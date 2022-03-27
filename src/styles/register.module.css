@@ -1,0 +1,81 @@
+.grid_3fr_4fr {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 2fr 4fr;
+}
+
+@media screen and (max-width : 1250px) {
+    .grid_3fr_4fr {
+        grid-template-columns: 2fr 2fr;
+    }
+}
+
+.bg_register {
+    width: 100%;
+    height: 100%;
+    background-image: url('/images/bg_register.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+}
+
+.button_google {
+    @apply bg-white;
+    @apply border-grey-200;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    border-width: 1px;
+
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.button_facebook {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    border-width: 1px;
+    background-color: #4287EF;
+
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+@media screen and (max-width: 1250px) {
+    .button_google {
+        height: 40px;
+    }
+    
+    .button_facebook {
+        height: 40px;
+    }
+}
+
+.step_active {
+    @apply bg-green-600
+}
+
+.profile_shadow {
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.profile_text_line2{
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}

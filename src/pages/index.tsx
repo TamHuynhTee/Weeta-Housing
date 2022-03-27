@@ -1,186 +1,93 @@
-import { useRouter } from 'next/router';
+import SliderCustom from '@/components/common/Slider';
+import LayoutCommon from '@/components/layout/LayoutCommon';
+import Link from 'next/link';
+import React from 'react';
 
-import { Meta } from '@/layout/Meta';
-import { Main } from '@/templates/Main';
-
-const Index = () => {
-  const router = useRouter();
-
+const Home = () => {
   return (
-    <Main
-      meta={
-        <Meta
-          title="Next.js Boilerplate Presentation"
-          description="Next js Boilerplate is the perfect starter code for your project. Build your React application with the Next.js framework."
-        />
-      }
-    >
-      <a href="https://github.com/ixartz/Next-js-Boilerplate">
-        <img
-          src={`${router.basePath}/assets/images/nextjs-starter-banner.png`}
-          alt="Nextjs starter banner"
-        />
-      </a>
-      <h1 className="text-2xl font-bold">
-        Boilerplate code for your Nextjs project with Tailwind CSS
-      </h1>
-      <p>
-        <span role="img" aria-label="rocket">
-          🚀
-        </span>{' '}
-        Next.js Boilerplate is a starter code for your Next js project by
-        putting developer experience first .{' '}
-        <span role="img" aria-label="zap">
-          ⚡️
-        </span>{' '}
-        Made with Next.js, TypeScript, ESLint, Prettier, Husky, Lint-Staged,
-        VSCode, Netlify, PostCSS, Tailwind CSS.
-      </p>
-      <h2 className="text-lg font-semibold">Next js Boilerplate Features</h2>
-      <p>Developer experience first:</p>
-      <ul>
-        <li>
-          <span role="img" aria-label="fire">
-            🔥
-          </span>{' '}
-          <a href="https://nextjs.org" rel="nofollow">
-            Next.js
-          </a>{' '}
-          for Static Site Generator
-        </li>
-        <li>
-          <span role="img" aria-label="art">
-            🎨
-          </span>{' '}
-          Integrate with{' '}
-          <a href="https://tailwindcss.com" rel="nofollow">
-            Tailwind CSS
-          </a>
-        </li>
-        <li>
-          <span role="img" aria-label="nail_care">
-            💅
-          </span>{' '}
-          PostCSS for processing Tailwind CSS
-        </li>
-        <li>
-          <span role="img" aria-label="tada">
-            🎉
-          </span>{' '}
-          Type checking Typescript
-        </li>
-        <li>
-          <span role="img" aria-label="pencil2">
-            ✏️
-          </span>{' '}
-          Linter with{' '}
-          <a href="https://eslint.org" rel="nofollow">
-            ESLint
-          </a>
-        </li>
-        <li>
-          <span role="img" aria-label="hammer_and_wrench">
-            🛠
-          </span>{' '}
-          Code Formatter with{' '}
-          <a href="https://prettier.io" rel="nofollow">
-            Prettier
-          </a>
-        </li>
-        <li>
-          <span role="img" aria-label="fox_face">
-            🦊
-          </span>{' '}
-          Husky for Git Hooks
-        </li>
-        <li>
-          <span role="img" aria-label="no_entry_sign">
-            🚫
-          </span>{' '}
-          Lint-staged for running linters on Git staged files
-        </li>
-        <li>
-          <span role="img" aria-label="no_entry_sign">
-            🗂
-          </span>{' '}
-          VSCode configuration: Debug, Settings, Tasks and extension for
-          PostCSS, ESLint, Prettier, TypeScript
-        </li>
-        <li>
-          <span role="img" aria-label="robot">
-            🤖
-          </span>{' '}
-          SEO metadata, JSON-LD and Open Graph tags with Next SEO
-        </li>
-        <li>
-          <span role="img" aria-label="robot">
-            ⚙️
-          </span>{' '}
-          <a
-            href="https://www.npmjs.com/package/@next/bundle-analyzer"
-            rel="nofollow"
-          >
-            Bundler Analyzer
-          </a>
-        </li>
-        <li>
-          <span role="img" aria-label="rainbow">
-            🌈
-          </span>{' '}
-          Include a FREE minimalist theme
-        </li>
-        <li>
-          <span role="img" aria-label="hundred">
-            💯
-          </span>{' '}
-          Maximize lighthouse score
-        </li>
-      </ul>
-      <p>Built-in feature from Next.js:</p>
-      <ul>
-        <li>
-          <span role="img" aria-label="coffee">
-            ☕
-          </span>{' '}
-          Minify HTML &amp; CSS
-        </li>
-        <li>
-          <span role="img" aria-label="dash">
-            💨
-          </span>{' '}
-          Live reload
-        </li>
-        <li>
-          <span role="img" aria-label="white_check_mark">
-            ✅
-          </span>{' '}
-          Cache busting
-        </li>
-      </ul>
-      <h2 className="text-lg font-semibold">Our Stater code Philosophy</h2>
-      <ul>
-        <li>Minimal code</li>
-        <li>SEO-friendly</li>
-        <li>
-          <span role="img" aria-label="rocket">
-            🚀
-          </span>{' '}
-          Production-ready
-        </li>
-      </ul>
-      <p>
-        Check our GitHub project for more information about{' '}
-        <a href="https://github.com/ixartz/Next-js-Boilerplate">
-          Nextjs Boilerplate
-        </a>
-        . You can also browse our{' '}
-        <a href="https://creativedesignsguru.com/category/nextjs/">
-          Premium NextJS Templates
-        </a>{' '}
-        on our website to support this project.
-      </p>
-    </Main>
+    <React.Fragment>
+      <LayoutCommon title="Weeta Housing" isVisibleSearchBar>
+        <div className="w-full">
+          <div className="w-full min-h-[calc(100vh-80px)] relative">
+            <SliderCustom
+              customSettings={{
+                dots: true,
+                className: 'h-full w-full relative',
+                autoplay: true,
+                dotsClass: 'slick-dots slick-thumb slick-dots-custom',
+                fade: true,
+                infinite: true,
+                speed: 5000,
+                appendDots: (dots) => (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: '20px',
+                    }}
+                  >
+                    <ul style={{ margin: '0px' }}>{dots}</ul>
+                  </div>
+                ),
+                arrows: false,
+              }}
+            >
+              <div className="h-[calc(100vh-80px)]">
+                <img
+                  src="/images/img_home_image_1.jpg"
+                  className="h-full w-full object-cover"
+                  alt=""
+                />
+              </div>
+              <div className="h-[calc(100vh-80px)]">
+                <img
+                  src="/images/img_home_image_2.jpg"
+                  className="h-full w-full object-cover"
+                  alt=""
+                />
+              </div>
+              <div className="h-[calc(100vh-80px)]">
+                <img
+                  src="/images/img_home_image_3.jpg"
+                  className="h-full w-full object-cover"
+                  alt=""
+                />
+              </div>
+              {/* <div>
+            <img src="/images/img_home_image_2.jpg" alt="" />
+          </div> */}
+            </SliderCustom>
+            <div className="absolute md:top-[20%] top-[50%] right-[50%] translate-x-[50%] bg-white min-w-[50%] max-w-[80%] rounded-[6px] py-[28px] px-[30px] shadow-[rgb(0_0_0_/_8%)_0_1px_20px]">
+              <p className="text-[24px] font-bold">
+                Đánh giá sớm nhất. Giá cả tốt nhất.
+              </p>
+              <p className="text-[15px]">
+                Chúng tôi kết nối hơn 200 chủ trọ khắp TPHCM để giúp bạn tìm
+                được nhà trọ tốt nhất.
+              </p>
+              <div className="w-full mt-[10px]">
+                <input type="text" />
+              </div>
+            </div>
+          </div>
+          <div className="w-full px-[50px] py-[30px]">
+            <div className="flex justify-between items-center my-[30px]">
+              <p className="text-[25px] font-bold text-[rgb(44_44_44)]">
+                Khám phá
+              </p>
+              <Link href={'#!'}>
+                <a className="text-[15px] hover:text-baseColor text-[rgb(44_44_44)]">
+                  Xem tất cả
+                </a>
+              </Link>
+            </div>
+            <div className="w-full flex flex-wrap"></div>
+          </div>
+        </div>
+      </LayoutCommon>
+    </React.Fragment>
   );
 };
 
-export default Index;
+// Home.layout = LayoutCommon;
+
+export default Home;
