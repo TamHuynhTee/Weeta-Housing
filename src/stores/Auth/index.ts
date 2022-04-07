@@ -2,7 +2,12 @@ import { ROLE } from '@/constants/base.constants';
 import { createHook, createStore } from 'react-sweet-state';
 import { authModel } from '../../models/Auth.model';
 import { selector } from './auth.selector';
-import { loginAsync, checkAuth } from './auth.action';
+import {
+  loginAsync,
+  checkAuth,
+  registerAccountAsync,
+  forgotPasswordAsync,
+} from './auth.action';
 
 export type State = {
   isLoggedIn: boolean;
@@ -16,7 +21,12 @@ const initialState: State = {
   role: ROLE.USER,
 };
 
-const actions = { loginAsync, checkAuth };
+const actions = {
+  loginAsync,
+  checkAuth,
+  registerAccountAsync,
+  forgotPasswordAsync,
+};
 
 const Store = createStore({
   initialState,

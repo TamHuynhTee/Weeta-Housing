@@ -3,15 +3,22 @@ import {
   saveToLocalStorage,
 } from '@/helpers/base.helpers';
 import { notifyError, notifySuccess } from '@/helpers/toast.helpers';
-import { getInfoByTokenService, loginService } from '@/services/apis/Auth';
-import { IReqLogin } from '@/services/apis/Auth/Auth.interface';
+import {
+  forgotPasswordService,
+  getInfoByTokenService,
+  loginService,
+  registerAccountService,
+} from '@/services/apis/Auth';
+import {
+  IReqLogin,
+  IReqRegisterAccount,
+} from '@/services/apis/Auth/Auth.interface';
 import { State } from '.';
 
 type Actions = { setState: any; getState: () => State; dispatch: any };
 
 export const loginAsync = (payload: IReqLogin) => async () => {
   const result = await loginService(payload);
-  console.log(result);
   if (result.code !== 200) {
     notifyError('Email hoặc mật khẩu không hợp lệ');
     return false;
@@ -22,6 +29,32 @@ export const loginAsync = (payload: IReqLogin) => async () => {
     return true;
   }
 };
+
+export const registerAccountAsync =
+  (payload: IReqRegisterAccount) => async () => {
+    const result = await registerAccountService(payload);
+    if (result.error !== undefined) {
+      if (!result.error) {
+        notifySuccess('Đăng ký tài khoản thành công');
+        return true;
+      }
+    }
+    notifyError(result.message);
+    return false;
+  };
+
+export const forgotPasswordAsync =
+  (payload: IReqRegisterAccount) => async () => {
+    const result = await forgotPasswordService(payload);
+    if (result.error !== undefined) {
+      if (!result.error) {
+        notifySuccess('Gửi thành công, vui lòng kiểm tra email.');
+        return true;
+      }
+    }
+    notifyError(result.message);
+    return false;
+  };
 
 export const checkAuth =
   () =>

@@ -39,7 +39,7 @@ const LayoutCommon: FC<IProps> = ({
                     WEETA HOUSING
                   </a>
                 </Link>
-                {isVisibleSearchBar && (
+                {isVisibleSearchBar && router.pathname !== '/tim-kiem' && (
                   <HeaderSearch
                     className={`pb-[2 px] w-full h-full text-[16px] text-back-100 placeholder-grey-50 border-0 outline-none md:hidden`}
                   />

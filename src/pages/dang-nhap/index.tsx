@@ -10,17 +10,17 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 const schemaLogin = yup.object().shape({
-  //   email: yup
-  //     .string()
-  //     .email('Email không hợp lệ')
-  //     .required('Email không được để trống'),
-  phone: yup
+  email: yup
     .string()
-    .required('Chưa nhập số điện thoại')
-    .matches(
-      /(84|0[3|5|7|8|9|1|2|4|6])+([0-9]{8})\b/,
-      'Số điện thoại không hợp lệ'
-    ),
+    .email('Email không hợp lệ')
+    .required('Email không được để trống'),
+  //   phone: yup
+  //     .string()
+  //     .required('Chưa nhập số điện thoại')
+  //     .matches(
+  //       /(84|0[3|5|7|8|9|1|2|4|6])+([0-9]{8})\b/,
+  //       'Số điện thoại không hợp lệ'
+  //     ),
   password: yup.string().required('Mật khẩu không được để trống'),
 });
 
@@ -36,7 +36,8 @@ const LoginPage = () => {
 
   const handleSubmitLogin = async (data: any) => {
     const { email, password } = data;
-    const result = await actionAuth.loginAsync({ email: email, password });
+    // console.log(`email`, email);
+    const result = await actionAuth.loginAsync({ email, password });
     if (result) {
       router.push('/');
     }
@@ -79,6 +80,16 @@ const LoginPage = () => {
           >
             <div>
               <InputField
+                type="email"
+                register={register('email')}
+                name="email"
+                label="Email"
+                errors={errors}
+                placeholder="Cho xin cái email"
+              />
+            </div>
+            {/* <div>
+              <InputField
                 type="text"
                 register={register('phone')}
                 name="phone"
@@ -86,7 +97,7 @@ const LoginPage = () => {
                 errors={errors}
                 placeholder="Nhập số điện thoại để đăng nhập"
               />
-            </div>
+            </div> */}
             <div className="mt-[20px]">
               <InputField
                 type="password"

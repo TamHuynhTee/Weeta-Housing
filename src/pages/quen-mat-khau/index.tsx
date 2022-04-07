@@ -3,7 +3,6 @@ import { useAuth } from '@/stores/Auth';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -17,7 +16,7 @@ const schemaForgotPass = yup.object().shape({
 
 const ForgotPassPage = () => {
   const [, actionAuth] = useAuth();
-  const router = useRouter();
+  const [showForm, setShowForm] = React.useState(true);
 
   const {
     register,
@@ -25,11 +24,10 @@ const ForgotPassPage = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schemaForgotPass) });
 
-  const handleSendEmail = async (data: any) => {
-    const { email, password } = data;
-    const result = await actionAuth.loginAsync({ email: email, password });
+  const handleSubmitSendMail = async (data: any) => {
+    const result = await actionAuth.forgotPasswordAsync(data);
     if (result) {
-      router.push('/');
+      setShowForm(false);
     }
   };
 
@@ -56,42 +54,65 @@ const ForgotPassPage = () => {
               </div>
             </a>
           </Link>
-          <div className="mt-[20px]">
-            <h2 className="text-[36px] md:text-center font-bold lg:text-[28px]">
-              Để chúng tôi giúp bạn
-            </h2>
-            <p className="mt-[10px] text-[18px] md:text-center font-semibold text-[rgb(119_119_119)]">
-              Nhập email của bạn để lấy lại mật khẩu nhé
-            </p>
-          </div>
-          <form className="mt-[25px]" onSubmit={handleSubmit(handleSendEmail)}>
-            <div className="mb-[30px]">
-              <InputField
-                type="email"
-                register={register('email')}
-                name="email"
-                label="Email"
-                errors={errors}
-                placeholder="Email của bạn"
-              />
-            </div>
-            <button
-              className="w-full bg-[rgb(0_132_137)] text-[17px] text-white items-center h-[57px] font-bold flex justify-center rounded-[3px]"
-              type="submit"
-            >
-              Gửi
-            </button>
-          </form>
-          <p className="mt-[30px] flex justify-center">
-            Bạn nhớ mật khẩu rồi à?{' '}
-            <Link href={`/dang-nhap`}>
-              <a className="text-[rgb(0_132_137)] ml-[5px] hover:no-underline hover:border-b-0">
-                <div>
-                  <p className="text-[15px] font-bold">Đăng nhập</p>
+          {showForm ? (
+            <>
+              <div className="mt-[20px]">
+                <h2 className="text-[36px] md:text-center font-bold lg:text-[28px]">
+                  Để chúng tôi giúp bạn
+                </h2>
+                <p className="mt-[10px] text-[18px] md:text-center font-semibold text-[rgb(119_119_119)]">
+                  Nhập email của bạn để lấy lại mật khẩu nhé
+                </p>
+              </div>
+              <form
+                className="mt-[25px]"
+                onSubmit={handleSubmit(handleSubmitSendMail)}
+              >
+                <div className="mb-[30px]">
+                  <InputField
+                    type="email"
+                    register={register('email')}
+                    name="email"
+                    label="Email"
+                    errors={errors}
+                    placeholder="Email của bạn"
+                  />
                 </div>
-              </a>
-            </Link>
-          </p>
+                <button
+                  className="w-full bg-[rgb(0_132_137)] text-[17px] text-white items-center h-[57px] font-bold flex justify-center rounded-[3px]"
+                  type="submit"
+                >
+                  Gửi
+                </button>
+              </form>
+              <div className="mt-[30px] flex justify-center">
+                Bạn nhớ mật khẩu rồi à?{' '}
+                <Link href={`/dang-nhap`}>
+                  <a className="text-[rgb(0_132_137)] ml-[5px] hover:no-underline hover:border-b-0">
+                    <div>
+                      <p className="text-[15px] font-bold">Đăng nhập</p>
+                    </div>
+                  </a>
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="mt-[20px]">
+              <h2 className="text-[24px] md:text-center font-normal lg:text-[28px]">
+                Chúng tôi đã gửi link đổi mật khẩu mới đến mail của bạn, hãy
+                kiểm tra ngay nhé
+              </h2>
+              <Link href={`https://mail.google.com/mail/u/0/`}>
+                <a
+                  target={'_blank'}
+                  className="w-full mt-[20px] bg-[rgb(0_132_137)] text-[17px] text-white items-center h-[57px] font-bold flex justify-center rounded-[3px]"
+                  type="button"
+                >
+                  Mở mail
+                </a>
+              </Link>
+            </div>
+          )}
         </div>
         <div className="relative flex-1 h-full md:bg-none bg-[url('/images/login_background.png')] bg-center"></div>
       </div>

@@ -1,9 +1,9 @@
 export interface IReqRegisterAccount {
-  phone: string;
-  password: string;
+  username: string;
+  phoneNumber: string;
   fullname: string;
-  province: string;
   email: string;
+  password: string;
 }
 
 export interface IReqLogin {
@@ -31,7 +31,7 @@ export interface IReqVerifyUpdateEmail {
   code: string;
 }
 
-export interface IReqForgoPassword {
+export interface IReqForgotPassword {
   email: string;
 }
 

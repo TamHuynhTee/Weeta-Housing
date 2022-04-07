@@ -1,19 +1,23 @@
+import ErrorText from '@/components/common/ErrorText';
 import InputField from '@/components/common/InputField';
 import ToggleSwitch from '@/components/common/ToggleSwitch';
+import { useAuth } from '@/stores/Auth';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 const schemaRegister = yup.object().shape({
   username: yup.string().required('Tên đăng nhập không được để trống'),
+  fullname: yup.string().required('Tên của bạn đừng để trống'),
   email: yup
     .string()
     .email('Email không hợp lệ')
     .required('Email không được để trống'),
-  phone: yup
+  phoneNumber: yup
     .string()
     .required('Chưa nhập số điện thoại')
     .matches(
@@ -25,11 +29,13 @@ const schemaRegister = yup.object().shape({
     .string()
     .required('Chưa xác nhận mật khẩu')
     .oneOf([yup.ref('password'), null], 'Mật khẩu phải giống nhau'),
+  agreedTerms: yup.boolean().oneOf([true], 'Chưa chấp nhận điều khoản'),
+  // .required('Chưa chấp nhận điều khoản'),
 });
 
 const RegisterPage = () => {
-  //   const [, actionAuth] = useAuth();
-  //   const router = useRouter();
+  const [, actionAuth] = useAuth();
+  const router = useRouter();
 
   const {
     register,
@@ -38,12 +44,15 @@ const RegisterPage = () => {
   } = useForm({ resolver: yupResolver(schemaRegister) });
 
   const handleSubmitRegister = async (data: any) => {
-    // const { email, password } = data;
-    // const result = await actionAuth.loginAsync({ email: email, password });
-    // if (result) {
-    //   router.push('/');
-    // }
     console.log(data);
+    const { confirmPassword, agreedTerms, ...payload } = data;
+    console.log(payload);
+    if (agreedTerms) {
+      const result = await actionAuth.registerAccountAsync(payload);
+      if (result) {
+        router.push('/');
+      }
+    }
   };
 
   return (
@@ -93,6 +102,16 @@ const RegisterPage = () => {
             </div>
             <div className="mt-[20px]">
               <InputField
+                type="text"
+                register={register('fullname')}
+                name="fullname"
+                label="Họ tên"
+                errors={errors}
+                placeholder="Xin tên bạn nha"
+              />
+            </div>
+            <div className="mt-[20px]">
+              <InputField
                 type="email"
                 register={register('email')}
                 name="email"
@@ -104,8 +123,8 @@ const RegisterPage = () => {
             <div className="mt-[20px]">
               <InputField
                 type="text"
-                register={register('phone')}
-                name="phone"
+                register={register('phoneNumber')}
+                name="phoneNumber"
                 label="Số điện thoại"
                 errors={errors}
                 placeholder="Cho xin số đê"
@@ -131,7 +150,7 @@ const RegisterPage = () => {
                 errors={errors}
               />
             </div>
-            <div className="my-[30px] flex justify-between items-center">
+            <div className="my-[30px]">
               <ToggleSwitch
                 registerForm={register('agreedTerms')}
                 idToggleSw={'agreedTerms'}
@@ -146,6 +165,11 @@ const RegisterPage = () => {
                 defaultChecked={false}
                 allowLabelClick={false}
               />
+              <div className="mt-[10px]">
+                {errors.agreedTerms && (
+                  <ErrorText>{errors.agreedTerms.message}</ErrorText>
+                )}
+              </div>
             </div>
             <button
               className="w-full bg-[rgb(0_132_137)] text-[17px] text-white items-center h-[57px] font-bold flex justify-center rounded-[3px]"
