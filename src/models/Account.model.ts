@@ -1,6 +1,6 @@
 import { ACCOUNT_GENDER, ROLE } from '@/constants/base.constants';
 
-export interface accountModel {
+export interface ACCOUNT_MODEL {
   readonly _id: string;
   role: ROLE;
   gender: ACCOUNT_GENDER;

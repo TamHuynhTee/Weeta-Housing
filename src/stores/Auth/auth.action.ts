@@ -4,12 +4,14 @@ import {
 } from '@/helpers/base.helpers';
 import { notifyError, notifySuccess } from '@/helpers/toast.helpers';
 import {
+  changePasswordService,
   forgotPasswordService,
   getInfoByTokenService,
   loginService,
   registerAccountService,
 } from '@/services/apis/Auth';
 import {
+  IReqChangePassword,
   IReqLogin,
   IReqRegisterAccount,
 } from '@/services/apis/Auth/Auth.interface';
@@ -56,6 +58,19 @@ export const forgotPasswordAsync =
     return false;
   };
 
+export const changePasswordAsync =
+  (payload: IReqChangePassword) => async () => {
+    const result = await changePasswordService(payload);
+    if (result.error !== undefined) {
+      if (!result.error) {
+        notifySuccess('Đổi mật khẩu thành công');
+        return true;
+      }
+    }
+    notifyError(result.message);
+    return false;
+  };
+
 export const checkAuth =
   () =>
   async ({ setState, getState }: Actions) => {
@@ -76,4 +91,16 @@ export const checkAuth =
       setState({ ...getState(), isLoggedIn: false });
       return false;
     }
+  };
+
+export const logoutAsync =
+  (): any =>
+  async ({ setState, getState }: Actions) => {
+    localStorage.removeItem('token');
+    setState({
+      ...getState(),
+      isLoggedIn: false,
+      auth: undefined,
+    });
+    return true;
   };

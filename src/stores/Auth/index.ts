@@ -7,6 +7,8 @@ import {
   checkAuth,
   registerAccountAsync,
   forgotPasswordAsync,
+  logoutAsync,
+  changePasswordAsync,
 } from './auth.action';
 
 export type State = {
@@ -26,6 +28,8 @@ const actions = {
   checkAuth,
   registerAccountAsync,
   forgotPasswordAsync,
+  logoutAsync,
+  changePasswordAsync,
 };
 
 const Store = createStore({

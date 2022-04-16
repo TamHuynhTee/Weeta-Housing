@@ -1,10 +1,9 @@
 import LayoutCommon from '@/components/layout/LayoutCommon';
-import { useRouter } from 'next/router';
 import React from 'react';
 
 const SearchPage = () => {
-  const router = useRouter();
-  console.log(router.query);
+  //   const router = useRouter();
+  //   console.log(router.query);
   return (
     <React.Fragment>
       <LayoutCommon title="Tìm trọ" isVisibleSearchBar>

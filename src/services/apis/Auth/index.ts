@@ -1,8 +1,9 @@
-import { accountModel } from '@/models/Account.model';
+import { ACCOUNT_MODEL } from '@/models/Account.model';
 import { RouteApi } from '../../../constants/routeApi.constants';
 import API from '../_config/repositoryApi';
 import { ReturnResponse } from '../_config/response.interface';
 import {
+  IReqChangePassword,
   IReqForgotPassword,
   IReqLogin,
   IReqRegisterAccount,
@@ -33,8 +34,14 @@ export const forgotPasswordService = (
   return API.get(`${url}/forgot-password/${payload.email}`) as any;
 };
 
+export const changePasswordService = (
+  payload: IReqChangePassword
+): Promise<ReturnResponse<any>> => {
+  return API.put(`${url}/change-password`, { body: { ...payload } }) as any;
+};
+
 export const getInfoByTokenService = (): Promise<
-  ReturnResponse<{ account: accountModel }>
+  ReturnResponse<{ account: ACCOUNT_MODEL }>
 > => {
   return API.get(`account/get-account`);
 };

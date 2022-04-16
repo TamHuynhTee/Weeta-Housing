@@ -1,11 +1,13 @@
 // import HeaderSearchSkill from 'components/common/HeaderSearchSkill';
 // import NavLang from 'components/common/NavLang';
+import { getFromLocalStorage } from '@/helpers/base.helpers';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { FC } from 'react';
 import Footer from '../common/Footer';
 import HeaderSearch from '../common/HeaderSearch';
+import NavLogged from '../common/NavLogged';
 import NavNotLogged from '../common/NavNotLogged';
 
 interface IProps {
@@ -22,8 +24,16 @@ const LayoutCommon: FC<IProps> = ({
   title = 'Thông tin cá nhân',
 }: IProps) => {
   const router = useRouter();
-  //   const [stateAuth] = useAuth();
-  //   console.log(router);
+  //   const [stateAuth, actionAuth] = useAuth();
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+  React.useEffect(() => {
+    const token = getFromLocalStorage('token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   return (
     <React.Fragment>
       <Head>
@@ -68,14 +78,13 @@ const LayoutCommon: FC<IProps> = ({
                   </Link>
                   {/* <NavLang /> */}
                 </div>
-                <NavNotLogged />
-                {/* {stateAuth.isLoggedIn ? <NavLogged /> : <NavNotLogged />} */}
+                {isLoggedIn ? <NavLogged /> : <NavNotLogged />}
               </div>
             </div>
           </div>
         </div>
       </header>
-      <main>{children}</main>
+      <main className="container_app mx-auto">{children}</main>
       {isVisibleFooter && <Footer />}
     </React.Fragment>
   );

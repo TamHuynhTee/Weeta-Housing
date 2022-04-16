@@ -17,7 +17,7 @@ export interface IReqVerifyAccount {
 }
 
 export interface IReqChangePassword {
-  password: string;
+  oldPassword: string;
   newPassword: string;
 }
 

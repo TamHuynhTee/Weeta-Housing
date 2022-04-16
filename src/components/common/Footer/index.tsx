@@ -6,7 +6,7 @@ import LineHorizontal from '../LineHorizontal';
 const Footer = () => {
   return (
     <footer className="w-full bg-white-100">
-      <div className="container_app mx-auto px-[50px] pt-[70px] pb-[35px]">
+      <div className="container_app px-[50px] pt-[70px] pb-[35px] mx-auto">
         <div className="w-full grid grid-cols-3 mb-[70px]">
           <div className="w-full">
             <p className="font-semibold text-grey-400 text-18px">Dịch vụ</p>
