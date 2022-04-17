@@ -15,6 +15,7 @@ type Props = {
   defaultValue?: string | number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   allowNegative?: boolean;
+  disabled?: boolean;
   setValue?: (key: string, value: unknown) => void;
 };
 
@@ -29,6 +30,7 @@ const InputField = ({
   placeholder = '',
   defaultValue = '',
   allowNegative = false,
+  disabled = false,
   onChange = () => {
     return;
   },
@@ -66,10 +68,12 @@ const InputField = ({
           errors={errors}
           overrideInputClassName={overrideInputClassName}
           id={name}
+          disable={disabled}
         />
       ) : (
         <div className="relative bg-white">
           <input
+            disabled={disabled}
             type={thisType}
             {...register}
             name={name}

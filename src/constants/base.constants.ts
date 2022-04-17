@@ -4,7 +4,7 @@ export enum BASE_CONSTANTS {
 
 export enum ROLE {
   USER = 'user',
-  OWNER = 'owner',
+  LESSOR = 'lessor',
 }
 
 export enum ACCOUNT_GENDER {

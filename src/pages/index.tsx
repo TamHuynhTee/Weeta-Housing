@@ -1,5 +1,6 @@
 import SliderCustom from '@/components/common/Slider';
 import LayoutCommon from '@/components/layout/LayoutCommon';
+import Authentication from '@/HOC/auth.hoc';
 import Link from 'next/link';
 import React from 'react';
 
@@ -90,4 +91,4 @@ const Home = () => {
 
 // Home.layout = LayoutCommon;
 
-export default Home;
+export default Authentication(Home, { requiredLogin: false });

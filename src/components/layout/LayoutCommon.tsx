@@ -1,6 +1,6 @@
 // import HeaderSearchSkill from 'components/common/HeaderSearchSkill';
 // import NavLang from 'components/common/NavLang';
-import { getFromLocalStorage } from '@/helpers/base.helpers';
+import { useAuth } from '@/stores/Auth';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -24,15 +24,20 @@ const LayoutCommon: FC<IProps> = ({
   title = 'Thông tin cá nhân',
 }: IProps) => {
   const router = useRouter();
-  //   const [stateAuth, actionAuth] = useAuth();
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [stateAuth] = useAuth();
+  console.log(`stateAuth`, stateAuth);
+  //   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
-  React.useEffect(() => {
-    const token = getFromLocalStorage('token');
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
+  //   React.useEffect(() => {
+  //     (async () => {
+  //       if (stateAuth.isLoggedIn) {
+  //         const token = getFromLocalStorage('token');
+  //         if (token) {
+  //           await actionAuth.getInfoAsync();
+  //         }
+  //       }
+  //     })();
+  //   }, [stateAuth.isLoggedIn]);
 
   return (
     <React.Fragment>
@@ -78,7 +83,7 @@ const LayoutCommon: FC<IProps> = ({
                   </Link>
                   {/* <NavLang /> */}
                 </div>
-                {isLoggedIn ? <NavLogged /> : <NavNotLogged />}
+                {stateAuth.isLoggedIn ? <NavLogged /> : <NavNotLogged />}
               </div>
             </div>
           </div>

@@ -7,6 +7,8 @@ import {
   IReqForgotPassword,
   IReqLogin,
   IReqRegisterAccount,
+  IReqUpdateAccount,
+  IReqUpdateAvatar,
 } from './Auth.interface';
 import { resLogin } from './Auth.type';
 
@@ -41,7 +43,19 @@ export const changePasswordService = (
 };
 
 export const getInfoByTokenService = (): Promise<
-  ReturnResponse<{ account: ACCOUNT_MODEL }>
+  ReturnResponse<ACCOUNT_MODEL>
 > => {
-  return API.get(`account/get-account`);
+  return API.get(`${url}/get-profile`);
+};
+
+export const updateProfileService = (
+  payload: Partial<IReqUpdateAccount>
+): Promise<ReturnResponse<ACCOUNT_MODEL>> => {
+  return API.put(`${url}/update-profile`, { body: { ...payload } });
+};
+
+export const updateAvatarService = (
+  payload: IReqUpdateAvatar
+): Promise<ReturnResponse<ACCOUNT_MODEL>> => {
+  return API.post(`${url}/update-avatar`, { body: { ...payload } });
 };

@@ -1,5 +1,6 @@
 import LayoutCommon from '@/components/layout/LayoutCommon';
 import BoxChannel from '@/components/pages/tin-nhan/BoxChannel';
+import Authentication from '@/HOC/auth.hoc';
 import React from 'react';
 
 const ChatPage = () => {
@@ -21,4 +22,4 @@ const ChatPage = () => {
 
 // Home.layout = LayoutCommon;
 
-export default ChatPage;
+export default Authentication(ChatPage, { requiredLogin: true });

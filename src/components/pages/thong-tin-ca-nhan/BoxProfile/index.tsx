@@ -1,16 +1,34 @@
 import InputField from '@/components/common/InputField';
 import LimitedTextArea from '@/components/common/LimitedTextArea';
+import { useAuth } from '@/stores/Auth';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 
 const BoxProfile = () => {
+  const [stateAuth, actionAuth] = useAuth();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
 
+  React.useEffect(() => {
+    if (stateAuth.auth) {
+      setValue('username', stateAuth.auth.username);
+      setValue('fullname', stateAuth.auth.fullname);
+      setValue('email', stateAuth.auth.email);
+      setValue('phoneNumber', stateAuth.auth.phoneNumber);
+      // setValue('phoneNumber', stateAuth.auth.phoneNumber)
+    }
+  }, [stateAuth.auth, setValue]);
+
   const handleEditProfile = async (data: any) => {
-    console.log(data);
+    // console.log(data);
+    if (stateAuth.auth) {
+      await actionAuth.updateProfileAsync(data);
+    }
   };
 
   return (
@@ -47,6 +65,7 @@ const BoxProfile = () => {
             label="Email"
             errors={errors}
             placeholder="Email của bạn"
+            disabled
           />
         </div>
         <div className="mt-[20px]">

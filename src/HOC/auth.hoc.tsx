@@ -7,12 +7,13 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { ROLE } from '../constants/base.constants';
 import { useAuth } from '../stores/Auth';
+
 const Authentication = (
   SpecificComponent: any,
   option: {
     requiredLogin: boolean;
   },
-  adminRoute?: ROLE.OWNER | ROLE.USER
+  adminRoute?: ROLE.LESSOR | ROLE.USER
 ) => {
   function AuthenticationCheck(props: any) {
     const { requiredLogin } = option;
@@ -20,8 +21,7 @@ const Authentication = (
     const [stateAuth, actionAuth] = useAuth();
 
     const fetchAuth = async () => {
-      const isLogin = await actionAuth.checkAuth();
-      //   if (isLogin) actionAuth.getMyInfoAsync();
+      const isLogin = await actionAuth.getInfoByTokenAsync();
       if (!isLogin) {
         if (requiredLogin === true) {
           router.push('/dang-nhap');

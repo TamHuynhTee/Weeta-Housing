@@ -1,19 +1,22 @@
 import { ROLE } from '@/constants/base.constants';
+import { ACCOUNT_MODEL } from '@/models/Account.model';
 import { createHook, createStore } from 'react-sweet-state';
-import { authModel } from '../../models/Auth.model';
-import { selector } from './auth.selector';
 import {
-  loginAsync,
-  checkAuth,
-  registerAccountAsync,
-  forgotPasswordAsync,
-  logoutAsync,
   changePasswordAsync,
+  forgotPasswordAsync,
+  getInfoByTokenAsync,
+  loginAsync,
+  logoutAsync,
+  registerAccountAsync,
+  getInfoAsync,
+  updateProfileAsync,
+  updateAvatarAsync,
 } from './auth.action';
+import { selector } from './auth.selector';
 
 export type State = {
   isLoggedIn: boolean;
-  auth: authModel | undefined;
+  auth: ACCOUNT_MODEL | undefined;
   role: ROLE;
 };
 
@@ -25,11 +28,14 @@ const initialState: State = {
 
 const actions = {
   loginAsync,
-  checkAuth,
+  getInfoByTokenAsync,
   registerAccountAsync,
   forgotPasswordAsync,
   logoutAsync,
   changePasswordAsync,
+  getInfoAsync,
+  updateProfileAsync,
+  updateAvatarAsync,
 };
 
 const Store = createStore({

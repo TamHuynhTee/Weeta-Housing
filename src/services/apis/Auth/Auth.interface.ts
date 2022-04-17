@@ -39,3 +39,16 @@ export interface IReqVerifyCodeForgotPassword {
   email: string;
   code: string;
 }
+
+export interface IReqUpdateAccount {
+  username: string;
+  phoneNumber: string;
+  fullname: string;
+  email: string;
+  gender: string;
+  introduction: string;
+}
+
+export interface IReqUpdateAvatar {
+  file: File;
+}

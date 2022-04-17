@@ -6,7 +6,7 @@ import React from 'react';
 
 const NavLogged = () => {
   const router = useRouter();
-  const [, actionAuth] = useAuth();
+  const [stateAuth, actionAuth] = useAuth();
 
   const handleLogout = () => {
     actionAuth.logoutAsync();
@@ -22,7 +22,10 @@ const NavLogged = () => {
       </Link>
       <div className="wrap_menuAvatar">
         <div className="h-[40px] w-[40px] rounded-[50%] iconAvatar">
-          <img src={DEFAULT_AVATAR} alt="w-full h-full" />
+          <img
+            src={stateAuth.auth?.avatar || DEFAULT_AVATAR}
+            alt="w-full h-full"
+          />
         </div>
         <div className="wrap_contentHover">
           <div className="contentHover py-[16px]">

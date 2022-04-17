@@ -1,7 +1,9 @@
 import { DEFAULT_AVATAR } from '@/constants/base.constants';
 import { isFileImage } from '@/helpers/base.helpers';
 import { notifyError, notifySuccess } from '@/helpers/toast.helpers';
+import { useAuth } from '@/stores/Auth';
 import React from 'react';
+import { useForm } from 'react-hook-form';
 
 interface ModalAvatarProps {
   closeModal: () => void;
@@ -9,7 +11,9 @@ interface ModalAvatarProps {
 
 const ModalAvatar = (props: ModalAvatarProps) => {
   const { closeModal } = props;
-  const avatarRef = React.useRef<any>(null);
+  const [stateAuth, actionAuth] = useAuth();
+
+  const { handleSubmit, setValue } = useForm();
 
   const handleChangeAvatar = async (e: any) => {
     if (isFileImage(e.target.files[0])) {
@@ -20,6 +24,7 @@ const ModalAvatar = (props: ModalAvatarProps) => {
             .getElementById(`upload_img_avatar`)!
             .setAttribute('src', e.target.result);
         };
+        setValue('file', e.target.files[0]);
         reader.readAsDataURL(e.target.files[0]);
         notifySuccess(`Upload ảnh thành công`);
       }
@@ -28,9 +33,13 @@ const ModalAvatar = (props: ModalAvatarProps) => {
     }
   };
 
-  const handleSaveAvatar = async () => {
-    console.log('changed', avatarRef.current.files);
-    closeModal();
+  const handleSaveAvatar = async (data: any) => {
+    if (data.file) {
+      const result = await actionAuth.updateAvatarAsync(data);
+      if (result) {
+        closeModal();
+      }
+    }
   };
 
   return (
@@ -38,12 +47,12 @@ const ModalAvatar = (props: ModalAvatarProps) => {
       <p className="mt-[16px] text-[20px] font-bold text-black-100 text-center">
         Đổi ảnh đại diện
       </p>
-      <div className="my-[25px]">
+      <form onSubmit={handleSubmit(handleSaveAvatar)} className="my-[25px]">
         <label htmlFor={'upload_avatar'}>
           <div className="flex justify-center">
             <div className="border-[1px] border-[#5EA199] w-[200px] h-[200px] rounded-[50%] cursor-pointer">
               <img
-                src={DEFAULT_AVATAR}
+                src={stateAuth.auth?.avatar || DEFAULT_AVATAR}
                 id={`upload_img_avatar`}
                 className="w-full h-full object-cover rounded-[50%]"
                 alt="upload-default"
@@ -54,7 +63,6 @@ const ModalAvatar = (props: ModalAvatarProps) => {
         <input
           type="file"
           id={'upload_avatar'}
-          ref={avatarRef}
           hidden
           onChange={handleChangeAvatar}
         />
@@ -63,7 +71,7 @@ const ModalAvatar = (props: ModalAvatarProps) => {
             Đổi
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

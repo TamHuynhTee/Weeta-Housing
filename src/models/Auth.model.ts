@@ -1,11 +1,11 @@
 import { ImageModel } from './Image.model';
 
-interface authUser {
+interface AUTH_USER {
   _id: string;
   avatar: ImageModel;
 }
 
-export interface authModel {
-  user: authUser | null;
-  owner: authUser | null;
+export interface AUTH_MODEL {
+  user: AUTH_USER | null;
+  lessor: AUTH_USER | null;
 }
