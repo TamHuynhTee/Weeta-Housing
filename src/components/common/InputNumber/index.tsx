@@ -66,7 +66,7 @@ const InputNumber = (props: Props) => {
       className={
         overrideInputClassName
           ? className
-          : `w-full bg-inherit border border-solid rounded-[3px] outline-none pl-[11px] pr-[11px] py-[4px] min-h-[48px] focus:shadow-[0_0_0_1px_rgb(0_132_137_/_20%)] border-[rgb(230_230_230)] ${
+          : `w-full bg-inherit border border-solid rounded-[3px] outline-none pl-[18px] pr-[11px] py-[4px] min-h-[48px] focus:shadow-[0_0_0_1px_rgb(0_132_137_/_20%)] border-[rgb(230_230_230)] ${
               errors[name] && '!border-[rgb(249_80_61)]'
             } ${className}`
       }

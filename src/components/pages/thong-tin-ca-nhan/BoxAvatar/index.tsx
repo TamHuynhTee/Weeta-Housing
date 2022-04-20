@@ -19,9 +19,9 @@ const BoxMenuAvatar = ({ openModal }: Props) => {
           >
             <div className="w-[100px] h-[100px] object-cover">
               <img
-                src={DEFAULT_AVATAR}
+                src={stateAuth.auth ? stateAuth.auth.avatar : DEFAULT_AVATAR}
                 alt="avatar"
-                className="w-full h-full object-cover rounded-[100%]"
+                className="w-full h-full object-cover rounded-[50%] user_avatar"
               />
             </div>
           </div>

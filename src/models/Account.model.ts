@@ -11,4 +11,5 @@ export interface ACCOUNT_MODEL {
   email: string;
   phoneNumber: string;
   avatar: string;
+  introduction: string;
 }

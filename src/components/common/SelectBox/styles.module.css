@@ -1,0 +1,4 @@
+.selectBox:checked ~ div {
+  max-height: 100vh;
+  @apply border border-gray-200;
+}

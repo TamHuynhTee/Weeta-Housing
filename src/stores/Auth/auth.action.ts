@@ -19,6 +19,8 @@ import {
   IReqUpdateAccount,
   IReqUpdateAvatar,
 } from '@/services/apis/Auth/Auth.interface';
+import { registerLessorService } from '@/services/apis/Lessor';
+import { IReqVerifyOPT } from '@/services/apis/Lessor/Lessor.interface';
 import { State } from '.';
 import { DEFAULT_SERVER_ERROR_MESSAGE } from '..';
 
@@ -35,7 +37,7 @@ export const loginAsync = (payload: IReqLogin) => async () => {
     notifyError('Email hoặc mật khẩu không hợp lệ');
     return false;
   }
-  notifyError(DEFAULT_SERVER_ERROR_MESSAGE);
+  notifyError(result.message);
   return false;
 };
 
@@ -131,6 +133,7 @@ export const updateProfileAsync =
           auth: result.data,
         });
         notifySuccess('Cập nhật thông tin thành công');
+        return;
       }
     }
     notifyError(DEFAULT_SERVER_ERROR_MESSAGE);
@@ -146,7 +149,22 @@ export const updateAvatarAsync =
           ...getState(),
           auth: result.data,
         });
+        const avatars = document.querySelectorAll('.user_avatar');
+        avatars.forEach((e) => e.setAttribute('src', result.data.avatar));
         notifySuccess('Cập nhật ảnh đại diện thành công');
+        return true;
+      }
+    }
+    notifyError(DEFAULT_SERVER_ERROR_MESSAGE);
+    return false;
+  };
+
+export const registerLessorAsync =
+  (payload: IReqVerifyOPT) =>
+  async ({}: Actions) => {
+    const result = await registerLessorService(payload);
+    if (result.error !== undefined) {
+      if (!result.error) {
         return true;
       }
     }

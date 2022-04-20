@@ -25,7 +25,7 @@ const LayoutCommon: FC<IProps> = ({
 }: IProps) => {
   const router = useRouter();
   const [stateAuth] = useAuth();
-  console.log(`stateAuth`, stateAuth);
+  //   console.log(`stateAuth`, stateAuth);
   //   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   //   React.useEffect(() => {

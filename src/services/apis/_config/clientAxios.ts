@@ -12,7 +12,7 @@ const axiosClient = axios.create({
   timeout: 20000,
   headers: {
     'Content-Type': 'application/json',
-    // 'Content-Type':'multipart/form-data',
+    // 'Content-Type': 'multipart/form-data',
 
     'Access-Control-Allow-Origin': '*',
   },

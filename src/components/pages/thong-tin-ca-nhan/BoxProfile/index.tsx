@@ -20,16 +20,17 @@ const BoxProfile = () => {
       setValue('fullname', stateAuth.auth.fullname);
       setValue('email', stateAuth.auth.email);
       setValue('phoneNumber', stateAuth.auth.phoneNumber);
-      // setValue('phoneNumber', stateAuth.auth.phoneNumber)
+      setValue('introduction', stateAuth.auth.introduction);
     }
   }, [stateAuth.auth, setValue]);
 
   const handleEditProfile = async (data: any) => {
-    // console.log(data);
     if (stateAuth.auth) {
       await actionAuth.updateProfileAsync(data);
     }
   };
+
+  //   console.log(stateAuth.auth);
 
   return (
     <div className="container_shadow">

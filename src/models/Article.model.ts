@@ -1,3 +1,5 @@
+import { ENUM_TYPE_ARTICLE } from '@/constants/base.constants';
+
 export interface ARTICLE_MODEL {
   readonly _id: string;
   title: boolean;
@@ -13,4 +15,9 @@ export interface ARTICLE_MODEL {
   isAvailable: boolean;
   isDelete: boolean;
   createdAt: boolean;
+  servicePackageId: string;
+  servicePackageName: ENUM_TYPE_ARTICLE;
+  startDate: string;
+  endDate: string;
+  timeService: number;
 }

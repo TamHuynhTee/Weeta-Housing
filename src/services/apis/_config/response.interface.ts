@@ -1,7 +1,7 @@
 interface ResponseInstant {
   message: string;
   error: boolean;
-  code?: number;
+  //   code?: number;
 }
 export interface ReturnResponse<T> extends ResponseInstant {
   data: T;

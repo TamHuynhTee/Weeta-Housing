@@ -25,7 +25,7 @@ export const loginService = (
 export const registerAccountService = (
   payload: IReqRegisterAccount
 ): Promise<ReturnResponse<any>> => {
-  return API.post(`${url}/signup`, {
+  return API.post(`${`account`}/signup`, {
     body: { ...payload },
   }) as any;
 };
@@ -57,5 +57,6 @@ export const updateProfileService = (
 export const updateAvatarService = (
   payload: IReqUpdateAvatar
 ): Promise<ReturnResponse<ACCOUNT_MODEL>> => {
-  return API.post(`${url}/update-avatar`, { body: { ...payload } });
+  //   console.log(`payload`, payload);
+  return API.postFormDataFile(`${url}/update-avatar`, { body: { ...payload } });
 };

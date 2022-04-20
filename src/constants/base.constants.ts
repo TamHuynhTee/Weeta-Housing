@@ -13,3 +13,9 @@ export enum ACCOUNT_GENDER {
 }
 
 export const DEFAULT_AVATAR = `https://firebasestorage.googleapis.com/v0/b/weeta-housing.appspot.com/o/avatar_default.png?alt=media&token=34619e46-80b6-45e5-b8ce-760d618db094`;
+
+export enum ENUM_TYPE_ARTICLE {
+  TOP = 'TOP',
+  COMMON = 'COMMON',
+  UP = 'UP',
+}

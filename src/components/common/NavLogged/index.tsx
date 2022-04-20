@@ -23,8 +23,9 @@ const NavLogged = () => {
       <div className="wrap_menuAvatar">
         <div className="h-[40px] w-[40px] rounded-[50%] iconAvatar">
           <img
-            src={stateAuth.auth?.avatar || DEFAULT_AVATAR}
-            alt="w-full h-full"
+            src={stateAuth.auth ? stateAuth.auth.avatar : DEFAULT_AVATAR}
+            className="w-full h-full object-cover rounded-[50%] user_avatar"
+            alt="avatar"
           />
         </div>
         <div className="wrap_contentHover">
