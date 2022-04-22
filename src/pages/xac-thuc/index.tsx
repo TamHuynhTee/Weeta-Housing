@@ -1,3 +1,4 @@
+import { useAuth } from '@/stores/Auth';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -12,20 +13,20 @@ enum Result_Type {
 const VerifyEmailToken = () => {
   //   const router = useRouter();
   const [result, setResult] = React.useState<Result_Type>(Result_Type.LOADING);
-  //   const [loading, setLoading] = React.useState(true);
+  const [, actionAuth] = useAuth();
 
   React.useEffect(() => {
-    // const params = new URLSearchParams(window.location.search);
-    // (async () => {
-    //   // const res = await verifyEmailApi({ token: params.get('token') });
-    //   // if (res.code === 200) setResult(true);
-    //   // setLoading(false);
-    //   console.log('verified', params.get('token'));
-    // })();
-    const timeout = setTimeout(() => {
-      setResult(Result_Type.FAILED);
-    }, 1000);
-    return () => clearTimeout(timeout);
+    const params = new URLSearchParams(window.location.search);
+    // console.log(`params`, params.get('token'));
+    (async () => {
+      const result = await actionAuth.verifyEmailAsync({
+        token: params.get('token') as string,
+      });
+      if (result) {
+        setResult(Result_Type.SUCCESS);
+      } else setResult(Result_Type.FAILED);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

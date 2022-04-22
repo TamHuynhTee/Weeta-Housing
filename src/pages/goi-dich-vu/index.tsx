@@ -1,4 +1,5 @@
 import LayoutCommon from '@/components/layout/LayoutCommon';
+import Authentication from '@/HOC/auth.hoc';
 import React from 'react';
 
 const ServicePackage = () => {
@@ -416,6 +417,4 @@ const ServicePackage = () => {
   );
 };
 
-// Home.layout = LayoutCommon;
-
-export default ServicePackage;
+export default Authentication(ServicePackage, { requiredLogin: false });

@@ -1,25 +1,36 @@
-import { DEFAULT_AVATAR } from '@/constants/base.constants';
+import { DEFAULT_AVATAR, ROLE } from '@/constants/base.constants';
 import { useAuth } from '@/stores/Auth';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-const NavLogged = () => {
+type Props = {
+  openCreateLessorModal: () => void;
+};
+
+const NavLogged = ({ openCreateLessorModal }: Props) => {
   const router = useRouter();
   const [stateAuth, actionAuth] = useAuth();
+  console.log(`stateAuth`, stateAuth);
 
   const handleLogout = () => {
     actionAuth.logoutAsync();
     router.push('/');
   };
 
+  const roleBasedHandle = () => {
+    if (stateAuth.role === ROLE.LESSOR) router.push('/tao-tin-moi');
+    else if (stateAuth.role === ROLE.USER) openCreateLessorModal();
+  };
+
   return (
     <div className="flex items-center ml-[25px] md:ml-[20px] gap-x-[20px]">
-      <Link href="/tao-tin-moi">
-        <a className="button-primary text-center md:text-[14px] md:leading-[17px]">
-          Đăng bài mới
-        </a>
-      </Link>
+      <button
+        className="button-primary text-center md:text-[14px] md:leading-[17px]"
+        onClick={roleBasedHandle}
+      >
+        Đăng bài mới
+      </button>
       <div className="wrap_menuAvatar">
         <div className="h-[40px] w-[40px] rounded-[50%] iconAvatar">
           <img

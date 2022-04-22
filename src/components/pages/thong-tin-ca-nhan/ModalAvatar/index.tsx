@@ -20,6 +20,7 @@ const ModalAvatar = (props: ModalAvatarProps) => {
       if (e.target.files && e.target.files[0]) {
         const reader = new FileReader();
         reader.onload = function (e: any) {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           document
             .getElementById(`upload_img_avatar`)!
             .setAttribute('src', e.target.result);

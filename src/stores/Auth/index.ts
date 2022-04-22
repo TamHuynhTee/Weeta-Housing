@@ -11,6 +11,9 @@ import {
   getInfoAsync,
   updateProfileAsync,
   updateAvatarAsync,
+  verifyEmailAsync,
+  registerLessorAsync,
+  verifyOTPAsync,
 } from './auth.action';
 import { selector } from './auth.selector';
 
@@ -36,6 +39,9 @@ const actions = {
   getInfoAsync,
   updateProfileAsync,
   updateAvatarAsync,
+  verifyEmailAsync,
+  registerLessorAsync,
+  verifyOTPAsync,
 };
 
 const Store = createStore({

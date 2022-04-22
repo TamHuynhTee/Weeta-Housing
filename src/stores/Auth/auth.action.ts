@@ -11,6 +11,7 @@ import {
   registerAccountService,
   updateAvatarService,
   updateProfileService,
+  verifyEmailService,
 } from '@/services/apis/Auth';
 import {
   IReqChangePassword,
@@ -19,8 +20,14 @@ import {
   IReqUpdateAccount,
   IReqUpdateAvatar,
 } from '@/services/apis/Auth/Auth.interface';
-import { registerLessorService } from '@/services/apis/Lessor';
-import { IReqVerifyOPT } from '@/services/apis/Lessor/Lessor.interface';
+import {
+  registerLessorService,
+  verifyOTPService,
+} from '@/services/apis/Lessor';
+import {
+  IReqSendOPT,
+  IReqVerifyOPT,
+} from '@/services/apis/Lessor/Lessor.interface';
 import { State } from '.';
 import { DEFAULT_SERVER_ERROR_MESSAGE } from '..';
 
@@ -160,15 +167,45 @@ export const updateAvatarAsync =
   };
 
 export const registerLessorAsync =
-  (payload: IReqVerifyOPT) =>
+  (payload: IReqSendOPT) =>
   async ({}: Actions) => {
     const result = await registerLessorService(payload);
+    if (result.error !== undefined) {
+      if (!result.error) {
+        return { success: true, token: result.data };
+      }
+      notifyError(result.message);
+    }
+    notifyError(DEFAULT_SERVER_ERROR_MESSAGE);
+    return { success: false, token: undefined };
+  };
+
+export const verifyEmailAsync =
+  (params: { token: string }) =>
+  async ({}: Actions) => {
+    const result = await verifyEmailService(params);
     if (result.error !== undefined) {
       if (!result.error) {
         return true;
       }
     }
-    notifyError(DEFAULT_SERVER_ERROR_MESSAGE);
+    notifyError(result.message);
+    return false;
+  };
+
+export const verifyOTPAsync =
+  (payload: IReqVerifyOPT) =>
+  async ({}: Actions) => {
+    const result = await verifyOTPService(payload);
+    if (result.error !== undefined) {
+      if (!result.error) {
+        notifySuccess(
+          'Đăng ký thành công, giờ đây bạn có thể đăng bài cho thuê'
+        );
+        return true;
+      }
+    }
+    notifyError(result.message);
     return false;
   };
 

@@ -44,10 +44,11 @@ const RegisterPage = () => {
   } = useForm({ resolver: yupResolver(schemaRegister) });
 
   const handleSubmitRegister = async (data: any) => {
-    console.log(data);
-    const { confirmPassword, agreedTerms, ...payload } = data;
-    console.log(payload);
+    // console.log(data);
+    const { agreedTerms, ...payload } = data;
+    // console.log(payload);
     if (agreedTerms) {
+      delete data.confirmPassword;
       const result = await actionAuth.registerAccountAsync(payload);
       if (result) {
         router.push('/');

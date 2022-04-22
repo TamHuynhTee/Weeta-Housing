@@ -8,50 +8,42 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-const schemaVerifyOTP = yup.object().shape({
-  otp: yup
+const schemaCreateOTP = yup.object().shape({
+  phoneNumber: yup
     .string()
-    .required('Bạn chưa nhập mã OTP')
-    .max(6, 'Mã OTP chỉ có 6 chữ số')
-    .min(6, 'Mã OTP có 6 chữ số'),
+    .required('Chưa nhập số điện thoại')
+    .matches(
+      /(84|0[3|5|7|8|9|1|2|4|6])+([0-9]{8})\b/,
+      'Số điện thoại không hợp lệ'
+    ),
 });
 
-const VerifyOTPPage = () => {
+const CreateOTPPage = () => {
   const [, actionAuth] = useAuth();
   const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(schemaVerifyOTP) });
+  } = useForm({ resolver: yupResolver(schemaCreateOTP) });
 
-  const handleSubmitOTP = async (data: any) => {
-    const { otp } = data;
-    const params = new URLSearchParams(window.location.search);
-    const result = await actionAuth.verifyOTPAsync({
-      otp,
-      token: params.get('token') as string,
-    });
-    if (result) {
-      router.push('/goi-dich-vu');
-    }
-  };
-
-  const handleSendPhoneNumber = async () => {
-    const params = new URLSearchParams(window.location.search);
-    const phone = params.get('phoneNumber') as string;
+  const handleSendPhoneNumber = async (data: any) => {
+    const { phoneNumber } = data;
+    const formatted = phoneNumber.replace(phoneNumber[0], '+84');
     const result = await actionAuth.registerLessorAsync({
-      phoneNumber: phone,
+      phoneNumber: formatted,
     });
     if (result.success) {
-      router.push(`/xac-thuc-otp?phoneNumber=${phone}&token=${result.token}`);
+      router.push(
+        `/xac-thuc-otp?phoneNumber=${formatted}&token=${result.token}`
+      );
     }
   };
 
   return (
     <React.Fragment>
       <Head>
-        <title>Xác thực số điện thoại</title>
+        <title>Nhập số điện thoại</title>
       </Head>
       <div className="w-[100vw] h-[100vh] flex md:flex-col">
         <div className="w-[40%] md:w-full h-full px-[60px] md:px-[90px] py-[30px] overflow-y-auto">
@@ -73,36 +65,31 @@ const VerifyOTPPage = () => {
           </Link>
           <div className="mt-[20px]">
             <h2 className="text-[36px] md:text-center font-bold lg:text-[28px]">
-              Xác thực số điện thoại chủ cho thuê
+              Nhập số điện thoại
             </h2>
             <p className="mt-[10px] text-[18px] md:text-center font-semibold text-[rgb(119_119_119)]">
-              Hãy điền mã OTP được gửi vào số điện thoại của bạn để tiếp tục
+              Hãy nhập số điện thoại của bạn để chúng tôi gửi mã xác thực
             </p>
           </div>
-
-          <form className="mt-[25px]" onSubmit={handleSubmit(handleSubmitOTP)}>
+          <form
+            className="mt-[25px]"
+            onSubmit={handleSubmit(handleSendPhoneNumber)}
+          >
             <div>
               <InputField
                 type="number"
-                register={register('otp')}
-                name="otp"
-                label="Nhập mã OTP"
+                register={register('phoneNumber')}
+                name="phoneNumber"
+                label="Điền số điện thoại"
                 errors={errors}
-                placeholder="Cho xin cái otp"
+                placeholder="+84 ..."
               />
             </div>
             <button
               className="w-full bg-[rgb(0_132_137)] mt-[20px] text-[17px] text-white items-center h-[57px] font-bold flex justify-center rounded-[3px]"
               type="submit"
             >
-              Xác thực
-            </button>
-            <button
-              className="w-full bg-[#dee2e2] mt-[20px] text-[17px] text-gray-500 items-center h-[57px] font-bold flex justify-center rounded-[3px]"
-              type="button"
-              onClick={handleSendPhoneNumber}
-            >
-              Chưa nhận được mã, gửi lại
+              Gửi
             </button>
           </form>
         </div>
@@ -112,4 +99,4 @@ const VerifyOTPPage = () => {
   );
 };
 
-export default VerifyOTPPage;
+export default CreateOTPPage;

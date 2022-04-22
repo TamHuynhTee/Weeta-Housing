@@ -60,3 +60,10 @@ export const updateAvatarService = (
   //   console.log(`payload`, payload);
   return API.postFormDataFile(`${url}/update-avatar`, { body: { ...payload } });
 };
+
+export const verifyEmailService = (params: {
+  token: string;
+}): Promise<ReturnResponse<any>> => {
+  //   console.log(`payload`, payload);
+  return API.get(`${url}/verify-email`, { ...params });
+};

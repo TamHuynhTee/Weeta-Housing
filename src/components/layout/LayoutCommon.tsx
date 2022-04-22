@@ -5,10 +5,12 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { FC } from 'react';
+import ContainerModal from '../common/ContainerModal';
 import Footer from '../common/Footer';
 import HeaderSearch from '../common/HeaderSearch';
 import NavLogged from '../common/NavLogged';
 import NavNotLogged from '../common/NavNotLogged';
+import ModalCreateLessor from '../pages/ModalCreateLessor';
 
 interface IProps {
   children: React.ReactElement;
@@ -24,20 +26,11 @@ const LayoutCommon: FC<IProps> = ({
   title = 'Thông tin cá nhân',
 }: IProps) => {
   const router = useRouter();
+  const [modalCreateLessor, setModalCreateLessor] = React.useState(false);
   const [stateAuth] = useAuth();
-  //   console.log(`stateAuth`, stateAuth);
-  //   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
-  //   React.useEffect(() => {
-  //     (async () => {
-  //       if (stateAuth.isLoggedIn) {
-  //         const token = getFromLocalStorage('token');
-  //         if (token) {
-  //           await actionAuth.getInfoAsync();
-  //         }
-  //       }
-  //     })();
-  //   }, [stateAuth.isLoggedIn]);
+  const openCreateLessorModal = () => setModalCreateLessor(true);
+  const closeCreateLessorModal = () => setModalCreateLessor(false);
 
   return (
     <React.Fragment>
@@ -83,7 +76,11 @@ const LayoutCommon: FC<IProps> = ({
                   </Link>
                   {/* <NavLang /> */}
                 </div>
-                {stateAuth.isLoggedIn ? <NavLogged /> : <NavNotLogged />}
+                {stateAuth.isLoggedIn ? (
+                  <NavLogged openCreateLessorModal={openCreateLessorModal} />
+                ) : (
+                  <NavNotLogged />
+                )}
               </div>
             </div>
           </div>
@@ -91,6 +88,12 @@ const LayoutCommon: FC<IProps> = ({
       </header>
       <main className="container_app mx-auto">{children}</main>
       {isVisibleFooter && <Footer />}
+      <ContainerModal
+        isVisible={modalCreateLessor}
+        closeModal={closeCreateLessorModal}
+      >
+        <ModalCreateLessor closeModal={closeCreateLessorModal} />
+      </ContainerModal>
     </React.Fragment>
   );
 };
