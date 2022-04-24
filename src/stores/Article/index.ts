@@ -1,10 +1,21 @@
 import { ARTICLE_MODEL } from '@/models/Article.model';
 import { createHook, createStore } from 'react-sweet-state';
-import { createArticleAsync, getListArticleAsync } from './article.action';
+import {
+  createArticleAsync,
+  getListArticleAsync,
+  getListTopArticleAsync,
+  loadMoreArticleAsync,
+  getDetailArticleAsync,
+} from './article.action';
 import { selector } from './article.selector';
 
 export type State = {
   article: {
+    list: Array<ARTICLE_MODEL>;
+    total: number;
+    isOver: boolean;
+  };
+  topArticle: {
     list: Array<ARTICLE_MODEL>;
     total: number;
     isOver: boolean;
@@ -18,12 +29,20 @@ const initialState: State = {
     total: 0,
     isOver: false,
   },
+  topArticle: {
+    list: [],
+    total: 0,
+    isOver: false,
+  },
   articleDetail: undefined,
 };
 
 const actions = {
   createArticleAsync,
   getListArticleAsync,
+  getListTopArticleAsync,
+  loadMoreArticleAsync,
+  getDetailArticleAsync,
 };
 
 const Store = createStore({

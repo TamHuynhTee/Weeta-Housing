@@ -2,10 +2,7 @@ type Props = {
   items?: Array<{ label: string; value: any }>;
   selectedItem?: { label: string; value: any };
   handleSearch?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSelectItem?: (
-    e: React.MouseEvent<HTMLLabelElement>,
-    item: { label: string; value: string }
-  ) => void;
+  handleSelectItem?: (item: { label: string; value: string }) => void;
   htmlFor?: string;
 };
 
@@ -27,8 +24,8 @@ const BoxSelectLocation = (props: Props) => {
               key={index}
               htmlFor={htmlFor}
               className="input_checkbox font-normal py-[5px]"
-              onClick={(e) => {
-                handleSelectItem(e, item);
+              onClick={() => {
+                handleSelectItem(item);
               }}
             >
               <div className="flex item-center gap-x-[20px] hover:bg-green-100 rounded-[3px] cursor-pointer px-[20px] py-[5px]">

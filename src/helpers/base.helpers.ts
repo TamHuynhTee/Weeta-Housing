@@ -13,6 +13,8 @@ export const getFromLocalStorage = (key: string): any => {
   return parsedValue;
 };
 
+export const getLengthArray = (array: any[]): number => array.length;
+
 export const isFileImage = (file: File) => {
   return file && file['type'].split('/')[0] === 'image';
 };

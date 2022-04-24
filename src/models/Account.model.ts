@@ -6,6 +6,7 @@ export interface ACCOUNT_MODEL {
   gender: ACCOUNT_GENDER;
   isEmailVerified: boolean;
   isActive: boolean;
+  isAutoApproved: boolean;
   username: string;
   fullname: string;
   email: string;

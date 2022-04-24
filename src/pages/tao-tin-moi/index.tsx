@@ -1,3 +1,4 @@
+import ErrorText from '@/components/common/ErrorText';
 import InputField from '@/components/common/InputField';
 import LimitedTextArea from '@/components/common/LimitedTextArea';
 import LineHorizontal from '@/components/common/LineHorizontal';
@@ -22,6 +23,7 @@ const schema = yup.object().shape({
   price: yup.string().required('Chưa nhập giá cho thuê'),
   area: yup.string().required('Chưa nhập diện tích cho thuê'),
   description: yup.string(),
+  //   files: yup.mixed().required('Chưa chọn ảnh chụp'),
 });
 
 const CreatePostPage = () => {
@@ -34,50 +36,54 @@ const CreatePostPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setValue,
+    clearErrors,
+    // setError,
   } = useForm({ resolver: yupResolver(schema) });
 
+  //   React.useEffect(() => {
+  //     setError('files', { type: 'required', message: 'Chưa chọn hình ảnh' });
+  //   }, [setError]);
+
   const handleCreateArticle = async (data: any) => {
-    const { district, ward, street, number, area, price, ...rest } = data;
+    const { number, street, area, price, ...rest } = data;
     const payload = {
       ...rest,
-      address: `${number}, ${street}, ${ward}, ${district}, TPHCM`,
       location: {
         latitude: 1,
         longtitude: 1,
       },
+      street: `${number} ${street}`,
       area: +area,
       price: +price,
+      files: Object.values(rest.files),
     };
+    console.log(`payload`, payload);
     const result = await actionArticle.createArticleAsync(payload);
     // console.log(`result`, result);
     if (result) {
     }
   };
 
-  const handleSelectDistrict = (
-    e: React.MouseEvent<HTMLLabelElement>,
-    item: { label: string; value: string }
-  ) => {
-    console.log(e);
+  const handleSelectDistrict = (item: { label: string; value: string }) => {
+    // console.log(e);
     batch(() => {
       setDistrict(item.label);
       setValue('district', item.label);
       setValue('ward', '');
       setSelectedDistrict(+item.value);
       setWard('Chọn phường, xã');
+      clearErrors('district');
     });
   };
 
-  const handleSelectWard = (
-    e: React.MouseEvent<HTMLLabelElement>,
-    item: { label: string; value: string }
-  ) => {
-    console.log(e);
+  const handleSelectWard = (item: { label: string; value: string }) => {
+    // console.log(e);
     batch(() => {
       setValue('ward', item.label);
       setWard(item.label);
+      clearErrors('ward');
     });
   };
 
@@ -232,17 +238,20 @@ const CreatePostPage = () => {
                   </label>
                   <input
                     type="file"
+                    {...register('files')}
                     id="article_images"
                     hidden
                     multiple
                     accept="image/*"
                   />
                 </div>
+                {errors.files && <ErrorText>{errors.files.message}</ErrorText>}
               </div>
               <input
                 type="submit"
                 className="button-primary w-32 mt-[30px] h-[40px] md:mt-[20px] md:h-[30px]"
-                value="Tạo"
+                value={isSubmitting ? '...Đang tải' : 'Tạo'}
+                disabled
               />
             </form>
           </div>

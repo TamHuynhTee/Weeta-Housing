@@ -27,6 +27,7 @@
     "react-slick": "^0.28.1",
     "react-sweet-state": "^2.5.2",
     "slick-carousel": "^1.8.1",
+    "socket.io-client": "^4.4.1",
     "styled-jsx-plugin-postcss": "^4.0.1",
     "yup": "^0.32.11"
   },
