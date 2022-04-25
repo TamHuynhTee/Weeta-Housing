@@ -1,19 +1,19 @@
 import LayoutCommon from '@/components/layout/LayoutCommon';
+import BoxManageArticle from '@/components/pages/thong-tin-ca-nhan/BoxManageArticle';
 import ContainerProfile from '@/components/pages/thong-tin-ca-nhan/Container';
-import BoxChangePass from '@/components/pages/thong-tin-ca-nhan/doi-mat-khau/BoxChangePass';
 import Authentication from '@/HOC/auth.hoc';
 import React from 'react';
 
-const ChangePassword = () => {
+const ArticleManagement = () => {
   return (
     <React.Fragment>
-      <LayoutCommon title="Đổi mật khẩu" isVisibleSearchBar>
+      <LayoutCommon title="Quản lý bài đăng" isVisibleSearchBar>
         <ContainerProfile>
-          <BoxChangePass />
+          <BoxManageArticle />
         </ContainerProfile>
       </LayoutCommon>
     </React.Fragment>
   );
 };
 
-export default Authentication(ChangePassword, { requiredLogin: true });
+export default Authentication(ArticleManagement, { requiredLogin: true });

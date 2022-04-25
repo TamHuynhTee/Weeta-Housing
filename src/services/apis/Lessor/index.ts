@@ -1,7 +1,12 @@
 import { RouteApi } from '@/constants/routeApi.constants';
 import API from '../_config/repositoryApi';
 import { ReturnResponse } from '../_config/response.interface';
-import { IReqSendOPT, IReqVerifyOPT } from './Lessor.interface';
+import {
+  IReqGetLessorArticles,
+  IReqSendOPT,
+  IReqVerifyOPT,
+} from './Lessor.interface';
+import { resGetLessorArticles } from './Lessor.type';
 
 const url = RouteApi.lessor;
 
@@ -19,4 +24,10 @@ export const verifyOTPService = (
   return API.post(`${url}/verifyOtp`, {
     body: { ...payload },
   }) as any;
+};
+
+export const getLessorArticleService = (
+  params: Partial<IReqGetLessorArticles>
+): Promise<ReturnResponse<resGetLessorArticles>> => {
+  return API.get(`${url}/articles`, { ...params }) as any;
 };

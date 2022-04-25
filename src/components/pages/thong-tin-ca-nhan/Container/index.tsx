@@ -1,5 +1,7 @@
 import ContainerModal from '@/components/common/ContainerModal';
+import { ROLE } from '@/constants/base.constants';
 import { isCurrentLink } from '@/helpers/base.helpers';
+import { useAuth } from '@/stores/Auth';
 import Link from 'next/link';
 import React from 'react';
 import BoxMenuAvatar from '../BoxAvatar';
@@ -10,6 +12,7 @@ interface IProps {
 }
 
 const ContainerProfile = (props: IProps) => {
+  const [stateAuth] = useAuth();
   const { children } = props;
   const [modalAvatar, setModalAvatar] = React.useState(false);
   return (
@@ -47,19 +50,34 @@ const ContainerProfile = (props: IProps) => {
                       Đổi mật khẩu
                     </a>
                   </Link>
-                  <Link href="/thong-tin-ca-nhan/xac-thuc-tai-khoan">
+                  <Link href="/tin-nhan">
                     <a
-                      className={`mt-[16px] text-black text-[16px] hover:font-bold hover:text-green-600 ${
-                        isCurrentLink(
-                          '/thong-tin-ca-nhan/xac-thuc-tai-khoan'
-                        ) && 'font-bold text-green-600'
-                      } `}
+                      className={`mt-[16px] text-black text-[16px] hover:font-bold hover:text-green-600 `}
                     >
-                      Xác thực tài khoản
+                      Tin nhắn của tôi
                     </a>
                   </Link>
                 </div>
               </div>
+              {stateAuth.role === ROLE.LESSOR && (
+                <div className="w-full mt-[24px]">
+                  <h2 className="text-[20px] font-bold text-baseColor">
+                    Quản lý bài đăng
+                  </h2>
+                  <div className="pl-[20px] grid">
+                    <Link href="/thong-tin-ca-nhan/quan-ly-bai-dang/da-duyet">
+                      <a
+                        className={`mt-[16px] text-black text-[16px] hover:font-bold hover:text-green-600 ${
+                          isCurrentLink('/quan-ly-bai-dang') &&
+                          'font-bold text-green-600'
+                        } `}
+                      >
+                        Bài đăng của tôi
+                      </a>
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

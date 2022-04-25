@@ -77,6 +77,7 @@ const BoxProfile = () => {
             label="Số điện thoại"
             errors={errors}
             placeholder="Số điện thoại của bạn"
+            disabled
           />
         </div>
         <div className="mt-[20px]">
@@ -88,6 +89,7 @@ const BoxProfile = () => {
           </label>
           <LimitedTextArea
             name="introduction"
+            id="introduction"
             registerForm={register('introduction')}
             limit={600}
             value=""
