@@ -29,7 +29,7 @@ const NavLogged = ({ openCreateLessorModal }: Props) => {
         className="button-primary text-center md:text-[14px] md:leading-[17px]"
         onClick={roleBasedHandle}
       >
-        Đăng bài mới
+        {stateAuth.role === ROLE.LESSOR ? 'Đăng bài mới' : 'Đăng ký cho thuê'}
       </button>
       <div className="wrap_menuAvatar">
         <div className="h-[40px] w-[40px] rounded-[50%] iconAvatar">

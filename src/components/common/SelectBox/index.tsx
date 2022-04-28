@@ -46,7 +46,7 @@ const SelectField = (props: Props) => {
           }}
           className={`bg-white py-[3px] flex border border${
             hasBorder ? '-gray-200' : '-0'
-          } rounded-[3px] items-center cursor-pointer min-h-[38px] ${
+          } rounded-[3px] items-center cursor-pointer min-h-[48px] ${
             errors[name] && '!border-[rgb(249_80_61)]'
           }`}
         >

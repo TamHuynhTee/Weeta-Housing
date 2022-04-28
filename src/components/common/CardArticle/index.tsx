@@ -47,7 +47,7 @@ const CardArticle = (props: ErrorTextProps) => {
                 ? data.image[0]
                 : '/images/img_no_image.jpg'
             }
-            className="w-full h-[180px] object-contain rounded-[5px]"
+            className="w-full h-[180px] object-cover rounded-[5px]"
             alt=""
           />
         </div>

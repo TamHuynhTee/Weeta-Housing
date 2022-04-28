@@ -45,7 +45,7 @@ const RegisterPage = () => {
 
   const handleSubmitRegister = async (data: any) => {
     // console.log(data);
-    const { agreedTerms, ...payload } = data;
+    const { agreedTerms, confirmPassword, ...payload } = data;
     // console.log(payload);
     if (agreedTerms) {
       delete data.confirmPassword;

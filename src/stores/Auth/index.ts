@@ -14,6 +14,7 @@ import {
   verifyEmailAsync,
   registerLessorAsync,
   verifyOTPAsync,
+  setAppLoading,
 } from './auth.action';
 import { selector } from './auth.selector';
 
@@ -21,12 +22,14 @@ export type State = {
   isLoggedIn: boolean;
   auth: ACCOUNT_MODEL | undefined;
   role: ROLE;
+  appLoading: boolean;
 };
 
 const initialState: State = {
   isLoggedIn: false,
   auth: undefined,
   role: ROLE.USER,
+  appLoading: false,
 };
 
 const actions = {
@@ -42,6 +45,7 @@ const actions = {
   verifyEmailAsync,
   registerLessorAsync,
   verifyOTPAsync,
+  setAppLoading,
 };
 
 const Store = createStore({
@@ -49,4 +53,6 @@ const Store = createStore({
   actions,
 });
 
-export const useAuth = createHook(Store, { selector: selector });
+const useAuth = createHook(Store, { selector: selector });
+
+export { useAuth, Store };

@@ -27,7 +27,7 @@ const LimitedTextArea = (props: {
         placeholder={placeholder}
         onChange={(event) => setFormattedContent(event.target.value)}
         value={content}
-        className="min-h-[120px] h-auto resize-none w-full px-[16px] py-[8px] border-[0.5px] border-grey-200 rounded-[3px] outline-none text-16px font-normal relative"
+        className="min-h-[240px] h-auto resize-none w-full px-[16px] py-[8px] border-[0.5px] border-grey-200 rounded-[3px] outline-none text-16px font-normal relative"
       ></textarea>
       <span
         className={`absolute bottom-[8px] right-[16px] select-none text-gray-400 ${

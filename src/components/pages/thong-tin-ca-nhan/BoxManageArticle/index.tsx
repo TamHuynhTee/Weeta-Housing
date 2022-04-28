@@ -76,6 +76,7 @@ const BoxManageArticle = () => {
           <CardArticle data={item} key={index} showVertical={false} />
         ))}
       </div>
+      <div className="mt-[20px]"></div>
     </div>
   );
 };

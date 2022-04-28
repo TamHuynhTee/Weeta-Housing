@@ -9,8 +9,9 @@ import { DISTRICTS, WARDS } from '@/constants/location.constants';
 import Authentication from '@/HOC/auth.hoc';
 import { useArticle } from '@/stores/Article';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from 'next/router';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, UseFormRegisterReturn } from 'react-hook-form';
 import { batch } from 'react-sweet-state';
 import * as yup from 'yup';
 
@@ -33,18 +34,15 @@ const CreatePostPage = () => {
   >(undefined);
   const [district, setDistrict] = React.useState('Chọn quận, huyện');
   const [ward, setWard] = React.useState('Chọn phường, xã');
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     setValue,
     clearErrors,
-    // setError,
   } = useForm({ resolver: yupResolver(schema) });
-
-  //   React.useEffect(() => {
-  //     setError('files', { type: 'required', message: 'Chưa chọn hình ảnh' });
-  //   }, [setError]);
 
   const handleCreateArticle = async (data: any) => {
     const { number, street, area, price, ...rest } = data;
@@ -59,15 +57,13 @@ const CreatePostPage = () => {
       price: +price,
       files: Object.values(rest.files),
     };
-    console.log(`payload`, payload);
     const result = await actionArticle.createArticleAsync(payload);
-    // console.log(`result`, result);
     if (result) {
+      router.push('/thong-tin-ca-nhan/quan-ly-bai-dang/chua-duyet');
     }
   };
 
   const handleSelectDistrict = (item: { label: string; value: string }) => {
-    // console.log(e);
     batch(() => {
       setDistrict(item.label);
       setValue('district', item.label);
@@ -79,7 +75,6 @@ const CreatePostPage = () => {
   };
 
   const handleSelectWard = (item: { label: string; value: string }) => {
-    // console.log(e);
     batch(() => {
       setValue('ward', item.label);
       setWard(item.label);
@@ -225,39 +220,79 @@ const CreatePostPage = () => {
                   <span className="text-red-400">(*)</span> Bạn vui lòng tải lên
                   ít nhất 1 hình ảnh về phòng trọ bạn cho thuê (tối đa 10 hình)
                 </p>
-                <div className="border-dashed h-[200px] mt-[10px] border-gray-300 rounded-[3px] border-2 flex justify-center items-center">
-                  <label
-                    className="h-[150px] w-[150px] opacity-30 cursor-pointer"
-                    htmlFor="article_images"
-                  >
-                    <img
-                      src="/icons/ic_add.png"
-                      alt=""
-                      className="w-full h-full"
-                    />
-                  </label>
-                  <input
-                    type="file"
-                    {...register('files')}
-                    id="article_images"
-                    hidden
-                    multiple
-                    accept="image/*"
-                  />
-                </div>
-                {errors.files && <ErrorText>{errors.files.message}</ErrorText>}
+                <ImagePicker
+                  register={register('files')}
+                  name="files"
+                  errors={errors}
+                  setValue={setValue}
+                />
               </div>
               <input
                 type="submit"
                 className="button-primary w-32 mt-[30px] h-[40px] md:mt-[20px] md:h-[30px]"
-                value={isSubmitting ? '...Đang tải' : 'Tạo'}
-                disabled
+                value={'Tạo'}
+                // disabled={isSubmitting}
               />
             </form>
           </div>
         </div>
       </LayoutCommon>
     </React.Fragment>
+  );
+};
+
+const ImagePicker = ({
+  register,
+  errors,
+  name,
+  setValue,
+}: {
+  register: UseFormRegisterReturn;
+  errors: any;
+  name: string;
+  setValue: (key: string, value: unknown) => void;
+}) => {
+  const handlePickImages = (e: React.FormEvent<HTMLInputElement>) => {
+    const files = e.currentTarget.files || [];
+    const preview = document.querySelector('#images_preview');
+    [].forEach.call(files, function (file: any) {
+      if (/image\/.*/.test(file.type)) {
+        const img = new Image();
+        img.style.height = '200px'; // use style, "width" defaults to "auto"
+        img.style.width = '200px'; // use style, "width" defaults to "auto"
+        img.style.objectFit = 'cover';
+        img.style.borderRadius = '10px';
+        img.style.borderBlockColor = '1px';
+        img.src = (URL || webkitURL).createObjectURL(file);
+        preview?.appendChild(img); // add image to preview container
+      }
+    });
+    setValue(name, Object.values(files));
+  };
+
+  return (
+    <>
+      <div className="border-dashed h-[200px] mt-[10px] border-gray-300 rounded-[3px] border-2 flex justify-center items-center">
+        <label
+          className="h-[150px] w-[150px] opacity-30 cursor-pointer"
+          htmlFor="article_images"
+        >
+          <img src="/icons/ic_add.png" alt="" className="w-full h-full" />
+        </label>
+        <input
+          type="file"
+          {...register}
+          name={name}
+          id="article_images"
+          hidden
+          multiple
+          accept="image/*"
+          onChange={handlePickImages}
+        />
+      </div>
+      {errors[name] && <ErrorText>{errors[name].message}</ErrorText>}
+      <div id="images_preview" className="flex flex-wrap gap-3 mt-[20px]"></div>
+    </>
   );
 };
 

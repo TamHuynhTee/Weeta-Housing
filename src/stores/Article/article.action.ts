@@ -1,4 +1,5 @@
 import { notifyError, notifySuccess } from '@/helpers/toast.helpers';
+import { ARTICLE_MODEL } from '@/models/Article.model';
 import {
   createArticleService,
   getDetailArticleService,
@@ -9,14 +10,19 @@ import {
   IParamGetArticle,
   IReqCreateArticle,
 } from '@/services/apis/Article/Article.interface';
+import { defaultRegistry } from 'react-sweet-state';
 import { State } from '.';
+import { Store } from '../Auth';
 
 type Actions = { setState: any; getState: () => State; dispatch: any };
+const authInstance = defaultRegistry.getStore(Store);
 
 export const getListArticleAsync =
   (params: Partial<IParamGetArticle>) =>
   async ({ getState, setState }: Actions) => {
+    authInstance.actions.setAppLoading(true);
     const result = await getListArticleService(params);
+    authInstance.actions.setAppLoading(false);
     if (result.error !== undefined) {
       if (!result.error) {
         setState({
@@ -38,8 +44,9 @@ export const getListArticleAsync =
 export const loadMoreArticleAsync =
   (params: Partial<IParamGetArticle>) =>
   async ({ getState, setState }: Actions) => {
-    console.log(params);
+    authInstance.actions.setAppLoading(true);
     const result = await getListArticleService(params);
+    authInstance.actions.setAppLoading(false);
     if (result.error !== undefined) {
       if (!result.error) {
         const currentList = [...getState().article.list, ...result.data.data];
@@ -63,7 +70,9 @@ export const loadMoreArticleAsync =
 export const getListTopArticleAsync =
   (params: Partial<IParamGetArticle>) =>
   async ({ getState, setState }: Actions) => {
+    authInstance.actions.setAppLoading(true);
     const result = await getListTopArticleService(params);
+    authInstance.actions.setAppLoading(false);
     if (result.error !== undefined) {
       if (!result.error) {
         setState({
@@ -85,7 +94,9 @@ export const getListTopArticleAsync =
 export const getDetailArticleAsync =
   (articleId: string) =>
   async ({ getState, setState }: Actions) => {
+    authInstance.actions.setAppLoading(true);
     const result = await getDetailArticleService(articleId);
+    authInstance.actions.setAppLoading(false);
     if (result.error !== undefined) {
       if (!result.error) {
         setState({
@@ -95,12 +106,14 @@ export const getDetailArticleAsync =
         return true;
       }
     }
-    notifyError(result.message);
+    // notifyError(result.message);
     return false;
   };
 
 export const createArticleAsync = (payload: IReqCreateArticle) => async () => {
+  authInstance.actions.setAppLoading(true);
   const result = await createArticleService(payload);
+  authInstance.actions.setAppLoading(false);
   if (result.error !== undefined) {
     if (!result.error) {
       notifySuccess('Tạo bài viết thành công.');
@@ -110,3 +123,12 @@ export const createArticleAsync = (payload: IReqCreateArticle) => async () => {
   notifyError(result.message);
   return false;
 };
+
+export const setDetailArticle =
+  (article: ARTICLE_MODEL | undefined) =>
+  ({ setState, getState }: Actions) => {
+    setState({
+      ...getState(),
+      articleDetail: article,
+    });
+  };

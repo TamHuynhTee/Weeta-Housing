@@ -20,7 +20,7 @@ const ContainerProfile = (props: IProps) => {
       {/* <TabMenu /> */}
       <div className="mt-[20px] container_app mx-auto px-[50px] grid grid-cols-7 gap-x-[30px]">
         <div className="col-span-2">
-          <div className="w-full">
+          <div className="w-full sticky top-[100px]">
             <div className="container_shadow w-full">
               {/* Avatar */}
               <BoxMenuAvatar openModal={() => setModalAvatar(true)} />

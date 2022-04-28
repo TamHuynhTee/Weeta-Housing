@@ -1,10 +1,17 @@
 import CardArticle from '@/components/common/CardArticle';
+import InputField from '@/components/common/InputField';
+import SelectBoxField from '@/components/common/SelectBoxField';
 import LayoutCommon from '@/components/layout/LayoutCommon';
+import BoxSelectLocation from '@/components/pages/tao-tin-moi/BoxSelectLocation';
+import { DISTRICTS } from '@/constants/location.constants';
 import { formatMoney } from '@/helpers/base.helpers';
 import Authentication from '@/HOC/auth.hoc';
 import { ARTICLE_MODEL } from '@/models/Article.model';
 import { useArticle } from '@/stores/Article';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { BaseSyntheticEvent } from 'react';
+import { useForm } from 'react-hook-form';
+import { batch } from 'react-sweet-state';
 
 const SearchPage = () => {
   const [stateArticle, actionArticle] = useArticle();
@@ -36,9 +43,7 @@ const SearchPage = () => {
     <React.Fragment>
       <LayoutCommon title="Tìm trọ" isVisibleSearchBar>
         <div className="w-full px-[50px] py-[10px]">
-          <div className="w-full py-[20px]">
-            {/* <HeaderSearch placeholder="Nhập từ khóa" /> */}
-          </div>
+          <ArticleFilter />
           <div className="w-full grid grid-cols-3 gap-2">
             <div className="col-span-2">
               <TopArticles list={stateArticle.topArticles.list} />
@@ -84,13 +89,86 @@ const TopArticles = ({ list }: { list: Array<ARTICLE_MODEL> }) => {
         {list.map((item, index) => (
           <CardArticle data={item} key={index} />
         ))}
-        {/* <div className="w-full h-[200px] rounded-[3px] bg-slate-500"></div>
-        <div className="w-full h-[200px] rounded-[3px] bg-slate-500"></div>
-        <div className="w-full h-[200px] rounded-[3px] bg-slate-500"></div>
-        <div className="w-full h-[200px] rounded-[3px] bg-slate-500"></div> */}
-        {/* <div className="w-full h-[200px] rounded-[3px] bg-slate-500"></div> */}
       </div>
     </>
+  );
+};
+
+const ArticleFilter = () => {
+  const [district, setDistrict] = React.useState('Chọn quận, huyện');
+  //   const [ward, setWard] = React.useState('Chọn phường, xã');
+  //   const [selectedDistrict, setSelectedDistrict] = React.useState<
+  //     number | undefined
+  //   >(undefined);
+  const { register, handleSubmit, setValue } = useForm();
+  const router = useRouter();
+
+  const keyword = router.query.q as string;
+
+  const handleSearch = (
+    data: any,
+    e: BaseSyntheticEvent<object, any, any> | undefined
+  ) => {
+    e?.preventDefault();
+    console.log(data);
+    // const { keyword } = data;
+    // if (!keyword) router.push(`/thong-tin-ca-nhan/quan-ly-bai-dang/${slug}`);
+    // else
+    //   router.push(`/thong-tin-ca-nhan/quan-ly-bai-dang/${slug}?q=${keyword}`);
+  };
+
+  const handleSelectDistrict = (item: { label: string; value: string }) => {
+    batch(() => {
+      setDistrict(item.label);
+      setValue('district', item.label);
+      //   setValue('ward', '');
+      //   setSelectedDistrict(+item.value);
+      //   setWard('Chọn phường, xã');
+    });
+  };
+
+  React.useEffect(() => {
+    if (keyword) {
+      setValue('keyword', keyword);
+    }
+  }, [keyword, setValue]);
+
+  return (
+    <form
+      className="w-full py-[20px] grid grid-cols-4 gap-3"
+      onSubmit={handleSubmit(handleSearch)}
+    >
+      <div className="col-span-1">
+        <InputField
+          type="text"
+          register={register('keyword')}
+          name="keyword"
+          showLabel={false}
+          placeholder="Tìm kiếm ..."
+        />
+      </div>
+      <div className="col-span-1">
+        <SelectBoxField
+          label={'Chọn quận, huyện'}
+          id="district"
+          state={district}
+          registerForm={register('district')}
+          name="district"
+          showLabel={false}
+          overrideClassNameContainer
+          classNameContainer=""
+          isRequired
+        >
+          <BoxSelectLocation
+            items={DISTRICTS}
+            handleSelectItem={handleSelectDistrict}
+            htmlFor="district"
+          />
+        </SelectBoxField>
+      </div>
+      <div className="col-span-1"></div>
+      <div className="col-span-1"></div>
+    </form>
   );
 };
 

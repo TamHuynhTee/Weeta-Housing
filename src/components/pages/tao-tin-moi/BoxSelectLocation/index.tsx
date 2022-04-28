@@ -16,7 +16,7 @@ const BoxSelectLocation = (props: Props) => {
   } = props;
 
   return (
-    <div className="max-h-[150px] overflow-y-scroll selectBox">
+    <div className="max-h-[200px] overflow-y-scroll selectBox">
       <div className="">
         {items.map((item, index) => {
           return (

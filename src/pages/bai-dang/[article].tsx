@@ -1,10 +1,10 @@
-import SliderCustom from '@/components/common/Slider';
-import SliderArrow from '@/components/common/Slider/SliderArrow';
 import LayoutCommon from '@/components/layout/LayoutCommon';
+import ImageSlide from '@/components/pages/bai-dang/ImageSlide';
 import WidgetLessor from '@/components/pages/bai-dang/WidgetLessor';
-import { formatMoney, getLengthArray } from '@/helpers/base.helpers';
+import { formatMoney } from '@/helpers/base.helpers';
 import Authentication from '@/HOC/auth.hoc';
 import { useArticle } from '@/stores/Article';
+import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -16,7 +16,16 @@ const ArticleDetail = () => {
   React.useEffect(() => {
     actionArticle.getDetailArticleAsync(articleId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [articleId]);
+
+    // return () => actionArticle.setDetailArticle(undefined);
+  }, [articleId, actionArticle]);
+
+  React.useEffect(() => {
+    return () => {
+      if (stateArticle.articleDetail) actionArticle.setDetailArticle(undefined);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const data = stateArticle.articleDetail;
   console.log(stateArticle.articleDetail);
@@ -41,6 +50,28 @@ const ArticleDetail = () => {
               <p className="text-black-100 text-[18px] font-bold">
                 Thông tin chính
               </p>
+              <ul className="list-disc list-inside mt-[10px] grid grid-cols-2">
+                <li className="col-span-1">
+                  Diện tích:{' '}
+                  <span className="text-baseColor">
+                    {data?.area} m<sup>2</sup>
+                  </span>
+                </li>
+                <li className="col-span-1">
+                  Ngày đăng:{' '}
+                  <span className="text-baseColor">
+                    {dayjs(data?.createdAt).format('DD/MM/YYYY')}
+                  </span>
+                </li>
+                {/* <li className="col-span-1">
+                  Diện tích:{' '}
+                  <span className="text-baseColor">{data?.area}</span>
+                </li>
+                <li className="col-span-1">
+                  Diện tích:{' '}
+                  <span className="text-baseColor">{data?.area}</span>
+                </li> */}
+              </ul>
             </div>
             <div className="mt-[20px]">
               <p className="text-black-100 text-[18px] font-bold">Giới thiệu</p>
@@ -55,61 +86,6 @@ const ArticleDetail = () => {
       </LayoutCommon>
     </React.Fragment>
   );
-};
-
-const ImageSlide = ({ images }: { images: Array<string> | undefined }) => {
-  console.log(images);
-  if (images && getLengthArray(images) > 0)
-    return (
-      <div className="w-full h-[500px] relative border rounded-[5px]">
-        <SliderCustom
-          customSettings={{
-            className: 'h-full w-full relative rounded-[5px]',
-            arrows: true,
-            prevArrow: (
-              <SliderArrow
-                heightImage="h-[22px]"
-                image="/icons/ic_arr_left.png"
-                classNameProps="top-[50%] left-[-40px] w-[60px] h-[60px] bg-black"
-              />
-            ),
-            nextArrow: (
-              <SliderArrow
-                heightImage="h-[22px]"
-                image="/icons/ic_arr_right.png"
-                classNameProps="top-[50%] right-[-40px] w-[60px] h-[60px] bg-black"
-              />
-            ),
-            slidesToShow: 1,
-            slidesToScroll: 1,
-          }}
-        >
-          {images.map((item, index) => {
-            return (
-              <div className="h-[500px]" key={index}>
-                <img
-                  src={item}
-                  className="h-full w-full object-cover"
-                  alt="image"
-                />
-              </div>
-            );
-          })}
-        </SliderCustom>
-      </div>
-    );
-  else
-    return (
-      <div className="w-full h-[500px] relative">
-        <div className="h-[500px]">
-          <img
-            src="/images/img_no_image.jpg"
-            className="h-full w-full object-cover"
-            alt=""
-          />
-        </div>
-      </div>
-    );
 };
 
 export default Authentication(ArticleDetail, { requiredLogin: false });

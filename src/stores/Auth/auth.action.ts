@@ -220,3 +220,12 @@ export const logoutAsync =
     });
     return true;
   };
+
+export const setAppLoading =
+  (loading: boolean) =>
+  ({ setState, getState }: Actions) => {
+    setState({
+      ...getState(),
+      appLoading: loading,
+    });
+  };

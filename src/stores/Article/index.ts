@@ -6,6 +6,7 @@ import {
   getListTopArticleAsync,
   loadMoreArticleAsync,
   getDetailArticleAsync,
+  setDetailArticle,
 } from './article.action';
 import { selector } from './article.selector';
 
@@ -43,6 +44,7 @@ const actions = {
   getListTopArticleAsync,
   loadMoreArticleAsync,
   getDetailArticleAsync,
+  setDetailArticle,
 };
 
 const Store = createStore({
