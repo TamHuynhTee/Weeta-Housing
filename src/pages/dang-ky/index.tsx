@@ -5,7 +5,6 @@ import { useAuth } from '@/stores/Auth';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -34,8 +33,8 @@ const schemaRegister = yup.object().shape({
 });
 
 const RegisterPage = () => {
+  const [successRegister, setSuccessRegister] = React.useState(false);
   const [, actionAuth] = useAuth();
-  const router = useRouter();
 
   const {
     register,
@@ -44,14 +43,13 @@ const RegisterPage = () => {
   } = useForm({ resolver: yupResolver(schemaRegister) });
 
   const handleSubmitRegister = async (data: any) => {
-    // console.log(data);
-    const { agreedTerms, confirmPassword, ...payload } = data;
-    // console.log(payload);
+    const { agreedTerms, ...payload } = data;
     if (agreedTerms) {
       delete data.confirmPassword;
       const result = await actionAuth.registerAccountAsync(payload);
       if (result) {
-        router.push('/');
+        setSuccessRegister(true);
+        // router.push('/');
       }
     }
   };
@@ -79,116 +77,138 @@ const RegisterPage = () => {
               </div>
             </a>
           </Link>
-          <div className="mt-[20px]">
-            <h2 className="text-[24px] md:text-center font-bold lg:text-[22px]">
-              Chào mừng đến với <span className="">Weeta Housing</span>
-            </h2>
-            <p className="mt-[10px] text-[18px] md:text-center font-semibold text-[rgb(119_119_119)]">
-              Hãy tạo tài khoản cho bạn nhé
-            </p>
-          </div>
-          <form
-            className="mt-[25px]"
-            onSubmit={handleSubmit(handleSubmitRegister)}
-          >
-            <div>
-              <InputField
-                type="text"
-                register={register('username')}
-                name="username"
-                label="Tên đăng nhập"
-                errors={errors}
-                placeholder="Username"
-              />
-            </div>
-            <div className="mt-[20px]">
-              <InputField
-                type="text"
-                register={register('fullname')}
-                name="fullname"
-                label="Họ tên"
-                errors={errors}
-                placeholder="Xin tên bạn nha"
-              />
-            </div>
-            <div className="mt-[20px]">
-              <InputField
-                type="email"
-                register={register('email')}
-                name="email"
-                label="Email"
-                errors={errors}
-                placeholder="Email đăng nhập"
-              />
-            </div>
-            <div className="mt-[20px]">
-              <InputField
-                type="text"
-                register={register('phoneNumber')}
-                name="phoneNumber"
-                label="Số điện thoại"
-                errors={errors}
-                placeholder="Cho xin số đê"
-              />
-            </div>
-            <div className="mt-[20px]">
-              <InputField
-                type="password"
-                register={register('password')}
-                name="password"
-                label="Mật khẩu"
-                placeholder="Nhập mật khẩu nha"
-                errors={errors}
-              />
-            </div>
-            <div className="mt-[20px]">
-              <InputField
-                type="password"
-                register={register('confirmPassword')}
-                name="confirmPassword"
-                label="Xác nhận mật khẩu"
-                placeholder="Nhập lại mật khẩu nha"
-                errors={errors}
-              />
-            </div>
-            <div className="my-[30px]">
-              <ToggleSwitch
-                registerForm={register('agreedTerms')}
-                idToggleSw={'agreedTerms'}
-                labelText={
-                  <span>
-                    Tôi đồng ý với{' '}
-                    <a className="cursor-pointer text-[rgb(0_132_137)]">
-                      Điều khoản sử dụng
-                    </a>
-                  </span>
-                }
-                defaultChecked={false}
-                allowLabelClick={false}
-              />
-              <div className="mt-[10px]">
-                {errors.agreedTerms && (
-                  <ErrorText>{errors.agreedTerms.message}</ErrorText>
-                )}
+          {!successRegister ? (
+            <>
+              <div className="mt-[20px]">
+                <h2 className="text-[24px] md:text-center font-bold lg:text-[22px]">
+                  Chào mừng đến với <span className="">Weeta Housing</span>
+                </h2>
+                <p className="mt-[10px] text-[18px] md:text-center font-semibold text-[rgb(119_119_119)]">
+                  Hãy tạo tài khoản cho bạn nhé
+                </p>
               </div>
-            </div>
-            <button
-              className="w-full bg-[rgb(0_132_137)] text-[17px] text-white items-center h-[57px] font-bold flex justify-center rounded-[3px]"
-              type="submit"
-            >
-              Đăng ký
-            </button>
-          </form>
-          <div className="mt-[30px] flex justify-center">
-            Bạn có tài khoản rồi à?{' '}
-            <Link href={`/dang-nhap`}>
-              <a className="text-[rgb(0_132_137)] ml-[5px] hover:no-underline hover:border-b-0">
+              <form
+                className="mt-[25px]"
+                onSubmit={handleSubmit(handleSubmitRegister)}
+              >
                 <div>
-                  <span className="text-[15px] font-bold">Đăng nhập</span>
+                  <InputField
+                    type="text"
+                    register={register('username')}
+                    name="username"
+                    label="Tên đăng nhập"
+                    errors={errors}
+                    placeholder="Username"
+                  />
                 </div>
-              </a>
-            </Link>
-          </div>
+                <div className="mt-[20px]">
+                  <InputField
+                    type="text"
+                    register={register('fullname')}
+                    name="fullname"
+                    label="Họ tên"
+                    errors={errors}
+                    placeholder="Xin tên bạn nha"
+                  />
+                </div>
+                <div className="mt-[20px]">
+                  <InputField
+                    type="email"
+                    register={register('email')}
+                    name="email"
+                    label="Email"
+                    errors={errors}
+                    placeholder="Email đăng nhập"
+                  />
+                </div>
+                <div className="mt-[20px]">
+                  <InputField
+                    type="text"
+                    register={register('phoneNumber')}
+                    name="phoneNumber"
+                    label="Số điện thoại"
+                    errors={errors}
+                    placeholder="Cho xin số đê"
+                  />
+                </div>
+                <div className="mt-[20px]">
+                  <InputField
+                    type="password"
+                    register={register('password')}
+                    name="password"
+                    label="Mật khẩu"
+                    placeholder="Nhập mật khẩu nha"
+                    errors={errors}
+                  />
+                </div>
+                <div className="mt-[20px]">
+                  <InputField
+                    type="password"
+                    register={register('confirmPassword')}
+                    name="confirmPassword"
+                    label="Xác nhận mật khẩu"
+                    placeholder="Nhập lại mật khẩu nha"
+                    errors={errors}
+                  />
+                </div>
+                <div className="my-[30px]">
+                  <ToggleSwitch
+                    registerForm={register('agreedTerms')}
+                    idToggleSw={'agreedTerms'}
+                    labelText={
+                      <span>
+                        Tôi đồng ý với{' '}
+                        <a className="cursor-pointer text-[rgb(0_132_137)]">
+                          Điều khoản sử dụng
+                        </a>
+                      </span>
+                    }
+                    defaultChecked={false}
+                    allowLabelClick={false}
+                  />
+                  <div className="mt-[10px]">
+                    {errors.agreedTerms && (
+                      <ErrorText>{errors.agreedTerms.message}</ErrorText>
+                    )}
+                  </div>
+                </div>
+                <button
+                  className="w-full bg-[rgb(0_132_137)] text-[17px] text-white items-center h-[57px] font-bold flex justify-center rounded-[3px]"
+                  type="submit"
+                >
+                  Đăng ký
+                </button>
+              </form>
+              <div className="mt-[30px] flex justify-center">
+                Bạn có tài khoản rồi à?{' '}
+                <Link href={`/dang-nhap`}>
+                  <a className="text-[rgb(0_132_137)] ml-[5px] hover:no-underline hover:border-b-0">
+                    <div>
+                      <span className="text-[15px] font-bold">Đăng nhập</span>
+                    </div>
+                  </a>
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="mt-[20px]">
+              <h2 className="text-[24px] md:text-center font-bold lg:text-[22px]">
+                Đăng ký thành công!
+              </h2>
+              <p className="mt-[10px] text-[18px] md:text-center font-semibold text-[rgb(119_119_119)]">
+                Chúng tôi đã gửi thư xác thực đến email của bạn, hãy kiểm tra
+                ngay nhé!
+              </p>
+              <Link href={'https://mail.google.com/mail/u/0/'}>
+                <a
+                  target={'_blank'}
+                  className="w-full mt-[20px] bg-[rgb(0_132_137)] text-[17px] text-white items-center h-[57px] font-bold flex justify-center rounded-[3px]"
+                >
+                  Đến email
+                </a>
+              </Link>
+            </div>
+          )}
         </div>
         <div className="relative flex-1 h-full md:bg-none bg-[url('/images/login_background.png')] bg-center"></div>
       </div>

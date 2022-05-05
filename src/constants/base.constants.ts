@@ -19,3 +19,8 @@ export enum ENUM_TYPE_ARTICLE {
   COMMON = 'COMMON',
   UP = 'UP',
 }
+
+export enum ENUM_MESSAGE_MODE {
+  CHAT = 'CHAT',
+  EDIT = 'EDIT',
+}

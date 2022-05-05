@@ -2,5 +2,10 @@ export enum SOCKET_EVENTS {
   // Device
   SEND_DEVICE_CSS = 'SEND_DEVICE_CSS',
 
+  JOIN_ROOM_CSS = 'JOIN_ROOM_CSS',
+  JOIN_ROOM_SSC = 'JOIN_ROOM_SSC',
+  SEND_MESSAGE_CSS = 'SEND_MESSAGE_CSS',
+  SEND_MESSAGE_SSC = 'SEND_MESSAGE_SSC',
+
   disconnect = 'disconnect',
 }

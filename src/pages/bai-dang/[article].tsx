@@ -14,11 +14,9 @@ const ArticleDetail = () => {
   const articleId = router.query.article as string;
 
   React.useEffect(() => {
-    actionArticle.getDetailArticleAsync(articleId);
+    if (articleId) actionArticle.getDetailArticleAsync(articleId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-
-    // return () => actionArticle.setDetailArticle(undefined);
-  }, [articleId, actionArticle]);
+  }, [articleId]);
 
   React.useEffect(() => {
     return () => {
@@ -28,7 +26,6 @@ const ArticleDetail = () => {
   }, []);
 
   const data = stateArticle.articleDetail;
-  console.log(stateArticle.articleDetail);
 
   return (
     <React.Fragment>

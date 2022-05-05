@@ -6,10 +6,27 @@ import '../styles/global.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import { useAuth } from '@/stores/Auth';
+import { getFromLocalStorage } from '@/helpers/base.helpers';
+import socketService from '@/services/sockets/baseSocket';
+import { BASE_CONSTANTS } from '@/constants/base.constants';
 
 const MyApp = ({ Component, pageProps }: any) => {
   const Layout = Component.Layout || EmptyLayout;
   const [stateAuth] = useAuth();
+
+  React.useEffect(() => {
+    const token = getFromLocalStorage('token');
+    if (token && stateAuth.isLoggedIn)
+      (async () => {
+        await socketService
+          .connect(BASE_CONSTANTS.BASE_URL, token)
+          //   .then(() => console.log('connected to socket'))
+          .catch((err: any) => {
+            console.log('err', err);
+          });
+      })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stateAuth.isLoggedIn]);
 
   return (
     <React.Fragment>

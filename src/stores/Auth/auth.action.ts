@@ -30,6 +30,7 @@ import {
 } from '@/services/apis/Lessor/Lessor.interface';
 import { State } from '.';
 import { DEFAULT_SERVER_ERROR_MESSAGE } from '..';
+import socketService from '@/services/sockets/baseSocket';
 
 type Actions = { setState: any; getState: () => State; dispatch: any };
 
@@ -213,6 +214,7 @@ export const logoutAsync =
   (): any =>
   async ({ setState, getState }: Actions) => {
     localStorage.removeItem('token');
+    socketService.disconnect();
     setState({
       ...getState(),
       isLoggedIn: false,

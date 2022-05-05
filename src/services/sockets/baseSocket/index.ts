@@ -20,7 +20,7 @@ class SocketService {
           reconnection: true,
           rejectUnauthorized: true,
           query: {
-            secret: 'appfake@waodate.com',
+            // secret: 'appfake@waodate.com',
             authorization: `Bearer ${token}`,
           },
         });

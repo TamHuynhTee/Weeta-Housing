@@ -1,9 +1,44 @@
 import LayoutCommon from '@/components/layout/LayoutCommon';
 import BoxChannel from '@/components/pages/tin-nhan/BoxChannel';
 import Authentication from '@/HOC/auth.hoc';
+import { useConversation } from '@/stores/Conversation';
 import React from 'react';
+import socketService from '@/services/sockets/baseSocket';
+import SendMessageSocket from '@/services/sockets/MessageSocket';
+import BoxChat from '@/components/pages/tin-nhan/BoxChat';
+
+export const CONVERSATION_LIMIT = 10;
+export const MESSAGE_LIMIT = 10;
 
 const ChatPage = () => {
+  const [, actionConversation] = useConversation();
+
+  //   Chat listening events
+  React.useEffect(() => {
+    if (socketService.socket && socketService.socket.connected) {
+      console.log('here');
+      SendMessageSocket.onJoinRoomSSC(socketService.socket, () => {
+        // console.log('join room', data);
+      });
+      //   SendMessageSocket.onLeaveRoomSSC(socketService.socket, () => {
+      //     // console.log('leave room', data);
+      //   });
+      SendMessageSocket.onSendMessageSSC(socketService.socket, (data) => {
+        console.log('receive mess', data);
+        //   actionConversation.addMessageToConversation([data.data]);
+      });
+      //   SendMessageSocket.onEditMessageSSC(socketService.socket, (data) => {
+      //     // console.log('update mess', data);
+      //     actionConversation.updateMessageInConversation(data.data);
+      //   });
+      //   SendMessageSocket.onRemoveMessageSSC(socketService.socket, (data) => {
+      //     // console.log('delete mess', data);
+      //     actionConversation.updateMessageInConversation(data.data);
+      //   });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socketService.socket, socketService.socket?.connected]);
+
   return (
     <React.Fragment>
       <LayoutCommon title="Tin nhắn của tôi" isVisibleFooter={false}>
@@ -12,7 +47,9 @@ const ChatPage = () => {
             {/* Box channel */}
             <BoxChannel />
             {/* Box chat */}
-            <div className="w-full h-full col-span-5 bg-white rounded-tr-[20px] rounded-br-[20px]"></div>
+            <div className="w-full h-full col-span-5 bg-white rounded-tr-[20px] rounded-br-[20px]">
+              <BoxChat />
+            </div>
           </div>
         </div>
       </LayoutCommon>

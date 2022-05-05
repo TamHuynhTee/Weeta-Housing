@@ -166,7 +166,25 @@ const ArticleFilter = () => {
           />
         </SelectBoxField>
       </div>
-      <div className="col-span-1"></div>
+      <div className="col-span-1">
+        <SelectBoxField
+          label={'Theo giá'}
+          id="price"
+          state={district}
+          registerForm={register('price')}
+          name="price"
+          showLabel={false}
+          overrideClassNameContainer
+          classNameContainer=""
+          isRequired
+        >
+          <BoxSelectLocation
+            items={DISTRICTS}
+            handleSelectItem={handleSelectDistrict}
+            htmlFor="price"
+          />
+        </SelectBoxField>
+      </div>
       <div className="col-span-1"></div>
     </form>
   );
