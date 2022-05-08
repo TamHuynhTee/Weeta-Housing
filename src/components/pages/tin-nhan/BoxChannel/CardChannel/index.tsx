@@ -24,7 +24,7 @@ const CardChannel = (props: Props) => {
 
   return (
     <div
-      className={`w-full px-[10px] grid grid-cols-5 gap-x-[10px] h-[80px] cursor-pointer border-b ${
+      className={`w-full px-[20px] grid grid-cols-5 gap-x-[10px] h-[80px] cursor-pointer border-b ${
         isSelected && 'bg-white !cursor-default !border-none'
       }`}
       onClick={setCurrentConversation}

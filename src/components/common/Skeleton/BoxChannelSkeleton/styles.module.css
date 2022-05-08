@@ -1,0 +1,6 @@
+.rowAvatar {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  grid-column-gap: 15px;
+}

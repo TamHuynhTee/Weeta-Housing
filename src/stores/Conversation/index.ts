@@ -8,6 +8,9 @@ import {
   setMessageDetail,
   setConversationMode,
   getConversationMessagesAsync,
+  loadMoreConversationMessagesAsync,
+  createConversationMessageAsync,
+  addMessageToConversation,
 } from './conversation.action';
 import { selector } from './conversation.selector';
 
@@ -57,6 +60,9 @@ const actions = {
   setMessageDetail,
   setConversationMode,
   getConversationMessagesAsync,
+  loadMoreConversationMessagesAsync,
+  createConversationMessageAsync,
+  addMessageToConversation,
 };
 
 const Store = createStore({

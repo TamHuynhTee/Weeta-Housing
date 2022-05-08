@@ -1,8 +1,13 @@
 import { ENUM_MESSAGE_MODE } from '@/constants/base.constants';
+import { notifyError } from '@/helpers/toast.helpers';
 import { CONVERSATION_MODEL } from '@/models/Conversations.model';
 import { MESSAGE_MODEL } from '@/models/Messages.model';
 import { getConversationService } from '@/services/apis/Conversation';
-import { getConversationMessagesService } from '@/services/apis/Message';
+import {
+  createConversationMessageService,
+  getConversationMessagesService,
+} from '@/services/apis/Message';
+import { ICreateConversationMessage } from '@/services/apis/Message/Message.interface';
 import { State } from '.';
 
 type Actions = { setState: any; getState: () => State; dispatch: any };
@@ -54,7 +59,129 @@ export const getConversationMessagesAsync =
             list: resData.data.data,
             isOver: resData.data.isOver,
             total: resData.data.total,
-            skip: 1,
+            page: page,
+          },
+        });
+      }
+    }
+  };
+
+export const loadMoreConversationMessagesAsync =
+  ({
+    conversationId,
+    limit = 10,
+    page,
+  }: {
+    conversationId: string;
+    limit: number;
+    page: number;
+  }) =>
+  async ({ setState, getState }: Actions) => {
+    const resData = await getConversationMessagesService({
+      conversationId,
+      limit,
+      page,
+    });
+    if (resData.error !== undefined) {
+      if (!resData.error) {
+        const fetchData = resData.data.data;
+        const listData = [...getState().messages.list].concat(fetchData);
+        setState({
+          ...getState(),
+          messages: {
+            list: listData,
+            isOver: resData.data.isOver,
+            total: resData.data.total,
+            page: page + 1,
+          },
+        });
+      }
+    }
+  };
+
+export const createConversationMessageAsync =
+  (payload: ICreateConversationMessage) =>
+  async ({}: Actions) => {
+    const result = await createConversationMessageService(payload);
+    if (result.error !== undefined) {
+      if (!result.error) return { success: true, data: result.data };
+      return { success: false, data: undefined };
+    } else {
+      notifyError('Có lỗi xảy ra, vui lòng thử lại');
+      return { success: false, data: undefined };
+    }
+  };
+
+export const addMessageToConversation =
+  (message: MESSAGE_MODEL) =>
+  ({ setState, getState }: Actions) => {
+    const currentListConversation = [...getState().conversations.list];
+    const thisConversation = getState().conversationDetail;
+    //   Check which conversations these messages belong to
+    // 1 ****** Belongs to current conversation ******
+    if (thisConversation && message.conversation === thisConversation._id) {
+      const currentListMessage = [...getState().messages.list];
+      //   Check message with id exists
+      const isMessageExisted = currentListMessage.findIndex(
+        (item) => item._id === message._id
+      );
+      if (isMessageExisted === -1) {
+        // add message to list message
+        currentListMessage.unshift(message);
+        // update conversation list
+        thisConversation.latestMessage = message;
+        thisConversation.latestMessage.isSeen = 1;
+        const thisConversationIndex = currentListConversation.findIndex(
+          (ele) => ele._id === thisConversation._id
+        );
+        3;
+        if (thisConversationIndex > -1) {
+          currentListConversation.splice(thisConversationIndex, 1);
+          currentListConversation.unshift(thisConversation);
+        }
+        setState({
+          ...getState(),
+          conversations: {
+            ...getState().conversations,
+            list: currentListConversation,
+          },
+          messages: {
+            ...getState().messages,
+            list: currentListMessage,
+          },
+        });
+      }
+      // 2 ****** Belongs to other conversations ******
+    } else if (
+      thisConversation === undefined ||
+      (thisConversation && message.conversation !== thisConversation._id)
+    ) {
+      // kiếm cái conv của mess đó
+      const foundConversation = currentListConversation.find(
+        (item) => item._id === message.conversation
+      );
+      if (foundConversation) {
+        foundConversation.latestMessage = message;
+        // cộng số tn chưa seen vào
+        const amountOfNotSeenMess =
+          foundConversation.amountOfNotSeenMess !== undefined
+            ? foundConversation.amountOfNotSeenMess
+            : 0;
+        foundConversation.amountOfNotSeenMess = amountOfNotSeenMess + 1;
+        const foundConversationIndex = currentListConversation.findIndex(
+          (ele) => ele._id === foundConversation._id
+        );
+        // dua len dau conversation
+        if (foundConversationIndex > -1) {
+          currentListConversation.splice(foundConversationIndex, 1);
+          currentListConversation.unshift(foundConversation);
+        }
+        // update rồi setState
+        setState({
+          ...getState(),
+          conversations: {
+            ...getState().conversations,
+            list: currentListConversation,
           },
         });
       }

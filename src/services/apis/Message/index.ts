@@ -1,6 +1,8 @@
 import { RouteApi } from '@/constants/routeApi.constants';
+import { MESSAGE_MODEL } from '@/models/Messages.model';
 import API from '../_config/repositoryApi';
 import { ReturnResponse } from '../_config/response.interface';
+import { ICreateConversationMessage } from './Message.interface';
 import { resConversationMessage } from './Message.type';
 
 const url = RouteApi.message;
@@ -15,4 +17,10 @@ export const getConversationMessagesService = async ({
   page: number;
 }): Promise<ReturnResponse<resConversationMessage>> => {
   return API.get(`${url}/${url}/${conversationId}`, { page, limit });
+};
+
+export const createConversationMessageService = async (
+  payload: ICreateConversationMessage
+): Promise<ReturnResponse<MESSAGE_MODEL>> => {
+  return API.post(`${url}/${url}`, { body: { ...payload } });
 };

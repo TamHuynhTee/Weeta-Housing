@@ -1,8 +1,10 @@
+import { MESSAGE_MODEL } from './Messages.model';
+
 export interface CONVERSATION_MODEL {
   readonly _id: string;
   members: Array<CONVERSATION_MEMBER>; // populate _id, ava, fullname
   status: number;
-  latestMessage: LATEST_MESSAGE;
+  latestMessage: MESSAGE_MODEL;
   conversationName: string;
   createdAt: string;
   amountOfNotSeenMess: number;
@@ -11,7 +13,7 @@ export interface CONVERSATION_MODEL {
 export interface LATEST_MESSAGE {
   readonly _id: string;
   sender: string; // populate _id, ava, fullname
-  data: string;
+  text: string;
   isSeen: number;
   status: number;
   createdAt: string;

@@ -11,6 +11,7 @@ import HeaderSearch from '../common/HeaderSearch';
 import NavLogged from '../common/NavLogged';
 import NavNotLogged from '../common/NavNotLogged';
 import ModalCreateLessor from '../pages/ModalCreateLessor';
+import ModalFullOfArticle from '../pages/ModalFullOfArticle';
 
 interface IProps {
   children: React.ReactElement;
@@ -27,10 +28,13 @@ const LayoutCommon: FC<IProps> = ({
 }: IProps) => {
   const router = useRouter();
   const [modalCreateLessor, setModalCreateLessor] = React.useState(false);
+  const [modalFullOfArticle, setModalFullOfArticle] = React.useState(false);
   const [stateAuth] = useAuth();
 
   const openCreateLessorModal = () => setModalCreateLessor(true);
   const closeCreateLessorModal = () => setModalCreateLessor(false);
+  const openFullOfArticleModal = () => setModalFullOfArticle(true);
+  const closeFullOfArticleModal = () => setModalFullOfArticle(false);
 
   return (
     <React.Fragment>
@@ -77,7 +81,10 @@ const LayoutCommon: FC<IProps> = ({
                   {/* <NavLang /> */}
                 </div>
                 {stateAuth.isLoggedIn ? (
-                  <NavLogged openCreateLessorModal={openCreateLessorModal} />
+                  <NavLogged
+                    openCreateLessorModal={openCreateLessorModal}
+                    openFullOfArticleModal={openFullOfArticleModal}
+                  />
                 ) : (
                   <NavNotLogged />
                 )}
@@ -93,6 +100,12 @@ const LayoutCommon: FC<IProps> = ({
         closeModal={closeCreateLessorModal}
       >
         <ModalCreateLessor closeModal={closeCreateLessorModal} />
+      </ContainerModal>
+      <ContainerModal
+        isVisible={modalFullOfArticle}
+        closeModal={closeFullOfArticleModal}
+      >
+        <ModalFullOfArticle closeModal={closeFullOfArticleModal} />
       </ContainerModal>
     </React.Fragment>
   );

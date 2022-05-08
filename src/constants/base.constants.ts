@@ -1,5 +1,6 @@
 export enum BASE_CONSTANTS {
   BASE_URL = 'https://weetabe.herokuapp.com/api',
+  BASE_URL_LOCAL = 'http://localhost:5000/api',
 }
 
 export enum ROLE {

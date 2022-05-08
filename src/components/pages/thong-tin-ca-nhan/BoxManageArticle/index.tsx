@@ -23,6 +23,7 @@ const BoxManageArticle = () => {
       isApproved: status,
       keyword,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query]);
 
   const handleSearch = (
@@ -43,7 +44,7 @@ const BoxManageArticle = () => {
         <div className="flex gap-x-[20px] col-span-1">
           <Link href={`/thong-tin-ca-nhan/quan-ly-bai-dang/da-duyet`}>
             <a
-              className={`text-black py-[10px] min-w-[100px] hover:font-bold ${
+              className={`text-black py-[10px] min-w-[100px] ${
                 status && '!text-baseColor font-bold'
               }`}
             >
@@ -52,7 +53,7 @@ const BoxManageArticle = () => {
           </Link>
           <Link href={`/thong-tin-ca-nhan/quan-ly-bai-dang/chua-duyet`}>
             <a
-              className={`text-black py-[10px] min-w-[100px] hover:font-bold ${
+              className={`text-black py-[10px] min-w-[100px] ${
                 !status && '!text-baseColor font-bold'
               }`}
             >

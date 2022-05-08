@@ -5,6 +5,7 @@ import 'tailwindcss/tailwind.css';
 import '../styles/global.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 import { useAuth } from '@/stores/Auth';
 import { getFromLocalStorage } from '@/helpers/base.helpers';
 import socketService from '@/services/sockets/baseSocket';

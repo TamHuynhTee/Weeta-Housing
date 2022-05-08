@@ -6,7 +6,7 @@ import { SOCKET_EVENTS } from '../events.socket';
 class SendMessageSocket {
   public async joinRoomCSS(
     socket: Socket,
-    payload: { conversationID: string }
+    payload: { senderId: string; receiverId: string }
   ) {
     socket.emit(SOCKET_EVENTS.JOIN_ROOM_CSS, payload);
   }

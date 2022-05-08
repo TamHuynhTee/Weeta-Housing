@@ -9,6 +9,7 @@ import BoxChat from '@/components/pages/tin-nhan/BoxChat';
 
 export const CONVERSATION_LIMIT = 10;
 export const MESSAGE_LIMIT = 10;
+export const FORM_MESSAGE_NAME = 'message';
 
 const ChatPage = () => {
   const [, actionConversation] = useConversation();
@@ -16,16 +17,15 @@ const ChatPage = () => {
   //   Chat listening events
   React.useEffect(() => {
     if (socketService.socket && socketService.socket.connected) {
-      console.log('here');
-      SendMessageSocket.onJoinRoomSSC(socketService.socket, () => {
-        // console.log('join room', data);
+      SendMessageSocket.onJoinRoomSSC(socketService.socket, (data) => {
+        console.log('join room', data);
       });
       //   SendMessageSocket.onLeaveRoomSSC(socketService.socket, () => {
       //     // console.log('leave room', data);
       //   });
       SendMessageSocket.onSendMessageSSC(socketService.socket, (data) => {
-        console.log('receive mess', data);
-        //   actionConversation.addMessageToConversation([data.data]);
+        // console.log('receive mess', data);
+        actionConversation.addMessageToConversation(data.data);
       });
       //   SendMessageSocket.onEditMessageSSC(socketService.socket, (data) => {
       //     // console.log('update mess', data);

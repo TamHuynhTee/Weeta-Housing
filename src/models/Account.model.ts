@@ -6,11 +6,20 @@ export interface ACCOUNT_MODEL {
   gender: ACCOUNT_GENDER;
   isEmailVerified: boolean;
   isActive: boolean;
-  isAutoApproved: boolean;
+  isApproved: boolean;
   username: string;
   fullname: string;
   email: string;
   phoneNumber: string;
   avatar: string;
   introduction: string;
+  saveArticle: Array<string>;
+  //   lessor model
+  IDCard: string;
+  lessorId: string;
+  memberPackageId: string;
+  articleTotal: number;
+  articleUsed: number;
+  isAutoApproved: boolean;
+  isBan: boolean;
 }

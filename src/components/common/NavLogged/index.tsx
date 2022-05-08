@@ -6,12 +6,16 @@ import React from 'react';
 
 type Props = {
   openCreateLessorModal: () => void;
+  openFullOfArticleModal: () => void;
 };
 
-const NavLogged = ({ openCreateLessorModal }: Props) => {
+const NavLogged = ({
+  openCreateLessorModal,
+  openFullOfArticleModal,
+}: Props) => {
   const router = useRouter();
   const [stateAuth, actionAuth] = useAuth();
-  console.log(`stateAuth`, stateAuth);
+  //   console.log(`stateAuth`, stateAuth);
 
   const handleLogout = () => {
     actionAuth.logoutAsync();
@@ -19,8 +23,14 @@ const NavLogged = ({ openCreateLessorModal }: Props) => {
   };
 
   const roleBasedHandle = () => {
-    if (stateAuth.role === ROLE.LESSOR) router.push('/tao-tin-moi');
-    else if (stateAuth.role === ROLE.USER) openCreateLessorModal();
+    if (stateAuth.role === ROLE.LESSOR) {
+      if (stateAuth.auth) {
+        if (stateAuth.auth.articleUsed >= stateAuth.auth.articleTotal)
+          openFullOfArticleModal();
+        else router.push('/tao-tin-moi');
+      }
+      // router.push('/tao-tin-moi');
+    } else if (stateAuth.role === ROLE.USER) openCreateLessorModal();
   };
 
   return (
