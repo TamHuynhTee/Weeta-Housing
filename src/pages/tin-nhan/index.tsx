@@ -6,6 +6,9 @@ import React from 'react';
 import socketService from '@/services/sockets/baseSocket';
 import SendMessageSocket from '@/services/sockets/MessageSocket';
 import BoxChat from '@/components/pages/tin-nhan/BoxChat';
+import ContainerModal from '@/components/common/ContainerModal';
+import Hook from '@/hooks/Conversations/conversations.hook';
+import ModalDeleteMessage from '@/components/pages/tin-nhan/Modal/ModalDeleteMessage';
 
 export const CONVERSATION_LIMIT = 10;
 export const MESSAGE_LIMIT = 10;
@@ -13,6 +16,12 @@ export const FORM_MESSAGE_NAME = 'message';
 
 const ChatPage = () => {
   const [, actionConversation] = useConversation();
+
+  const {
+    stateShowDeleteMessageModal,
+    openDeleteMessageModal,
+    closeDeleteMessageModal,
+  } = Hook.useShowDeleteMessageModal();
 
   //   Chat listening events
   React.useEffect(() => {
@@ -27,14 +36,14 @@ const ChatPage = () => {
         // console.log('receive mess', data);
         actionConversation.addMessageToConversation(data.data);
       });
-      //   SendMessageSocket.onEditMessageSSC(socketService.socket, (data) => {
-      //     // console.log('update mess', data);
-      //     actionConversation.updateMessageInConversation(data.data);
-      //   });
-      //   SendMessageSocket.onRemoveMessageSSC(socketService.socket, (data) => {
-      //     // console.log('delete mess', data);
-      //     actionConversation.updateMessageInConversation(data.data);
-      //   });
+      SendMessageSocket.onEditMessageSSC(socketService.socket, (data) => {
+        // console.log('update mess', data);
+        actionConversation.updateMessageInConversation(data.data);
+      });
+      SendMessageSocket.onRemoveMessageSSC(socketService.socket, (data) => {
+        // console.log('delete mess', data);
+        actionConversation.updateMessageInConversation(data.data);
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socketService.socket, socketService.socket?.connected]);
@@ -48,9 +57,17 @@ const ChatPage = () => {
             <BoxChannel />
             {/* Box chat */}
             <div className="w-full h-full col-span-5 bg-white rounded-tr-[20px] rounded-br-[20px]">
-              <BoxChat />
+              <BoxChat openDeleteMessageModal={openDeleteMessageModal} />
             </div>
           </div>
+          <ContainerModal
+            isVisible={stateShowDeleteMessageModal}
+            closeModal={() => {
+              closeDeleteMessageModal();
+            }}
+          >
+            <ModalDeleteMessage closeModal={closeDeleteMessageModal} />
+          </ContainerModal>
         </div>
       </LayoutCommon>
     </React.Fragment>

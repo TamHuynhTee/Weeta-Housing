@@ -1,12 +1,14 @@
-import { ENUM_MESSAGE_MODE } from '@/constants/base.constants';
+import { notifyError } from '@/helpers/toast.helpers';
+import { MESSAGE_MODEL } from '@/models/Messages.model';
+import {
+  ICreateConversationMessage,
+  IEditConversationMessage,
+} from '@/services/apis/Message/Message.interface';
+import socketService from '@/services/sockets/baseSocket';
+import SendMessageSocket from '@/services/sockets/MessageSocket';
 import { useConversation } from '@/stores/Conversation';
 import React from 'react';
 import useInView from '../useInView';
-import socketService from '@/services/sockets/baseSocket';
-import SendMessageSocket from '@/services/sockets/MessageSocket';
-import { MESSAGE_MODEL } from '@/models/Messages.model';
-import { notifyError } from '@/helpers/toast.helpers';
-import { ICreateConversationMessage } from '@/services/apis/Message/Message.interface';
 
 // const useShowConversation = (role: ROLE) => {
 //   const [stateConverse, actionConverse] = useConversation();
@@ -93,24 +95,24 @@ const useLoadMoreMessages = () => {
 //     closeUpdateConversationModal,
 //   };
 // };
-// const useShowDeleteMessageModal = () => {
-//   const [stateShowDeleteMessageModal, setStateShowDeleteMessageModal] =
-//     React.useState(false);
+const useShowDeleteMessageModal = () => {
+  const [stateShowDeleteMessageModal, setStateShowDeleteMessageModal] =
+    React.useState(false);
 
-//   const openDeleteMessageModal = () => {
-//     setStateShowDeleteMessageModal(true);
-//   };
+  const openDeleteMessageModal = () => {
+    setStateShowDeleteMessageModal(true);
+  };
 
-//   const closeDeleteMessageModal = () => {
-//     setStateShowDeleteMessageModal(false);
-//   };
+  const closeDeleteMessageModal = () => {
+    setStateShowDeleteMessageModal(false);
+  };
 
-//   return {
-//     stateShowDeleteMessageModal,
-//     openDeleteMessageModal,
-//     closeDeleteMessageModal,
-//   };
-// };
+  return {
+    stateShowDeleteMessageModal,
+    openDeleteMessageModal,
+    closeDeleteMessageModal,
+  };
+};
 
 // const useShowImageMessageModal = () => {
 //   const [stateShowImageMessageModal, setStateShowImageMessageModal] =
@@ -178,30 +180,28 @@ const useMessageActions = ({
     }
   };
 
-  //   const handleEditMessage = async (data: { message: string }) => {
-  //     if (socketService.socket && socketService.socket.connected) {
-  //       const payload: IEditConversationMessage = {
-  //         field: 'data',
-  //         value: data.message,
-  //       };
-  //       const result = await actionConversation.editConversationMessageAsync({
-  //         messageId: stateConversation.messageDetail?._id || '',
-  //         payload,
-  //       });
-  //       if (result.success) {
-  //         SendMessageSocket.editMessageCSS(
-  //           socketService.socket,
-  //           result.data as MESSAGE_MODEL
-  //         );
-  //         setValue(nameValue, '');
-  //         actionConversation.setConversationMode(ENUM_MESSAGE_MODE.CHAT);
-  //       }
-  //     }
-  //   };
+  const handleEditMessage = async (data: { message: string }) => {
+    if (socketService.socket && socketService.socket.connected) {
+      const payload: IEditConversationMessage = {
+        text: data.message,
+      };
+      const result = await actionConversation.editConversationMessageAsync({
+        messageId: stateConversation.messageDetail?._id || '',
+        payload,
+      });
+      if (result.success) {
+        SendMessageSocket.editMessageCSS(
+          socketService.socket,
+          result.data as MESSAGE_MODEL
+        );
+        setValue(nameValue, '');
+      }
+    }
+  };
 
   return {
     handleChatMessage,
-    // handleEditMessage,
+    handleEditMessage,
   };
 };
 
@@ -243,6 +243,7 @@ const Hook = {
   useLoadMoreMessages,
   useLoadMoreConversations,
   useMessageActions,
+  useShowDeleteMessageModal,
 };
 
 export default Hook;

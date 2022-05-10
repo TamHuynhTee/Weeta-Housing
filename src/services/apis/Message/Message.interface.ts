@@ -3,3 +3,7 @@ export interface ICreateConversationMessage {
   sender: string;
   text: string;
 }
+
+export interface IEditConversationMessage {
+  text: string;
+}

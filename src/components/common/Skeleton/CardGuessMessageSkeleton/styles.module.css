@@ -1,0 +1,7 @@
+.rowAvatarSkeleton {
+  max-width: 60%;
+  display: grid;
+  grid-template-columns: 45px 1fr;
+  grid-column-gap: 15px;
+  /* width: 100%; */
+}

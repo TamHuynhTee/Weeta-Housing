@@ -50,11 +50,11 @@ const CardGuessMessageChat = (props: Prop) => {
       {!message.isDelete ? (
         <>
           <div
-            className="max-w-full  rounded-md  pl-[20px] pr-[20px] relative"
+            className="max-w-full rounded-md pl-[20px] pr-[20px] relative"
             title={formatChatMessageTime(message.createdAt)}
           >
             <div
-              className={`absolute w-[10px] h-[10px] right-[-20px] cursor-pointer top-[50%] translate-y-[-50%] ${styles.guess_message_tooltip}`}
+              className={`absolute w-[10px] h-[10px] right-[-5px] cursor-pointer top-[50%] translate-y-[-50%] ${styles.guess_message_tooltip}`}
               onClick={() => setTooltip(!tooltip)}
             >
               <img
@@ -80,7 +80,7 @@ const CardGuessMessageChat = (props: Prop) => {
             </div>
 
             {message.text ? (
-              <div className="bg-green-200 inline-block rounded-md pt-[18px] pb-[18px] pl-[18px] pr-[18px]">
+              <div className="bg-green-200 inline-block rounded-tr-[15px] rounded-bl-[15px] rounded-br-[15px] pt-[18px] pb-[18px] pl-[18px] pr-[18px]">
                 <span
                   className={`text-16px text-black-100 break-all leading-[22px]`}
                 >
@@ -93,7 +93,7 @@ const CardGuessMessageChat = (props: Prop) => {
           </div>
         </>
       ) : (
-        <div className="pt-[20px] pb-[16px] pl-[21px] pr-[29px] w-full bg-white border border-gray-300 rounded-md ml-[20px]">
+        <div className="pt-[20px] pb-[16px] pl-[21px] pr-[19px] w-full bg-white border border-gray-300 rounded-tr-[15px] rounded-bl-[15px] rounded-br-[15px] ml-[20px]">
           <p className="text-16px text-gray-300 italic">
             Tin nhắn đã được thu hồi
           </p>

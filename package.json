@@ -27,6 +27,7 @@
     "react-loading-skeleton": "^3.1.0",
     "react-slick": "^0.28.1",
     "react-sweet-state": "^2.5.2",
+    "sharp": "^0.30.4",
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.4.1",
     "styled-jsx-plugin-postcss": "^4.0.1",

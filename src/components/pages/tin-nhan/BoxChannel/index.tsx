@@ -12,6 +12,7 @@ import SendMessageSocket from '@/services/sockets/MessageSocket';
 
 const BoxChannel = () => {
   const [stateConversation, actionConversation] = useConversation();
+  //   console.log(`stateConversation id`, stateConversation.conversationDetail);
   const [stateAuth] = useAuth();
 
   React.useEffect(() => {
@@ -29,6 +30,9 @@ const BoxChannel = () => {
       if (stateConversation.conversationDetail._id === id) return;
     }
     if (socketService.socket && socketService.socket.connected) {
+      actionConversation.setConversationDetail(conversation);
+      actionConversation.setConversationMode(ENUM_MESSAGE_MODE.CHAT);
+      actionConversation.setMessageDetail(undefined);
       const senderId = conversation.members.find(
         (item) => item._id === stateAuth.authId
       )?._id;
@@ -46,9 +50,6 @@ const BoxChannel = () => {
         limit: 10,
         page: 1,
       });
-      actionConversation.setConversationDetail(conversation);
-      actionConversation.setConversationMode(ENUM_MESSAGE_MODE.CHAT);
-      actionConversation.setMessageDetail(undefined);
       //   if (stateConversation.conversationDetail) {
       //     SendMessageSocket.leaveRoomCSS(socketService.socket, {
       //       conversationID: stateConversation.conversationDetail._id,

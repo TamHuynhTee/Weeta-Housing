@@ -11,6 +11,9 @@ import {
   loadMoreConversationMessagesAsync,
   createConversationMessageAsync,
   addMessageToConversation,
+  editConversationMessageAsync,
+  removeConversationMessageAsync,
+  updateMessageInConversation,
 } from './conversation.action';
 import { selector } from './conversation.selector';
 
@@ -63,6 +66,9 @@ const actions = {
   loadMoreConversationMessagesAsync,
   createConversationMessageAsync,
   addMessageToConversation,
+  editConversationMessageAsync,
+  removeConversationMessageAsync,
+  updateMessageInConversation,
 };
 
 const Store = createStore({

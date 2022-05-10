@@ -13,27 +13,30 @@ class SendMessageSocket {
   public async onJoinRoomSSC(socket: Socket, listener: (data: any) => void) {
     socket.on(SOCKET_EVENTS.JOIN_ROOM_SSC, listener);
   }
+
   public async sendMessageCSS(socket: Socket, payload: MESSAGE_MODEL) {
     socket.emit(SOCKET_EVENTS.SEND_MESSAGE_CSS, payload);
   }
   public async onSendMessageSSC(socket: Socket, listener: (data: any) => void) {
     socket.on(SOCKET_EVENTS.SEND_MESSAGE_SSC, listener);
   }
-  //   public async editMessageCSS(socket: Socket, payload: MESSAGE_MODEL) {
-  //     socket.emit(SOCKET_EVENTS.MESSAGE_UPDATED_CSS, payload);
-  //   }
-  //   public async onEditMessageSSC(socket: Socket, listener: (data: any) => void) {
-  //     socket.on(SOCKET_EVENTS.MESSAGE_UPDATED_SSC, listener);
-  //   }
-  //   public async removeMessageCSS(socket: Socket, payload: MESSAGE_MODEL) {
-  //     socket.emit(SOCKET_EVENTS.MESSAGE_REMOVED_CSS, payload);
-  //   }
-  //   public async onRemoveMessageSSC(
-  //     socket: Socket,
-  //     listener: (data: any) => void
-  //   ) {
-  //     socket.on(SOCKET_EVENTS.MESSAGE_REMOVED_SSC, listener);
-  //   }
+
+  public async editMessageCSS(socket: Socket, payload: MESSAGE_MODEL) {
+    socket.emit(SOCKET_EVENTS.UPDATE_MESSAGE_CSS, payload);
+  }
+  public async onEditMessageSSC(socket: Socket, listener: (data: any) => void) {
+    socket.on(SOCKET_EVENTS.UPDATE_MESSAGE_SSC, listener);
+  }
+
+  public async removeMessageCSS(socket: Socket, payload: MESSAGE_MODEL) {
+    socket.emit(SOCKET_EVENTS.REMOVE_MESSAGE_CSS, payload);
+  }
+  public async onRemoveMessageSSC(
+    socket: Socket,
+    listener: (data: any) => void
+  ) {
+    socket.on(SOCKET_EVENTS.REMOVE_MESSAGE_SSC, listener);
+  }
   //   public async leaveRoomCSS(
   //     socket: Socket,
   //     payload: { conversationID: string; receiverId: string }

@@ -5,9 +5,14 @@ import { MESSAGE_MODEL } from '@/models/Messages.model';
 import { getConversationService } from '@/services/apis/Conversation';
 import {
   createConversationMessageService,
+  editConversationMessageService,
   getConversationMessagesService,
+  removeConversationMessageService,
 } from '@/services/apis/Message';
-import { ICreateConversationMessage } from '@/services/apis/Message/Message.interface';
+import {
+  ICreateConversationMessage,
+  IEditConversationMessage,
+} from '@/services/apis/Message/Message.interface';
 import { State } from '.';
 
 type Actions = { setState: any; getState: () => State; dispatch: any };
@@ -59,7 +64,7 @@ export const getConversationMessagesAsync =
             list: resData.data.data,
             isOver: resData.data.isOver,
             total: resData.data.total,
-            page: page,
+            page: 2,
           },
         });
       }
@@ -110,6 +115,87 @@ export const createConversationMessageAsync =
       notifyError('Có lỗi xảy ra, vui lòng thử lại');
       return { success: false, data: undefined };
     }
+  };
+
+export const editConversationMessageAsync =
+  ({
+    messageId,
+    payload,
+  }: {
+    messageId: string;
+    payload: IEditConversationMessage;
+  }) =>
+  async ({ getState, setState }: Actions) => {
+    const result = await editConversationMessageService(messageId, payload);
+    if (result.error !== undefined) {
+      if (!result.error) {
+        //   Code re-render edited message here
+        const listMessage = [...getState().messages.list];
+        const index = listMessage.findIndex(
+          (ele) => ele._id === result.data._id
+        );
+        listMessage[index] = result.data;
+        setState({
+          ...getState(),
+          mode: ENUM_MESSAGE_MODE.CHAT,
+          messageDetail: undefined,
+          messages: {
+            ...getState().messages,
+            list: listMessage,
+          },
+        });
+        return { success: true, data: result.data };
+      }
+      return { success: false, data: undefined };
+    } else {
+      notifyError('Có lỗi xảy ra, vui lòng thử lại');
+      return { success: false, data: undefined };
+    }
+  };
+
+export const removeConversationMessageAsync =
+  ({ messageId }: { messageId: string }) =>
+  async ({ setState, getState }: Actions) => {
+    const result = await removeConversationMessageService(messageId);
+
+    if (result.error !== undefined) {
+      if (!result.error) {
+        //   Code re-render removed message here
+        const listMessage = [...getState().messages.list];
+        const index = listMessage.findIndex(
+          (ele) => ele._id === result.data._id
+        );
+        listMessage[index] = result.data;
+        setState({
+          ...getState(),
+          messageDetail: undefined,
+          messages: {
+            ...getState().messages,
+            list: listMessage,
+          },
+        });
+        return { success: true, data: result.data };
+      }
+      return { success: false, data: undefined };
+    } else {
+      notifyError('Có lỗi xảy ra, vui lòng thử lại');
+      return { success: false, data: undefined };
+    }
+  };
+
+export const updateMessageInConversation =
+  (message: MESSAGE_MODEL) =>
+  ({ setState, getState }: Actions) => {
+    const listMessage = [...getState().messages.list];
+    const index = listMessage.findIndex((ele) => ele._id === message._id);
+    listMessage[index] = message;
+    setState({
+      ...getState(),
+      messages: {
+        ...getState().messages,
+        list: listMessage,
+      },
+    });
   };
 
 export const addMessageToConversation =

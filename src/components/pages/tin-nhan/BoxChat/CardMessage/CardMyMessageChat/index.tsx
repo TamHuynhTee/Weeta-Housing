@@ -43,15 +43,15 @@ const CardMyMessageChat = (props: Prop) => {
       <div
         className={`flex flex-row-reverse w-full mt-[15px] ${styles.my_message_container}`}
       >
-        <div className="max-w-[60%] ">
+        <div className="max-w-[60%]">
           {!message.isDelete ? (
             <>
               <div
-                className="text-right relative  pl-[20px]  pr-[20px] w-full  rounded-md"
+                className="text-right relative px-[20px] w-full rounded-md"
                 title={formatChatMessageTime(message.createdAt)}
               >
                 {message.text ? (
-                  <div className="bg-[#F1F1F1] inline-block relative rounded-md pt-[18px] pb-[18px] pl-[18px] pr-[18px] ]">
+                  <div className="bg-[#ffeba3] inline-block relative rounded-tl-[15px] rounded-bl-[15px] rounded-br-[15px] p-[18px]">
                     <span
                       className={`text-16px block text-black-100 break-all whitespace-pre-line`}
                     >
@@ -63,7 +63,7 @@ const CardMyMessageChat = (props: Prop) => {
                 )}
 
                 <div
-                  className={`absolute w-[10px] h-[10px] left-[-20px] cursor-pointer top-[50%] translate-y-[-50%] ${styles.my_message_tooltip}`}
+                  className={`absolute w-[10px] h-[10px] left-[-5px] cursor-pointer top-[50%] translate-y-[-50%] ${styles.my_message_tooltip}`}
                   onClick={() => setTooltip(!tooltip)}
                 >
                   <img
@@ -83,23 +83,25 @@ const CardMyMessageChat = (props: Prop) => {
                       className="hover:bg-green-200 px-[10px] text-[14px] cursor-pointer rounded-[5px]"
                       onClick={handleEditMessage}
                     >
-                      <a>Chỉnh sửa</a>
+                      Chỉnh sửa
                     </li>
                     <li
                       className="hover:bg-green-200 px-[10px] text-[14px] cursor-pointer rounded-[5px]"
                       onClick={handleRemoveMessage}
                     >
-                      <a>Thu hồi</a>
+                      Thu hồi
                     </li>
                   </ul>
                 </div>
               </div>
             </>
           ) : (
-            <div className="pt-[20px] pb-[16px] pl-[21px] pr-[29px] w-full bg-white border border-gray-300 rounded-md ">
-              <p className="text-16px text-gray-300 italic">
-                Tin nhắn đã được thu hồi
-              </p>
+            <div className="text-right relative px-[20px] w-full rounded-md">
+              <div className="pt-[20px] pb-[16px] pl-[21px] pr-[29px] w-full bg-white border border-gray-300 rounded-tl-[15px] rounded-bl-[15px] rounded-br-[15px]">
+                <p className="text-16px text-gray-300 italic">
+                  Tin nhắn đã được thu hồi
+                </p>
+              </div>
             </div>
           )}
         </div>

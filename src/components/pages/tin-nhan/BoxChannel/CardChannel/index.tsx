@@ -1,4 +1,5 @@
 import { DEFAULT_AVATAR } from '@/constants/base.constants';
+import { formatChannelMessageTime } from '@/helpers/base.helpers';
 import { CONVERSATION_MODEL } from '@/models/Conversations.model';
 import React from 'react';
 
@@ -11,6 +12,7 @@ type Props = {
 
 const CardChannel = (props: Props) => {
   const { isSelected, data, authId, handleSelect } = props;
+  const { latestMessage } = data;
   //   const [stateConversation] = useConversation();
 
   const theOtherMember = data.members.filter((e) => e._id !== authId)[0];
@@ -42,12 +44,20 @@ const CardChannel = (props: Props) => {
             {theOtherMember?.fullname}
           </p>
           <p className="max_line-1 font-normal text-[16px]">
-            Tôi rất không thích thái độ của cậu nhé
+            {latestMessage?.isDelete ? (
+              <span className="text-[14px] text-gray-400 italic">
+                Tin nhắn đã được thu hồi
+              </span>
+            ) : (
+              latestMessage?.text
+            )}
           </p>
         </div>
       </div>
-      <div className="col-span-1 flex">
-        <p className="text-gray-400 text-[12px] self-center">Thứ năm</p>
+      <div className="col-span-1 flex justify-center">
+        <p className="text-gray-400 text-[12px] self-center">
+          {formatChannelMessageTime(latestMessage?.createdAt)}
+        </p>
       </div>
     </div>
   );

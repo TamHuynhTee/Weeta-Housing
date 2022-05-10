@@ -1,5 +1,23 @@
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import updateLocale from 'dayjs/plugin/updateLocale';
+
+dayjs.extend(relativeTime);
+dayjs.extend(updateLocale);
+
+dayjs.updateLocale('vi', {
+  weekdays: [
+    'Chủ nhật',
+    'Thứ hai',
+    'Thứ ba',
+    'Thứ tư',
+    'Thứ năm',
+    'Thứ sáu',
+    'Thứ bảy',
+  ],
+  weekdaysShort: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+});
 
 export const formatMoney = (money: number): string =>
   money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -36,6 +54,16 @@ export const isCurrentLink = (link: string) => {
   return router.asPath.includes(link);
 };
 
+export const formatChannelMessageTime = (date: string | undefined) => {
+  const formatDate = dayjs(date).format('YYYY-MM-DD');
+  if (formatDate === dayjs().format('YYYY-MM-DD'))
+    return dayjs(date).format('HH:mm');
+  const dayDistance = dayjs(formatDate).diff(dayjs(), 'days');
+  if (dayDistance === -1) return `Hôm qua`;
+  if (dayDistance >= -7 && dayDistance < -1) return dayjs(date).fromNow();
+  return dayjs(date).format('DD/MM/YYYY HH:mm');
+};
+
 export const formatChatMessageTime = (date: string | undefined) => {
   const formatDate = dayjs(date).format('YYYY-MM-DD');
   if (formatDate === dayjs().format('YYYY-MM-DD'))
@@ -52,7 +80,7 @@ export const isShowTimeMessageBetween = (time: number, time2: number) => {
   const timeMessageInMinutes = timeMessage / 1000 / 60;
   const timeMessage2 = new Date(currentTime - time2).getTime();
   const timeMessage2InMinutes = timeMessage2 / 1000 / 60;
-  if (timeMessage2InMinutes - timeMessageInMinutes > 1) {
+  if (timeMessage2InMinutes - timeMessageInMinutes > 5) {
     return true;
   }
   return false;

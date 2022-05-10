@@ -14,8 +14,16 @@ import CardMessageTime from './CardMessage/CardTimeMessage';
 import styles from './styles.module.css';
 import socketService from '@/services/sockets/baseSocket';
 import InputChat from '@/components/common/InputChat';
+import BoxChatSkeleton from './BoxChatSkeleton';
 
-const BoxChat = () => {
+interface BoxChatProps {
+  openDeleteMessageModal: () => void;
+  // openDeleteConversationModal: () => void;
+  // openUpdateConversationModal: () => void;
+}
+
+const BoxChat = (props: BoxChatProps) => {
+  const { openDeleteMessageModal } = props;
   const [stateConversation, actionConversation] = useConversation();
   const [stateAuth] = useAuth();
 
@@ -23,7 +31,7 @@ const BoxChat = () => {
 
   const { refLoadMoreMessages, loadMoreMessages } = Hook.useLoadMoreMessages();
 
-  const { handleChatMessage } = Hook.useMessageActions({
+  const { handleChatMessage, handleEditMessage } = Hook.useMessageActions({
     setValue,
     nameValue: FORM_MESSAGE_NAME,
   });
@@ -59,15 +67,15 @@ const BoxChat = () => {
           <CardMyMessageChat
             message={message}
             key={index}
-            //   onEditSelect={() => {
-            //     setValue(nameMessage, message.data);
-            //     actionConversation.setMessageDetail(message);
-            //     actionConversation.setConversationMode(ENUM_MESSAGE_MODE.EDIT);
-            //   }}
-            //   onRemoveSelect={() => {
-            //     openDeleteMessageModal();
-            //     actionConversation.setMessageDetail(message);
-            //   }}
+            onEditSelect={() => {
+              setValue(FORM_MESSAGE_NAME, message.text);
+              actionConversation.setMessageDetail(message);
+              actionConversation.setConversationMode(ENUM_MESSAGE_MODE.EDIT);
+            }}
+            onRemoveSelect={() => {
+              openDeleteMessageModal();
+              actionConversation.setMessageDetail(message);
+            }}
           />
         </div>
       );
@@ -108,11 +116,16 @@ const BoxChat = () => {
       if (!messageStr) return;
       if (stateConversation.mode === ENUM_MESSAGE_MODE.CHAT) {
         handleChatMessage(dataMessage, stateAuth.authId);
+      } else if (stateConversation.mode === ENUM_MESSAGE_MODE.EDIT) {
+        handleEditMessage(dataMessage);
       }
-      //   else if (stateConversation.mode === ENUM_MESSAGE_MODE.EDIT) {
-      //     handleEditMessage(data);
-      //   }
     }
+  };
+
+  const handleCancelEditMode = () => {
+    setValue(FORM_MESSAGE_NAME, '');
+    actionConversation.setMessageDetail(undefined);
+    actionConversation.setConversationMode(ENUM_MESSAGE_MODE.CHAT);
   };
 
   return (
@@ -121,24 +134,28 @@ const BoxChat = () => {
         {stateConversation.conversationDetail ? (
           <>
             <BoxChatHeader />
-            <div className={`${styles.scrollbar}`}>
-              {stateConversation.messages.list.map((item, index) =>
-                renderMessageBox(
-                  item,
-                  index,
-                  stateConversation.messages.list[index + 1] as MESSAGE_MODEL
-                )
-              )}
+            {stateConversation.messages.loading ? (
+              <BoxChatSkeleton />
+            ) : (
+              <div className={`${styles.scrollbar}`}>
+                {stateConversation.messages.list.map((item, index) =>
+                  renderMessageBox(
+                    item,
+                    index,
+                    stateConversation.messages.list[index + 1] as MESSAGE_MODEL
+                  )
+                )}
 
-              {!stateConversation.messages.isOver && (
-                <p
-                  className="flex justify-center text-14px text-green-600 mt-[10px]"
-                  ref={refLoadMoreMessages}
-                >
-                  Đang tải
-                </p>
-              )}
-            </div>
+                {!stateConversation.messages.isOver && (
+                  <p
+                    className="flex justify-center text-14px text-green-600 mt-[10px]"
+                    ref={refLoadMoreMessages}
+                  >
+                    Đang tải...
+                  </p>
+                )}
+              </div>
+            )}
             <form
               className="w-full h-[60px] px-[20px] pt-[5px] pb-[10px] flex justify-between items-center gap-x-3"
               autoComplete="off"
@@ -151,16 +168,25 @@ const BoxChat = () => {
                 placeholder="Soạn tin nhắn..."
                 setValue={setValue}
               />
-              <button
-                type="submit"
-                className="w-[32px] h-[33px] cursor-pointer"
-              >
-                <img
-                  src="/icons/ic_sendMess.png"
-                  className="w-full h-full object-contain"
-                  alt="icon"
-                />
-              </button>
+              {stateConversation.mode === ENUM_MESSAGE_MODE.CHAT ? (
+                <button
+                  type="submit"
+                  className="w-[32px] h-[33px] cursor-pointer"
+                >
+                  <img
+                    src="/icons/ic_sendMess.png"
+                    className="w-full h-full object-contain"
+                    alt="icon"
+                  />
+                </button>
+              ) : (
+                <a
+                  className="w-[32px] h-[33px] cursor-pointer text-gray-500 font-bold"
+                  onClick={handleCancelEditMode}
+                >
+                  Hủy
+                </a>
+              )}
             </form>
           </>
         ) : (
