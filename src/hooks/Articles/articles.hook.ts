@@ -39,8 +39,6 @@ const useFilterPriceArticle = () => {
 
   const router = useRouter();
 
-  const district = router.query.district as string;
-
   const handleSelectMinPrice = (price: number) => {
     if (price === -1 && maxPrice === -1) setStatePriceFilter(initialText);
     else if (price !== -1 && maxPrice === -1)
@@ -51,18 +49,16 @@ const useFilterPriceArticle = () => {
       if (maxPrice <= price) {
         setMaxPrice(-1);
         setStatePriceFilter(`> ${formatMoney(price)}`);
-        pushSearchQueries(
-          router,
-          { priceGTE: price, priceLTE: undefined },
-          district
-        );
+        delete router.query.priceLTE;
+        pushSearchQueries(router, { priceGTE: price });
       } else
         setStatePriceFilter(`${formatMoney(price)} - ${formatMoney(maxPrice)}`);
     }
     setMinPrice(price);
-    if (price !== -1) pushSearchQueries(router, { priceGTE: price }, district);
+    if (price !== -1) pushSearchQueries(router, { priceGTE: price });
     else {
-      pushSearchQueries(router, { priceGTE: undefined }, district);
+      delete router.query.priceGTE;
+      pushSearchQueries(router, {});
     }
   };
 
@@ -76,18 +72,16 @@ const useFilterPriceArticle = () => {
       if (minPrice >= price) {
         setMinPrice(-1);
         setStatePriceFilter(`< ${formatMoney(price)}`);
-        pushSearchQueries(
-          router,
-          { priceLTE: price, priceGTE: undefined },
-          district
-        );
+        delete router.query.priceGTE;
+        pushSearchQueries(router, { priceLTE: price });
       } else
         setStatePriceFilter(`${formatMoney(minPrice)} - ${formatMoney(price)}`);
     }
     setMaxPrice(price);
-    if (price !== -1) pushSearchQueries(router, { priceLTE: price }, district);
+    if (price !== -1) pushSearchQueries(router, { priceLTE: price });
     else {
-      pushSearchQueries(router, { priceLTE: undefined }, district);
+      delete router.query.priceLTE;
+      pushSearchQueries(router, {});
     }
   };
 
@@ -111,7 +105,6 @@ const useFilterAreaArticle = () => {
   const [maxArea, setMaxArea] = React.useState<number>(-1);
 
   const router = useRouter();
-  const district = router.query.district as string;
 
   const handleSelectMinArea = (area: number) => {
     if (area === -1 && maxArea === -1) setStateAreaFilter(initialText);
@@ -121,17 +114,15 @@ const useFilterAreaArticle = () => {
       if (maxArea <= area) {
         setMaxArea(-1);
         setStateAreaFilter(`> ${area}`);
-        pushSearchQueries(
-          router,
-          { areaGTE: area, areaLTE: undefined },
-          district
-        );
+        delete router.query.areaLTE;
+        pushSearchQueries(router, { areaGTE: area });
       } else setStateAreaFilter(`${area} - ${maxArea}`);
     }
     setMinArea(area);
-    if (area !== -1) pushSearchQueries(router, { areaGTE: area }, district);
+    if (area !== -1) pushSearchQueries(router, { areaGTE: area });
     else {
-      pushSearchQueries(router, { areaGTE: undefined }, district);
+      delete router.query.areaGTE;
+      pushSearchQueries(router, {});
     }
   };
 
@@ -145,18 +136,16 @@ const useFilterAreaArticle = () => {
       if (minArea >= area) {
         setMinArea(-1);
         setStateAreaFilter(`< ${formatMoney(area)}`);
-        pushSearchQueries(
-          router,
-          { areaLTE: area, areaGTE: undefined },
-          district
-        );
+        delete router.query.areaGTE;
+        pushSearchQueries(router, { areaLTE: area });
       } else
         setStateAreaFilter(`${formatMoney(minArea)} - ${formatMoney(area)}`);
     }
     setMaxArea(area);
-    if (area !== -1) pushSearchQueries(router, { areaLTE: area }, district);
+    if (area !== -1) pushSearchQueries(router, { areaLTE: area });
     else {
-      pushSearchQueries(router, { areaLTE: undefined }, district);
+      delete router.query.areaLTE;
+      pushSearchQueries(router, {});
     }
   };
 

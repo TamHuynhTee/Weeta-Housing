@@ -35,6 +35,10 @@ const AreaFilter = () => {
         setMinArea(-1);
         setMaxArea(+areaLTE);
       }
+    } else {
+      setMinArea(-1);
+      setMaxArea(-1);
+      setStateAreaFilter(`Diện tích`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [areaGTE, areaLTE]);

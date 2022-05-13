@@ -1,6 +1,7 @@
 import ContainerModal from '@/components/common/ContainerModal';
 import InputField from '@/components/common/InputField';
 import LineHorizontal from '@/components/common/LineHorizontal';
+import SearchBar from '@/components/common/SearchBar';
 import { pushSearchQueries } from '@/helpers/base.helpers';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
@@ -11,7 +12,6 @@ import DistrictFilter from '../DistrictFilter';
 import PriceFilter from '../PriceFilter';
 
 const ArticleFilter = () => {
-  const { register, handleSubmit, setValue } = useForm();
   const [stateFilterModal, setStateFilterModal] = React.useState(false);
 
   const openModal = () => setStateFilterModal(true);
@@ -19,39 +19,17 @@ const ArticleFilter = () => {
 
   const router = useRouter();
 
-  const urlKeyword = router.query.q as string;
-  const urlDistrict = router.query.district as string;
   const urlStartDate = router.query.startDate as string;
 
   const countMoreFilter = urlStartDate ? 1 : undefined;
 
-  const handleSearch = (data: any) => {
-    const { keyword } = data;
-    if (keyword)
-      router.push({
-        pathname: urlDistrict ? `/thue-tro/${urlDistrict}` : '/thue-tro',
-        query: { ...router.query, q: keyword },
-      });
-  };
-
-  React.useEffect(() => {
-    if (urlKeyword) {
-      setValue('keyword', urlKeyword);
-    } else setValue('keyword', '');
-  }, [urlKeyword, setValue]);
-
   return (
     <div className="w-full py-[20px] grid grid-cols-12 gap-1">
-      <form className="col-span-2" onSubmit={handleSubmit(handleSearch)}>
-        <InputField
-          type="text"
-          register={register('keyword')}
-          name="keyword"
-          showLabel={false}
-          placeholder="Tên bài đăng ..."
-          inputClassName="bg-white-200"
+      <div className="col-span-2">
+        <SearchBar
+          className={`pb-[2 px] w-full h-full text-[16px] text-back-100 placeholder-grey-50 bg-green-100 border-0 outline-none`}
         />
-      </form>
+      </div>
       <div className="col-span-3">
         <DistrictFilter />
       </div>
@@ -100,15 +78,18 @@ const ModalMoreFilter = (props: Props) => {
   const { register, handleSubmit, reset, setValue } = useForm();
   const router = useRouter();
 
-  const urlDistrict = router.query.district as string;
   const urlStartDate = router.query.startDate as string;
 
   const handleFilter = (data: any) => {
-    pushSearchQueries(router, { startDate: data.startDate }, urlDistrict);
+    pushSearchQueries(router, { startDate: data.startDate });
+
+    closeModal();
   };
 
   const handleClearFilter = () => {
     reset();
+    delete router.query.startDate;
+    pushSearchQueries(router, {});
   };
 
   React.useEffect(() => {

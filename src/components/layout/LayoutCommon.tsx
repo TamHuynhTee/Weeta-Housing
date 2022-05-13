@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import React, { FC } from 'react';
 import ContainerModal from '../common/ContainerModal';
 import Footer from '../common/Footer';
-import HeaderSearch from '../common/HeaderSearch';
+import SearchBar from '../common/SearchBar';
 import NavLogged from '../common/NavLogged';
 import NavNotLogged from '../common/NavNotLogged';
 import ModalCreateLessor from '../pages/ModalCreateLessor';
@@ -54,8 +54,8 @@ const LayoutCommon: FC<IProps> = ({
                   </a>
                 </Link>
                 {isVisibleSearchBar && router.pathname !== '/thue-tro' && (
-                  <HeaderSearch
-                    className={`pb-[2 px] w-full h-full text-[16px] text-back-100 placeholder-grey-50 border-0 outline-none md:hidden`}
+                  <SearchBar
+                    className={`pb-[2 px] w-full h-[40px] text-[16px] text-back-100 placeholder-grey-50 border-0 outline-none md:hidden`}
                   />
                 )}
               </div>

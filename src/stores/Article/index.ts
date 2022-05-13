@@ -15,11 +15,13 @@ export type State = {
     list: Array<ARTICLE_MODEL>;
     total: number;
     isOver: boolean;
+    loading: boolean;
   };
   topArticle: {
     list: Array<ARTICLE_MODEL>;
     total: number;
     isOver: boolean;
+    loading: boolean;
   };
   articleDetail: ARTICLE_MODEL | undefined;
 };
@@ -29,11 +31,13 @@ const initialState: State = {
     list: [],
     total: 0,
     isOver: false,
+    loading: false,
   },
   topArticle: {
     list: [],
     total: 0,
     isOver: false,
+    loading: false,
   },
   articleDetail: undefined,
 };

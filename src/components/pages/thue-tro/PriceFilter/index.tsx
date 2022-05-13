@@ -22,6 +22,7 @@ const PriceFilter = () => {
   const priceLTE = router.query.priceLTE as string;
 
   React.useEffect(() => {
+    console.log('price change');
     if (priceGTE || priceLTE) {
       if (priceGTE && priceLTE) {
         setStatePriceFilter(
@@ -38,6 +39,10 @@ const PriceFilter = () => {
         setMinPrice(-1);
         setMaxPrice(+priceLTE);
       }
+    } else {
+      setMinPrice(-1);
+      setMaxPrice(-1);
+      setStatePriceFilter(`Giá thuê`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [priceGTE, priceLTE]);

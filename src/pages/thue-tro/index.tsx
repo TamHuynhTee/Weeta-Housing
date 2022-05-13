@@ -1,5 +1,6 @@
 import Breadcrumb from '@/components/common/BreadCrumb';
 import CardArticle from '@/components/common/CardArticle';
+import BoxSkeletonArticle from '@/components/common/Skeleton/CardArticleSkeleton';
 import LayoutCommon from '@/components/layout/LayoutCommon';
 import ArticleFilter from '@/components/pages/thue-tro/ArticleFilter';
 import NoResults from '@/components/pages/thue-tro/NoResults';
@@ -12,32 +13,33 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-const LIMIT = 10;
+export const ARTICLE_LIMIT = 10;
 
 const SearchPage = () => {
   const [stateArticle, actionArticle] = useArticle();
   const router = useRouter();
-  const page = Number(router.query.page) || 1;
+  const { page, ...filter } = router.query as any;
+  const currentPage = Number(router.query.page) || 1;
 
   const thisDay = new Date();
 
   const showRangeResult = `${
-    stateArticle.articles.total > 0 ? (page - 1) * LIMIT + 1 : 0
+    stateArticle.articles.total > 0 ? (currentPage - 1) * ARTICLE_LIMIT + 1 : 0
   } - ${
-    LIMIT * page > stateArticle.articles.total
+    ARTICLE_LIMIT * currentPage > stateArticle.articles.total
       ? stateArticle.articles.total
-      : LIMIT * page
+      : ARTICLE_LIMIT * currentPage
   }`;
 
   React.useEffect(() => {
     actionArticle.getListArticleAsync({
-      limit: LIMIT,
+      limit: ARTICLE_LIMIT,
       'area[gte]': router.query.areaGTE as string,
       'area[lte]': router.query.areaLTE as string,
       'price[gte]': router.query.priceGTE as string,
       'price[lte]': router.query.priceLTE as string,
       'startDate[gte]': router.query.startDate as string,
-      page,
+      page: currentPage,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query]);
@@ -61,11 +63,28 @@ const SearchPage = () => {
         <div className="w-full px-[50px] py-[10px]">
           <ArticleFilter />
           {/* breadcrumb */}
-          <Breadcrumb />
-          <p className="text-[20px] font-bold my-[10px]">
-            Thuê trọ tại TPHCM. Giá thuê mới nhất tháng{' '}
-            {`${thisDay.getMonth() + 1}/${thisDay.getFullYear()}`}
-          </p>
+          <Breadcrumb
+            arr_link={[
+              { href: '/', value: 'Weeta' },
+              { href: '/thue-tro', value: 'Thuê trọ TPHCM' },
+            ]}
+          />
+
+          <div className="flex items-center justify-between my-[10px]">
+            <p className="text-[20px] leading-[34px] font-bold my-[10px]">
+              Thuê trọ tại TPHCM. Giá thuê mới nhất tháng{' '}
+              {`${thisDay.getMonth() + 1}/${thisDay.getFullYear()}`}.
+            </p>
+            {Object.values(filter).length > 0 && (
+              <div
+                className="bg-red-100 py-[5px] px-[10px] h-[34px] rounded-[50px] text-gray-600 cursor-pointer"
+                onClick={() => router.push('/thue-tro')}
+              >
+                <span className="mr-[5px] text-rose-500">X</span> Xóa bộ lọc
+              </div>
+            )}
+          </div>
+
           <div className="w-full grid grid-cols-3 gap-4">
             <div className="col-span-2">
               {/* <TopArticles list={stateArticle.topArticles.list} /> */}
@@ -81,7 +100,9 @@ const SearchPage = () => {
                 kết quả
               </div>
               <div className="mt-[10px] grid grid-cols-1 gap-[10px] col-span-2">
-                {stateArticle.articles.list.length > 0 ? (
+                {stateArticle.articles.loading ? (
+                  <BoxSkeletonArticle showVertical={false} count={3} />
+                ) : stateArticle.articles.list.length > 0 ? (
                   stateArticle.articles.list.map((item, index) => (
                     <CardArticle key={index} data={item} showVertical={false} />
                   ))
@@ -91,8 +112,8 @@ const SearchPage = () => {
               </div>
               <Pagination
                 total={stateArticle.articles.total}
-                limit={LIMIT}
-                currentPage={page}
+                limit={ARTICLE_LIMIT}
+                currentPage={currentPage}
               />
             </div>
             {/* side */}
@@ -118,20 +139,5 @@ const SearchPage = () => {
     </React.Fragment>
   );
 };
-
-// const TopArticles = ({ list }: { list: Array<ARTICLE_MODEL> }) => {
-//   return (
-//     <>
-//       <div className="px-[20px] py-[10px] bg-baseColor text-white font-bold rounded-[3px]">
-//         Tin TOP
-//       </div>
-//       <div className="mt-[10px] grid grid-cols-3 gap-[10px]">
-//         {list.map((item, index) => (
-//           <CardArticle data={item} key={index} />
-//         ))}
-//       </div>
-//     </>
-//   );
-// };
 
 export default Authentication(SearchPage, { requiredLogin: false });

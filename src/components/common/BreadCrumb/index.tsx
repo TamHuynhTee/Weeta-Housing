@@ -17,29 +17,35 @@ let breadcrumb_link: Array<{ href: string; value: string }> = [
 ];
 
 const Breadcrumb = (props: IProps) => {
-  if (props.arr_link && props.arr_link.length > 0) {
-    breadcrumb_link = props.arr_link;
+  const { arr_link, classNameContainer, classNameBreadcrumb } = props;
+  if (arr_link && arr_link.length > 0) {
+    breadcrumb_link = arr_link;
   }
   return (
     <div
       className={`h-auto w-full text-[14px] rounded-br-[20px] ${
-        props.classNameContainer ?? ''
+        classNameContainer ?? ''
       }`}
     >
       <div
         className={`${styles.wrap_breadcrumb} ${
-          props.classNameBreadcrumb ?? ''
+          classNameBreadcrumb ?? ''
         } w-full py-[5px]`}
       >
         {breadcrumb_link.map((item, index) => (
           <div className="flex" key={index}>
-            <AnchorLink
-              href={item.href}
-              className={`category-link text-grey-300 font-semibold`}
-              style={{ textDecoration: 'none' }}
-            >
-              {item.value}
-            </AnchorLink>
+            {breadcrumb_link.length > 1 &&
+            index === breadcrumb_link.length - 1 ? (
+              <p className={`text-black font-normal`}>{item.value}</p>
+            ) : (
+              <AnchorLink
+                href={item.href}
+                className={`category-link text-grey-300 font-semibold`}
+                style={{ textDecoration: 'none' }}
+              >
+                {item.value}
+              </AnchorLink>
+            )}
             {index !== breadcrumb_link.length - 1 && (
               <span className="text-16px text-grey-300 mx-[5px]">{'>'}</span>
             )}

@@ -19,10 +19,10 @@ const authInstance = defaultRegistry.getStore(Store);
 
 export const getListArticleAsync =
   (params: Partial<IParamGetArticle>) =>
-  async ({ getState, setState }: Actions) => {
-    // authInstance.actions.setAppLoading(true);
+  async ({ getState, setState, dispatch }: Actions) => {
+    dispatch(setLoadingArticle(true));
     const result = await getListArticleService(params);
-    // authInstance.actions.setAppLoading(false);
+    dispatch(setLoadingArticle(false));
     if (result.error !== undefined) {
       if (!result.error) {
         setState({
@@ -69,10 +69,10 @@ export const loadMoreArticleAsync =
 
 export const getListTopArticleAsync =
   (params: Partial<IParamGetArticle>) =>
-  async ({ getState, setState }: Actions) => {
-    authInstance.actions.setAppLoading(true);
+  async ({ getState, setState, dispatch }: Actions) => {
+    dispatch(setLoadingTOPArticle(true));
     const result = await getListTopArticleService(params);
-    authInstance.actions.setAppLoading(false);
+    dispatch(setLoadingTOPArticle(false));
     if (result.error !== undefined) {
       if (!result.error) {
         setState({
@@ -130,5 +130,26 @@ export const setDetailArticle =
     setState({
       ...getState(),
       articleDetail: article,
+    });
+  };
+
+const setLoadingArticle = (loadingArticle: boolean) => (actions: Actions) => {
+  actions.setState({
+    ...actions.getState(),
+    article: {
+      ...actions.getState().article,
+      loading: loadingArticle,
+    },
+  });
+};
+
+const setLoadingTOPArticle =
+  (loadingArticle: boolean) => (actions: Actions) => {
+    actions.setState({
+      ...actions.getState(),
+      topArticle: {
+        ...actions.getState().topArticle,
+        loading: loadingArticle,
+      },
     });
   };
