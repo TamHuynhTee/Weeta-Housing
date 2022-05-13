@@ -7,9 +7,6 @@ module.exports = {
         transparent: 'transparent',
         baseColor: 'rgb(0, 132, 137)',
         bannerHome: '#671C0B',
-        'red-F7': '#F7E8E8',
-        'red-50': '#B31D1D',
-        mobile: '#C5D0CF',
 
         'white-100': '#F9F9F9',
         'white-200': '#F5F5F5',
@@ -56,7 +53,7 @@ module.exports = {
 
         'purple-100': '#2A1C48',
 
-        'orange-100': '#FF9700',
+        'orange-100': '#fff2b1',
         'orange-200': '#FFB800',
       },
     },

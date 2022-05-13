@@ -155,7 +155,7 @@ const ServicePackage = () => {
                   <button className="button-primary">Chọn gói</button>
                 </div>
               </div>
-              <div className="border border-[rgb(230_230_230)] rounded-[6px] hover:shadow-[rgb(0_0_0_/_16%)_0px_0px_15px] transition-[box-shadow_0.3s_ease_0s] mx-[15px] flex-1">
+              <div className="border border-[rgb(230_230_230)] rounded-[6px] shadow-[rgb(0_0_0_/_16%)_0px_0px_15px] transition-[box-shadow_0.3s_ease_0s] mx-[15px] flex-1">
                 <div className="py-[27px] px-[29px] w-full rounded-tl-[6px] rounded-tr-[6px] bg-[rgb(247_247_247)]">
                   <p className="text-[22px] font-bold text-[rgb(4_153_168)]">
                     Tiêu chuẩn

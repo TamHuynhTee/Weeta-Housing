@@ -15,6 +15,7 @@ type Props = {
   hasBorder?: boolean;
   errors?: any;
   name: string;
+  iconPlaceholder?: string;
 };
 
 const SelectField = (props: Props) => {
@@ -32,6 +33,7 @@ const SelectField = (props: Props) => {
     clearErrors,
     errors = {},
     name,
+    iconPlaceholder = '',
   } = props;
 
   const classChildren = showChildren ? '' : 'hidden';
@@ -50,10 +52,19 @@ const SelectField = (props: Props) => {
             errors[name] && '!border-[rgb(249_80_61)]'
           }`}
         >
+          {iconPlaceholder && (
+            <div className="w-[34px] h-[34px] ml-[10px]">
+              <img
+                src={iconPlaceholder}
+                alt="box_icon"
+                className="h-full w-full object-contain"
+              />
+            </div>
+          )}
           {
             <>
               <input {...registerForm} type="text" defaultValue={''} hidden />
-              <span className="px-[18px] appearance-none outline-none select-none text-black text-[16px] font-normal w-full max_line-1 capitalize">
+              <span className="px-[10px] appearance-none outline-none select-none text-black text-[16px] font-normal w-full max_line-1 capitalize">
                 {state}
               </span>
             </>

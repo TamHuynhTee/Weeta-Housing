@@ -1,24 +1,32 @@
 import React from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import ErrorText from '../ErrorText';
+import InputDate from '../InputDate';
 import InputNumber from '../InputNumber';
 
 type Props = {
+  // Common
   register: UseFormRegisterReturn;
   name: string;
   inputClassName?: string;
   overrideInputClassName?: boolean;
   errors?: any;
   label?: string;
-  placeholder?: string;
-  type?: 'password' | 'text' | 'email' | 'number';
+  type?: 'password' | 'text' | 'email' | 'number' | 'date';
   defaultValue?: string | number;
+  placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  allowNegative?: boolean;
   disabled?: boolean;
   setValue?: (key: string, value: unknown) => void;
   showLabel?: boolean;
   isRequired?: boolean;
+  //   Date
+  maxDate?: string;
+  minDate?: string;
+  //   Number
+  maxNumber?: number;
+  minNumber?: number;
+  allowNegative?: boolean;
 };
 
 const InputField = ({
@@ -41,6 +49,8 @@ const InputField = ({
   },
   showLabel = true,
   isRequired = false,
+  maxDate = '',
+  minDate = '',
 }: Props) => {
   const [thisType, setThisType] = React.useState(type);
   const [showVisible, setShowVisible] = React.useState(false);
@@ -74,7 +84,20 @@ const InputField = ({
           errors={errors}
           overrideInputClassName={overrideInputClassName}
           id={name}
-          disable={disabled}
+          disabled={disabled}
+        />
+      ) : thisType === 'date' ? (
+        <InputDate
+          name={name}
+          registerForm={register}
+          className={inputClassName}
+          defaultValue={defaultValue}
+          errors={errors}
+          overrideInputClassName={overrideInputClassName}
+          id={name}
+          disabled={disabled}
+          min={minDate}
+          max={maxDate}
         />
       ) : (
         <div className="relative bg-white">

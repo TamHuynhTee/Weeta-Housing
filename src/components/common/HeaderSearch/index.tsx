@@ -11,7 +11,7 @@ const HeaderSearch = (props: { className?: string; placeholder?: string }) => {
   const handleSearch = (data: any) => {
     const keyword = data.keyword.trim();
     if (keyword === '') return;
-    router.push(`/tim-kiem?q=${keyword}`);
+    router.push(`/thue-tro?q=${keyword}`);
   };
 
   return (

@@ -18,10 +18,10 @@ interface Prop {
   registerForm?: UseFormRegisterReturn;
   children: any;
   errors?: any;
-  buttonTags?: React.ReactNode;
   showChildren?: boolean;
   onSelectClick?: () => void;
   name: string;
+  iconPlaceholder?: string;
   showLabel?: boolean;
   isRequired?: boolean;
 }
@@ -55,10 +55,10 @@ const SelectBoxField = (props: Prop) => {
     overrideClassNameSelectBox = false,
     id = '',
     state = '',
+    iconPlaceholder = '',
     registerForm = {} as UseFormRegisterReturn,
     children,
     errors = {},
-    buttonTags = <></>,
     showChildren = true,
     onSelectClick,
     name,
@@ -94,7 +94,6 @@ const SelectBoxField = (props: Prop) => {
           {label} {isRequired && <span className="text-red-400">(*)</span>}
         </p>
       )}
-      {buttonTags}
       <div className={classContainerSelectBox}>
         <SelectBox
           idCheckBox={id}
@@ -105,6 +104,7 @@ const SelectBoxField = (props: Prop) => {
           onSelectClick={onSelectClick}
           errors={errors}
           name={name}
+          iconPlaceholder={iconPlaceholder}
         >
           {children}
         </SelectBox>

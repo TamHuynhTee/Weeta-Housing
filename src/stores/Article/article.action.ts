@@ -20,9 +20,9 @@ const authInstance = defaultRegistry.getStore(Store);
 export const getListArticleAsync =
   (params: Partial<IParamGetArticle>) =>
   async ({ getState, setState }: Actions) => {
-    authInstance.actions.setAppLoading(true);
+    // authInstance.actions.setAppLoading(true);
     const result = await getListArticleService(params);
-    authInstance.actions.setAppLoading(false);
+    // authInstance.actions.setAppLoading(false);
     if (result.error !== undefined) {
       if (!result.error) {
         setState({

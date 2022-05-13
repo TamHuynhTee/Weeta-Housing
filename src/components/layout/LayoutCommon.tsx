@@ -1,5 +1,6 @@
 // import HeaderSearchSkill from 'components/common/HeaderSearchSkill';
 // import NavLang from 'components/common/NavLang';
+import { getSplitPathName } from '@/helpers/base.helpers';
 import { useAuth } from '@/stores/Auth';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -24,9 +25,10 @@ const LayoutCommon: FC<IProps> = ({
   children,
   isVisibleFooter = true,
   isVisibleSearchBar = false,
-  title = 'Thông tin cá nhân',
+  title = 'Weeta',
 }: IProps) => {
   const router = useRouter();
+
   const [modalCreateLessor, setModalCreateLessor] = React.useState(false);
   const [modalFullOfArticle, setModalFullOfArticle] = React.useState(false);
   const [stateAuth] = useAuth();
@@ -51,7 +53,7 @@ const LayoutCommon: FC<IProps> = ({
                     WEETA HOUSING
                   </a>
                 </Link>
-                {isVisibleSearchBar && router.pathname !== '/tim-kiem' && (
+                {isVisibleSearchBar && router.pathname !== '/thue-tro' && (
                   <HeaderSearch
                     className={`pb-[2 px] w-full h-full text-[16px] text-back-100 placeholder-grey-50 border-0 outline-none md:hidden`}
                   />
@@ -63,16 +65,24 @@ const LayoutCommon: FC<IProps> = ({
                   {/* <Link href="#!">
                     <a className={`menu-link mr-[30px]`}>Danh sách</a>
                   </Link> */}
-                  <Link href="#!">
-                    <a className={`menu-link`}>Chủ trọ</a>
+                  <Link href="/thue-tro">
+                    <a
+                      className={`menu-link ${
+                        getSplitPathName(router.pathname, 1) === 'thue-tro' &&
+                        'active'
+                      }`}
+                    >
+                      Thuê trọ
+                    </a>
                   </Link>
-                  <Link href="#!">
+                  {/* <Link href="#!">
                     <a className={`menu-link`}>Blog</a>
-                  </Link>
+                  </Link> */}
                   <Link href="/goi-dich-vu">
                     <a
-                      className={`menu-link${
-                        router.pathname === '/goi-dich-vu' ? ' active' : ''
+                      className={`menu-link ${
+                        getSplitPathName(router.pathname, 1) ===
+                          'goi-dich-vu' && 'active'
                       }`}
                     >
                       Gói dịch vụ

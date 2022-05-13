@@ -1,7 +1,8 @@
 import dayjs from 'dayjs';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import updateLocale from 'dayjs/plugin/updateLocale';
+import { DISTRICTS } from '@/constants/location.constants';
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
@@ -84,4 +85,29 @@ export const isShowTimeMessageBetween = (time: number, time2: number) => {
     return true;
   }
   return false;
+};
+
+export const getProvince = (code: number) => {
+  return DISTRICTS.find((item) => item.value === code) as {
+    label: string;
+    value: number;
+  };
+};
+
+export const getSplitPathName = (pathName: string, index: number) => {
+  if (index < 0) return '';
+  return pathName.split('/')[index] || '';
+};
+
+export const pushSearchQueries = (
+  router: NextRouter,
+  query: any,
+  urlDistrict?: any
+) => {
+  const district = urlDistrict || router.query.district;
+  delete router.query.district;
+  router.push({
+    pathname: district ? `/thue-tro/${district}` : '/thue-tro',
+    query: { ...router.query, ...query },
+  });
 };

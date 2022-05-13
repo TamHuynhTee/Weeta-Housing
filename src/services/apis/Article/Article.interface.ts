@@ -12,10 +12,11 @@ export interface IReqCreateArticle {
 }
 
 export interface IParamGetArticle extends GET_LIST_PARAMS {
-  area: number;
+  'area[gte]': string;
+  'area[lte]': string;
+  'price[gte]': string;
+  'price[lte]': string;
+  'startDate[gte]': string;
   district: string;
-  deletedAt: Date;
-  startDate: Date;
-  price: number;
-  //   servicePackageId: string;
+  ward: string;
 }

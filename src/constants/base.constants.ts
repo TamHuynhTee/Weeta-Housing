@@ -25,3 +25,5 @@ export enum ENUM_MESSAGE_MODE {
   CHAT = 'CHAT',
   EDIT = 'EDIT',
 }
+
+export const DEFAULT_DATE_START = '2021-01-01';

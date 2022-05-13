@@ -1,72 +1,44 @@
+import { DEFAULT_DATE_START } from '@/constants/base.constants';
 import React from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-interface Props {
+type Props = {
   name: string;
-  placeholder?: string;
   className?: string;
   disabled?: boolean;
   registerForm?: UseFormRegisterReturn;
   defaultValue?: string | number;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  allowNegative?: boolean;
-  setValue?: (key: string, value: unknown) => void;
+  //   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  //   setValue?: (key: string, value: unknown) => void;
   errors?: any;
   overrideInputClassName?: boolean;
   id?: string;
-  max?: number;
-  min?: number;
-}
+  max?: string;
+  min?: string;
+};
 
-const InputNumber = (props: Props) => {
+const InputDate = (props: Props) => {
   const {
     name,
-    placeholder = '',
     className = '',
-    registerForm = {},
+    registerForm = {} as UseFormRegisterReturn,
     disabled = false,
     defaultValue = '',
-    allowNegative = false,
-    onChange = () => {
-      return;
-    },
-    setValue = () => {
-      return;
-    },
     overrideInputClassName = false,
     errors = {},
     id = '',
-    max,
+    max = '',
     min,
   } = props;
-
-  const handleAllowNegative = (
-    permission: boolean,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (!permission) {
-      const value = +e.target.value;
-      if (value < 0) {
-        setValue(name, 1);
-      }
-    }
-  };
 
   return (
     <input
       {...registerForm}
       disabled={disabled}
-      type="number"
+      type="date"
       name={name}
       id={id}
-      onChange={(e) => {
-        handleAllowNegative(allowNegative, e);
-        onChange(e);
-      }}
-      placeholder={placeholder}
       defaultValue={defaultValue}
-      onWheel={(e) => e.currentTarget.blur()}
-      onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
       className={
         overrideInputClassName
           ? className
@@ -74,10 +46,10 @@ const InputNumber = (props: Props) => {
               errors[name] && '!border-[rgb(249_80_61)]'
             } ${className}`
       }
-      min={min}
       max={max}
+      min={min || DEFAULT_DATE_START}
     />
   );
 };
 
-export default InputNumber;
+export default InputDate;

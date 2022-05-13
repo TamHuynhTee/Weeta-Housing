@@ -46,6 +46,490 @@ export const LOCATIONS = [
     ],
   },
   {
+    name: 'Quận 3',
+    code: 770,
+    wards: [
+      {
+        name: 'Phường 14',
+        code: 27127,
+      },
+      {
+        name: 'Phường 12',
+        code: 27130,
+      },
+      {
+        name: 'Phường 11',
+        code: 27133,
+      },
+      {
+        name: 'Phường 13',
+        code: 27136,
+      },
+      {
+        name: 'Phường Võ Thị Sáu',
+        code: 27139,
+      },
+      {
+        name: 'Phường 09',
+        code: 27142,
+      },
+      {
+        name: 'Phường 10',
+        code: 27145,
+      },
+      {
+        name: 'Phường 04',
+        code: 27148,
+      },
+      {
+        name: 'Phường 05',
+        code: 27151,
+      },
+      {
+        name: 'Phường 03',
+        code: 27154,
+      },
+      {
+        name: 'Phường 02',
+        code: 27157,
+      },
+      {
+        name: 'Phường 01',
+        code: 27160,
+      },
+    ],
+  },
+  {
+    name: 'Quận 4',
+    code: 773,
+    wards: [
+      {
+        name: 'Phường 13',
+        code: 27259,
+      },
+      {
+        name: 'Phường 09',
+        code: 27262,
+      },
+      {
+        name: 'Phường 06',
+        code: 27265,
+      },
+      {
+        name: 'Phường 08',
+        code: 27268,
+      },
+      {
+        name: 'Phường 10',
+        code: 27271,
+      },
+      {
+        name: 'Phường 18',
+        code: 27277,
+      },
+      {
+        name: 'Phường 14',
+        code: 27280,
+      },
+      {
+        name: 'Phường 04',
+        code: 27283,
+      },
+      {
+        name: 'Phường 03',
+        code: 27286,
+      },
+      {
+        name: 'Phường 16',
+        code: 27289,
+      },
+      {
+        name: 'Phường 02',
+        code: 27292,
+      },
+      {
+        name: 'Phường 15',
+        code: 27295,
+      },
+      {
+        name: 'Phường 01',
+        code: 27298,
+      },
+    ],
+  },
+  {
+    name: 'Quận 5',
+    code: 774,
+    wards: [
+      {
+        name: 'Phường 04',
+        code: 27301,
+      },
+      {
+        name: 'Phường 09',
+        code: 27304,
+      },
+      {
+        name: 'Phường 03',
+        code: 27307,
+      },
+      {
+        name: 'Phường 12',
+        code: 27310,
+      },
+      {
+        name: 'Phường 02',
+        code: 27313,
+      },
+      {
+        name: 'Phường 08',
+        code: 27316,
+      },
+      {
+        name: 'Phường 07',
+        code: 27322,
+      },
+      {
+        name: 'Phường 01',
+        code: 27325,
+      },
+      {
+        name: 'Phường 11',
+        code: 27328,
+      },
+      {
+        name: 'Phường 14',
+        code: 27331,
+      },
+      {
+        name: 'Phường 05',
+        code: 27334,
+      },
+      {
+        name: 'Phường 06',
+        code: 27337,
+      },
+      {
+        name: 'Phường 10',
+        code: 27340,
+      },
+      {
+        name: 'Phường 13',
+        code: 27343,
+      },
+    ],
+  },
+  {
+    name: 'Quận 6',
+    code: 775,
+    wards: [
+      {
+        name: 'Phường 14',
+        code: 27346,
+      },
+      {
+        name: 'Phường 13',
+        code: 27349,
+      },
+      {
+        name: 'Phường 09',
+        code: 27352,
+      },
+      {
+        name: 'Phường 06',
+        code: 27355,
+      },
+      {
+        name: 'Phường 12',
+        code: 27358,
+      },
+      {
+        name: 'Phường 05',
+        code: 27361,
+      },
+      {
+        name: 'Phường 11',
+        code: 27364,
+      },
+      {
+        name: 'Phường 02',
+        code: 27367,
+      },
+      {
+        name: 'Phường 01',
+        code: 27370,
+      },
+      {
+        name: 'Phường 04',
+        code: 27373,
+      },
+      {
+        name: 'Phường 08',
+        code: 27376,
+      },
+      {
+        name: 'Phường 03',
+        code: 27379,
+      },
+      {
+        name: 'Phường 07',
+        code: 27382,
+      },
+      {
+        name: 'Phường 10',
+        code: 27385,
+      },
+    ],
+  },
+  {
+    name: 'Quận 7',
+    code: 778,
+    wards: [
+      {
+        name: 'Phường Tân Thuận Đông',
+        code: 27466,
+      },
+      {
+        name: 'Phường Tân Thuận Tây',
+        code: 27469,
+      },
+      {
+        name: 'Phường Tân Kiểng',
+        code: 27472,
+      },
+      {
+        name: 'Phường Tân Hưng',
+        code: 27475,
+      },
+      {
+        name: 'Phường Bình Thuận',
+        code: 27478,
+      },
+      {
+        name: 'Phường Tân Quy',
+        code: 27481,
+      },
+      {
+        name: 'Phường Phú Thuận',
+        code: 27484,
+      },
+      {
+        name: 'Phường Tân Phú',
+        code: 27487,
+      },
+      {
+        name: 'Phường Tân Phong',
+        code: 27490,
+      },
+      {
+        name: 'Phường Phú Mỹ',
+        code: 27493,
+      },
+    ],
+  },
+  {
+    name: 'Quận 8',
+    code: 776,
+    wards: [
+      {
+        name: 'Phường 08',
+        code: 27388,
+      },
+      {
+        name: 'Phường 02',
+        code: 27391,
+      },
+      {
+        name: 'Phường 01',
+        code: 27394,
+      },
+      {
+        name: 'Phường 03',
+        code: 27397,
+      },
+      {
+        name: 'Phường 11',
+        code: 27400,
+      },
+      {
+        name: 'Phường 09',
+        code: 27403,
+      },
+      {
+        name: 'Phường 10',
+        code: 27406,
+      },
+      {
+        name: 'Phường 04',
+        code: 27409,
+      },
+      {
+        name: 'Phường 13',
+        code: 27412,
+      },
+      {
+        name: 'Phường 12',
+        code: 27415,
+      },
+      {
+        name: 'Phường 05',
+        code: 27418,
+      },
+      {
+        name: 'Phường 14',
+        code: 27421,
+      },
+      {
+        name: 'Phường 06',
+        code: 27424,
+      },
+      {
+        name: 'Phường 15',
+        code: 27427,
+      },
+      {
+        name: 'Phường 16',
+        code: 27430,
+      },
+      {
+        name: 'Phường 07',
+        code: 27433,
+      },
+    ],
+  },
+  {
+    name: 'Quận 10',
+    code: 771,
+    wards: [
+      {
+        name: 'Phường 15',
+        code: 27163,
+      },
+      {
+        name: 'Phường 13',
+        code: 27166,
+      },
+      {
+        name: 'Phường 14',
+        code: 27169,
+      },
+      {
+        name: 'Phường 12',
+        code: 27172,
+      },
+      {
+        name: 'Phường 11',
+        code: 27175,
+      },
+      {
+        name: 'Phường 10',
+        code: 27178,
+      },
+      {
+        name: 'Phường 09',
+        code: 27181,
+      },
+      {
+        name: 'Phường 01',
+        code: 27184,
+      },
+      {
+        name: 'Phường 08',
+        code: 27187,
+      },
+      {
+        name: 'Phường 02',
+        code: 27190,
+      },
+      {
+        name: 'Phường 04',
+        code: 27193,
+      },
+      {
+        name: 'Phường 07',
+        code: 27196,
+      },
+      {
+        name: 'Phường 05',
+        code: 27199,
+      },
+      {
+        name: 'Phường 06',
+        code: 27202,
+      },
+    ],
+  },
+  {
+    name: 'Quận 11',
+    code: 772,
+    wards: [
+      {
+        name: 'Phường 15',
+        code: 27208,
+      },
+      {
+        name: 'Phường 05',
+        code: 27211,
+      },
+      {
+        name: 'Phường 14',
+        code: 27214,
+      },
+      {
+        name: 'Phường 11',
+        code: 27217,
+      },
+      {
+        name: 'Phường 03',
+        code: 27220,
+      },
+      {
+        name: 'Phường 10',
+        code: 27223,
+      },
+      {
+        name: 'Phường 13',
+        code: 27226,
+      },
+      {
+        name: 'Phường 08',
+        code: 27229,
+      },
+      {
+        name: 'Phường 09',
+        code: 27232,
+      },
+      {
+        name: 'Phường 12',
+        code: 27235,
+      },
+      {
+        name: 'Phường 07',
+        code: 27238,
+      },
+      {
+        name: 'Phường 06',
+        code: 27241,
+      },
+      {
+        name: 'Phường 04',
+        code: 27244,
+      },
+      {
+        name: 'Phường 01',
+        code: 27247,
+      },
+      {
+        name: 'Phường 02',
+        code: 27250,
+      },
+      {
+        name: 'Phường 16',
+        code: 27253,
+      },
+    ],
+  },
+  {
     name: 'Quận 12',
     code: 761,
     wards: [
@@ -426,586 +910,6 @@ export const LOCATIONS = [
     ],
   },
   {
-    name: 'Thành phố Thủ Đức',
-    code: 769,
-    wards: [
-      {
-        name: 'Phường Linh Xuân',
-        code: 26794,
-      },
-      {
-        name: 'Phường Bình Chiểu',
-        code: 26797,
-      },
-      {
-        name: 'Phường Linh Trung',
-        code: 26800,
-      },
-      {
-        name: 'Phường Tam Bình',
-        code: 26803,
-      },
-      {
-        name: 'Phường Tam Phú',
-        code: 26806,
-      },
-      {
-        name: 'Phường Hiệp Bình Phước',
-        code: 26809,
-      },
-      {
-        name: 'Phường Hiệp Bình Chánh',
-        code: 26812,
-      },
-      {
-        name: 'Phường Linh Chiểu',
-        code: 26815,
-      },
-      {
-        name: 'Phường Linh Tây',
-        code: 26818,
-      },
-      {
-        name: 'Phường Linh Đông',
-        code: 26821,
-      },
-      {
-        name: 'Phường Bình Thọ',
-        code: 26824,
-      },
-      {
-        name: 'Phường Trường Thọ',
-        code: 26827,
-      },
-      {
-        name: 'Phường Long Bình',
-        code: 26830,
-      },
-      {
-        name: 'Phường Long Thạnh Mỹ',
-        code: 26833,
-      },
-      {
-        name: 'Phường Tân Phú',
-        code: 26836,
-      },
-      {
-        name: 'Phường Hiệp Phú',
-        code: 26839,
-      },
-      {
-        name: 'Phường Tăng Nhơn Phú A',
-        code: 26842,
-      },
-      {
-        name: 'Phường Tăng Nhơn Phú B',
-        code: 26845,
-      },
-      {
-        name: 'Phường Phước Long B',
-        code: 26848,
-      },
-      {
-        name: 'Phường Phước Long A',
-        code: 26851,
-      },
-      {
-        name: 'Phường Trường Thạnh',
-        code: 26854,
-      },
-      {
-        name: 'Phường Long Phước',
-        code: 26857,
-      },
-      {
-        name: 'Phường Long Trường',
-        code: 26860,
-      },
-      {
-        name: 'Phường Phước Bình',
-        code: 26863,
-      },
-      {
-        name: 'Phường Phú Hữu',
-        code: 26866,
-      },
-      {
-        name: 'Phường Thảo Điền',
-        code: 27088,
-      },
-      {
-        name: 'Phường An Phú',
-        code: 27091,
-      },
-      {
-        name: 'Phường An Khánh',
-        code: 27094,
-      },
-      {
-        name: 'Phường Bình Trưng Đông',
-        code: 27097,
-      },
-      {
-        name: 'Phường Bình Trưng Tây',
-        code: 27100,
-      },
-      {
-        name: 'Phường Cát Lái',
-        code: 27109,
-      },
-      {
-        name: 'Phường Thạnh Mỹ Lợi',
-        code: 27112,
-      },
-      {
-        name: 'Phường An Lợi Đông',
-        code: 27115,
-      },
-      {
-        name: 'Phường Thủ Thiêm',
-        code: 27118,
-      },
-    ],
-  },
-  {
-    name: 'Quận 3',
-    code: 770,
-    wards: [
-      {
-        name: 'Phường 14',
-        code: 27127,
-      },
-      {
-        name: 'Phường 12',
-        code: 27130,
-      },
-      {
-        name: 'Phường 11',
-        code: 27133,
-      },
-      {
-        name: 'Phường 13',
-        code: 27136,
-      },
-      {
-        name: 'Phường Võ Thị Sáu',
-        code: 27139,
-      },
-      {
-        name: 'Phường 09',
-        code: 27142,
-      },
-      {
-        name: 'Phường 10',
-        code: 27145,
-      },
-      {
-        name: 'Phường 04',
-        code: 27148,
-      },
-      {
-        name: 'Phường 05',
-        code: 27151,
-      },
-      {
-        name: 'Phường 03',
-        code: 27154,
-      },
-      {
-        name: 'Phường 02',
-        code: 27157,
-      },
-      {
-        name: 'Phường 01',
-        code: 27160,
-      },
-    ],
-  },
-  {
-    name: 'Quận 10',
-    code: 771,
-    wards: [
-      {
-        name: 'Phường 15',
-        code: 27163,
-      },
-      {
-        name: 'Phường 13',
-        code: 27166,
-      },
-      {
-        name: 'Phường 14',
-        code: 27169,
-      },
-      {
-        name: 'Phường 12',
-        code: 27172,
-      },
-      {
-        name: 'Phường 11',
-        code: 27175,
-      },
-      {
-        name: 'Phường 10',
-        code: 27178,
-      },
-      {
-        name: 'Phường 09',
-        code: 27181,
-      },
-      {
-        name: 'Phường 01',
-        code: 27184,
-      },
-      {
-        name: 'Phường 08',
-        code: 27187,
-      },
-      {
-        name: 'Phường 02',
-        code: 27190,
-      },
-      {
-        name: 'Phường 04',
-        code: 27193,
-      },
-      {
-        name: 'Phường 07',
-        code: 27196,
-      },
-      {
-        name: 'Phường 05',
-        code: 27199,
-      },
-      {
-        name: 'Phường 06',
-        code: 27202,
-      },
-    ],
-  },
-  {
-    name: 'Quận 11',
-    code: 772,
-    wards: [
-      {
-        name: 'Phường 15',
-        code: 27208,
-      },
-      {
-        name: 'Phường 05',
-        code: 27211,
-      },
-      {
-        name: 'Phường 14',
-        code: 27214,
-      },
-      {
-        name: 'Phường 11',
-        code: 27217,
-      },
-      {
-        name: 'Phường 03',
-        code: 27220,
-      },
-      {
-        name: 'Phường 10',
-        code: 27223,
-      },
-      {
-        name: 'Phường 13',
-        code: 27226,
-      },
-      {
-        name: 'Phường 08',
-        code: 27229,
-      },
-      {
-        name: 'Phường 09',
-        code: 27232,
-      },
-      {
-        name: 'Phường 12',
-        code: 27235,
-      },
-      {
-        name: 'Phường 07',
-        code: 27238,
-      },
-      {
-        name: 'Phường 06',
-        code: 27241,
-      },
-      {
-        name: 'Phường 04',
-        code: 27244,
-      },
-      {
-        name: 'Phường 01',
-        code: 27247,
-      },
-      {
-        name: 'Phường 02',
-        code: 27250,
-      },
-      {
-        name: 'Phường 16',
-        code: 27253,
-      },
-    ],
-  },
-  {
-    name: 'Quận 4',
-    code: 773,
-    wards: [
-      {
-        name: 'Phường 13',
-        code: 27259,
-      },
-      {
-        name: 'Phường 09',
-        code: 27262,
-      },
-      {
-        name: 'Phường 06',
-        code: 27265,
-      },
-      {
-        name: 'Phường 08',
-        code: 27268,
-      },
-      {
-        name: 'Phường 10',
-        code: 27271,
-      },
-      {
-        name: 'Phường 18',
-        code: 27277,
-      },
-      {
-        name: 'Phường 14',
-        code: 27280,
-      },
-      {
-        name: 'Phường 04',
-        code: 27283,
-      },
-      {
-        name: 'Phường 03',
-        code: 27286,
-      },
-      {
-        name: 'Phường 16',
-        code: 27289,
-      },
-      {
-        name: 'Phường 02',
-        code: 27292,
-      },
-      {
-        name: 'Phường 15',
-        code: 27295,
-      },
-      {
-        name: 'Phường 01',
-        code: 27298,
-      },
-    ],
-  },
-  {
-    name: 'Quận 5',
-    code: 774,
-    wards: [
-      {
-        name: 'Phường 04',
-        code: 27301,
-      },
-      {
-        name: 'Phường 09',
-        code: 27304,
-      },
-      {
-        name: 'Phường 03',
-        code: 27307,
-      },
-      {
-        name: 'Phường 12',
-        code: 27310,
-      },
-      {
-        name: 'Phường 02',
-        code: 27313,
-      },
-      {
-        name: 'Phường 08',
-        code: 27316,
-      },
-      {
-        name: 'Phường 07',
-        code: 27322,
-      },
-      {
-        name: 'Phường 01',
-        code: 27325,
-      },
-      {
-        name: 'Phường 11',
-        code: 27328,
-      },
-      {
-        name: 'Phường 14',
-        code: 27331,
-      },
-      {
-        name: 'Phường 05',
-        code: 27334,
-      },
-      {
-        name: 'Phường 06',
-        code: 27337,
-      },
-      {
-        name: 'Phường 10',
-        code: 27340,
-      },
-      {
-        name: 'Phường 13',
-        code: 27343,
-      },
-    ],
-  },
-  {
-    name: 'Quận 6',
-    code: 775,
-    wards: [
-      {
-        name: 'Phường 14',
-        code: 27346,
-      },
-      {
-        name: 'Phường 13',
-        code: 27349,
-      },
-      {
-        name: 'Phường 09',
-        code: 27352,
-      },
-      {
-        name: 'Phường 06',
-        code: 27355,
-      },
-      {
-        name: 'Phường 12',
-        code: 27358,
-      },
-      {
-        name: 'Phường 05',
-        code: 27361,
-      },
-      {
-        name: 'Phường 11',
-        code: 27364,
-      },
-      {
-        name: 'Phường 02',
-        code: 27367,
-      },
-      {
-        name: 'Phường 01',
-        code: 27370,
-      },
-      {
-        name: 'Phường 04',
-        code: 27373,
-      },
-      {
-        name: 'Phường 08',
-        code: 27376,
-      },
-      {
-        name: 'Phường 03',
-        code: 27379,
-      },
-      {
-        name: 'Phường 07',
-        code: 27382,
-      },
-      {
-        name: 'Phường 10',
-        code: 27385,
-      },
-    ],
-  },
-  {
-    name: 'Quận 8',
-    code: 776,
-    wards: [
-      {
-        name: 'Phường 08',
-        code: 27388,
-      },
-      {
-        name: 'Phường 02',
-        code: 27391,
-      },
-      {
-        name: 'Phường 01',
-        code: 27394,
-      },
-      {
-        name: 'Phường 03',
-        code: 27397,
-      },
-      {
-        name: 'Phường 11',
-        code: 27400,
-      },
-      {
-        name: 'Phường 09',
-        code: 27403,
-      },
-      {
-        name: 'Phường 10',
-        code: 27406,
-      },
-      {
-        name: 'Phường 04',
-        code: 27409,
-      },
-      {
-        name: 'Phường 13',
-        code: 27412,
-      },
-      {
-        name: 'Phường 12',
-        code: 27415,
-      },
-      {
-        name: 'Phường 05',
-        code: 27418,
-      },
-      {
-        name: 'Phường 14',
-        code: 27421,
-      },
-      {
-        name: 'Phường 06',
-        code: 27424,
-      },
-      {
-        name: 'Phường 15',
-        code: 27427,
-      },
-      {
-        name: 'Phường 16',
-        code: 27430,
-      },
-      {
-        name: 'Phường 07',
-        code: 27433,
-      },
-    ],
-  },
-  {
     name: 'Quận Bình Tân',
     code: 777,
     wards: [
@@ -1048,52 +952,6 @@ export const LOCATIONS = [
       {
         name: 'Phường An Lạc A',
         code: 27463,
-      },
-    ],
-  },
-  {
-    name: 'Quận 7',
-    code: 778,
-    wards: [
-      {
-        name: 'Phường Tân Thuận Đông',
-        code: 27466,
-      },
-      {
-        name: 'Phường Tân Thuận Tây',
-        code: 27469,
-      },
-      {
-        name: 'Phường Tân Kiểng',
-        code: 27472,
-      },
-      {
-        name: 'Phường Tân Hưng',
-        code: 27475,
-      },
-      {
-        name: 'Phường Bình Thuận',
-        code: 27478,
-      },
-      {
-        name: 'Phường Tân Quy',
-        code: 27481,
-      },
-      {
-        name: 'Phường Phú Thuận',
-        code: 27484,
-      },
-      {
-        name: 'Phường Tân Phú',
-        code: 27487,
-      },
-      {
-        name: 'Phường Tân Phong',
-        code: 27490,
-      },
-      {
-        name: 'Phường Phú Mỹ',
-        code: 27493,
       },
     ],
   },
@@ -1376,6 +1234,148 @@ export const LOCATIONS = [
       {
         name: 'Xã Lý Nhơn',
         code: 27682,
+      },
+    ],
+  },
+  {
+    name: 'Thành phố Thủ Đức',
+    code: 769,
+    wards: [
+      {
+        name: 'Phường Linh Xuân',
+        code: 26794,
+      },
+      {
+        name: 'Phường Bình Chiểu',
+        code: 26797,
+      },
+      {
+        name: 'Phường Linh Trung',
+        code: 26800,
+      },
+      {
+        name: 'Phường Tam Bình',
+        code: 26803,
+      },
+      {
+        name: 'Phường Tam Phú',
+        code: 26806,
+      },
+      {
+        name: 'Phường Hiệp Bình Phước',
+        code: 26809,
+      },
+      {
+        name: 'Phường Hiệp Bình Chánh',
+        code: 26812,
+      },
+      {
+        name: 'Phường Linh Chiểu',
+        code: 26815,
+      },
+      {
+        name: 'Phường Linh Tây',
+        code: 26818,
+      },
+      {
+        name: 'Phường Linh Đông',
+        code: 26821,
+      },
+      {
+        name: 'Phường Bình Thọ',
+        code: 26824,
+      },
+      {
+        name: 'Phường Trường Thọ',
+        code: 26827,
+      },
+      {
+        name: 'Phường Long Bình',
+        code: 26830,
+      },
+      {
+        name: 'Phường Long Thạnh Mỹ',
+        code: 26833,
+      },
+      {
+        name: 'Phường Tân Phú',
+        code: 26836,
+      },
+      {
+        name: 'Phường Hiệp Phú',
+        code: 26839,
+      },
+      {
+        name: 'Phường Tăng Nhơn Phú A',
+        code: 26842,
+      },
+      {
+        name: 'Phường Tăng Nhơn Phú B',
+        code: 26845,
+      },
+      {
+        name: 'Phường Phước Long B',
+        code: 26848,
+      },
+      {
+        name: 'Phường Phước Long A',
+        code: 26851,
+      },
+      {
+        name: 'Phường Trường Thạnh',
+        code: 26854,
+      },
+      {
+        name: 'Phường Long Phước',
+        code: 26857,
+      },
+      {
+        name: 'Phường Long Trường',
+        code: 26860,
+      },
+      {
+        name: 'Phường Phước Bình',
+        code: 26863,
+      },
+      {
+        name: 'Phường Phú Hữu',
+        code: 26866,
+      },
+      {
+        name: 'Phường Thảo Điền',
+        code: 27088,
+      },
+      {
+        name: 'Phường An Phú',
+        code: 27091,
+      },
+      {
+        name: 'Phường An Khánh',
+        code: 27094,
+      },
+      {
+        name: 'Phường Bình Trưng Đông',
+        code: 27097,
+      },
+      {
+        name: 'Phường Bình Trưng Tây',
+        code: 27100,
+      },
+      {
+        name: 'Phường Cát Lái',
+        code: 27109,
+      },
+      {
+        name: 'Phường Thạnh Mỹ Lợi',
+        code: 27112,
+      },
+      {
+        name: 'Phường An Lợi Đông',
+        code: 27115,
+      },
+      {
+        name: 'Phường Thủ Thiêm',
+        code: 27118,
       },
     ],
   },
