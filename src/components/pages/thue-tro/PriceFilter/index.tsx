@@ -22,7 +22,6 @@ const PriceFilter = () => {
   const priceLTE = router.query.priceLTE as string;
 
   React.useEffect(() => {
-    console.log('price change');
     if (priceGTE || priceLTE) {
       if (priceGTE && priceLTE) {
         setStatePriceFilter(
@@ -31,11 +30,11 @@ const PriceFilter = () => {
         setMinPrice(+priceGTE);
         setMaxPrice(+priceLTE);
       } else if (priceGTE) {
-        setStatePriceFilter(`> ${formatMoney(+priceGTE)}`);
+        setStatePriceFilter(`>= ${formatMoney(+priceGTE)}`);
         setMinPrice(+priceGTE);
         setMaxPrice(-1);
       } else if (priceLTE) {
-        setStatePriceFilter(`< ${formatMoney(+priceLTE)}`);
+        setStatePriceFilter(`<= ${formatMoney(+priceLTE)}`);
         setMinPrice(-1);
         setMaxPrice(+priceLTE);
       }

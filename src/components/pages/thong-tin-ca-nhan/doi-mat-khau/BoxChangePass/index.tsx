@@ -23,9 +23,7 @@ const BoxChangePass = () => {
 
   const handleChangePass = async (data: any) => {
     delete data.confirmPassword;
-    const result = await actionAuth.changePasswordAsync(data);
-    if (result) {
-    }
+    await actionAuth.changePasswordAsync(data);
   };
 
   return (

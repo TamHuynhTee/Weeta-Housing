@@ -6,6 +6,7 @@ import SelectBoxField from '@/components/common/SelectBoxField';
 import LayoutCommon from '@/components/layout/LayoutCommon';
 import BoxSelectLocation from '@/components/pages/tao-tin-moi/BoxSelectLocation';
 import { DISTRICTS, WARDS } from '@/constants/location.constants';
+import { formatMoney, moneyConverter } from '@/helpers/base.helpers';
 import Authentication from '@/HOC/auth.hoc';
 import { useArticle } from '@/stores/Article';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -42,7 +43,10 @@ const CreatePostPage = () => {
     formState: { errors },
     setValue,
     clearErrors,
+    watch,
   } = useForm({ resolver: yupResolver(schema) });
+
+  const preMoney = watch('price');
 
   const handleCreateArticle = async (data: any) => {
     const { number, street, area, price, ...rest } = data;
@@ -54,9 +58,10 @@ const CreatePostPage = () => {
       },
       street: `${number} ${street}`,
       area: +area,
-      price: +price,
+      price: moneyConverter(price),
       files: Object.values(rest.files),
     };
+    // console.log('payload', payload);
     const result = await actionArticle.createArticleAsync(payload);
     if (result) {
       router.push('/thong-tin-ca-nhan/quan-ly-bai-dang/chua-duyet');
@@ -66,7 +71,7 @@ const CreatePostPage = () => {
   const handleSelectDistrict = (item: { label: string; value: string }) => {
     batch(() => {
       setDistrict(item.label);
-      setValue('district', item.label);
+      setValue('district', item.value);
       setValue('ward', '');
       setSelectedDistrict(+item.value);
       setWard('Chọn phường, xã');
@@ -76,7 +81,7 @@ const CreatePostPage = () => {
 
   const handleSelectWard = (item: { label: string; value: string }) => {
     batch(() => {
-      setValue('ward', item.label);
+      setValue('ward', item.value);
       setWard(item.label);
       clearErrors('ward');
     });
@@ -172,14 +177,24 @@ const CreatePostPage = () => {
               </div>
               <div className="mt-[20px]">
                 <InputField
-                  type="number"
+                  type="money"
                   register={register('price')}
                   name="price"
-                  label="Giá tiền"
+                  label="Giá tiền (mỗi tháng) VND"
                   placeholder="Giá cho thuê"
+                  setValue={setValue}
+                  clearErrors={clearErrors}
                   errors={errors}
                   isRequired
                 />
+              </div>
+              <div className="mt-[20px]">
+                <p className="block font-semibold text-baseColor mb-[10px]">
+                  Tạm tính (VND)
+                </p>
+                <div className="bg-green-200 px-[20px] py-[10px] rounded-[3px]">
+                  {formatMoney(+preMoney)}
+                </div>
               </div>
               <LineHorizontal className="my-[30px]" />
               <p className="text-[20px] font-semibold text-baseColor text-center">
@@ -252,22 +267,26 @@ const ImagePicker = ({
   name: string;
   setValue: (key: string, value: unknown) => void;
 }) => {
+  const [pickedImages, setPickedImages] = React.useState<Array<any>>([]);
+
   const handlePickImages = (e: React.FormEvent<HTMLInputElement>) => {
     const files = e.currentTarget.files || [];
-    const preview = document.querySelector('#images_preview');
+    // const preview = document.querySelector('#images_preview');
     [].forEach.call(files, function (file: any) {
       if (/image\/.*/.test(file.type)) {
-        const img = new Image();
-        img.style.height = '200px'; // use style, "width" defaults to "auto"
-        img.style.width = '200px'; // use style, "width" defaults to "auto"
-        img.style.objectFit = 'cover';
-        img.style.borderRadius = '10px';
-        img.style.borderBlockColor = '1px';
-        img.src = (URL || webkitURL).createObjectURL(file);
-        preview?.appendChild(img); // add image to preview container
+        setPickedImages((images) => [
+          ...images,
+          (URL || webkitURL).createObjectURL(file),
+        ]);
       }
     });
     setValue(name, Object.values(files));
+  };
+
+  const handleRemoveImage = (index: number) => {
+    const newImages = pickedImages.filter((_, i) => i !== index);
+    setPickedImages(newImages);
+    setValue(name, newImages);
   };
 
   return (
@@ -277,7 +296,11 @@ const ImagePicker = ({
           className="h-[150px] w-[150px] opacity-30 cursor-pointer"
           htmlFor="article_images"
         >
-          <img src="/icons/ic_add.png" alt="" className="w-full h-full" />
+          <img
+            src="/icons/ic_add.png"
+            alt="add_image"
+            className="w-full h-full"
+          />
         </label>
         <input
           type="file"
@@ -291,7 +314,32 @@ const ImagePicker = ({
         />
       </div>
       {errors[name] && <ErrorText>{errors[name].message}</ErrorText>}
-      <div id="images_preview" className="flex flex-wrap gap-3 mt-[20px]"></div>
+      <div id="images_preview" className="grid grid-cols-5 gap-3 mt-[20px]">
+        {pickedImages.map((item, index) => (
+          <div
+            className="col-span-1 h-full w-full rounded-[10px] border relative"
+            key={index}
+          >
+            <img
+              src={item}
+              alt="images"
+              className="rounded-[10px] h-full w-full object-cover"
+            />
+            <div
+              className="absolute rounded-[50%] top-[-10px] right-[-10px] h-[30px] w-[30px] bg-gray-400 cursor-pointer"
+              onClick={function () {
+                handleRemoveImage(index);
+              }}
+            >
+              <img
+                src="/icons/ic_close.png"
+                alt="remove"
+                className="rounded-[50%] h-full w-full object-cover"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
     </>
   );
 };

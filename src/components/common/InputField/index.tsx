@@ -1,7 +1,12 @@
 import React from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import {
+  FieldValues,
+  UseFormClearErrors,
+  UseFormRegisterReturn,
+} from 'react-hook-form';
 import ErrorText from '../ErrorText';
 import InputDate from '../InputDate';
+import InputMoney from '../InputMoney';
 import InputNumber from '../InputNumber';
 
 type Props = {
@@ -12,7 +17,7 @@ type Props = {
   overrideInputClassName?: boolean;
   errors?: any;
   label?: string;
-  type?: 'password' | 'text' | 'email' | 'number' | 'date';
+  type?: 'password' | 'text' | 'email' | 'number' | 'date' | 'money';
   defaultValue?: string | number;
   placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -27,6 +32,8 @@ type Props = {
   maxNumber?: number;
   minNumber?: number;
   allowNegative?: boolean;
+  //   Money
+  clearErrors?: UseFormClearErrors<FieldValues>;
 };
 
 const InputField = ({
@@ -45,6 +52,9 @@ const InputField = ({
     return;
   },
   setValue = () => {
+    return;
+  },
+  clearErrors = () => {
     return;
   },
   showLabel = true,
@@ -99,6 +109,20 @@ const InputField = ({
           min={minDate}
           max={maxDate}
         />
+      ) : thisType === 'money' ? (
+        <InputMoney
+          name={name}
+          register={register}
+          inputClassName={inputClassName}
+          defaultValue={defaultValue}
+          placeholder={placeholder}
+          errors={errors}
+          overrideInputClassName={overrideInputClassName}
+          id={name}
+          disabled={disabled}
+          setValue={setValue}
+          clearError={clearErrors}
+        />
       ) : (
         <div className="relative bg-white">
           <input
@@ -123,15 +147,13 @@ const InputField = ({
               className="cursor-pointer block w-[20px] h-[20px] absolute right-[10px] top-[50%] translate-y-[-50%]"
               onClick={changeType}
             >
-              {thisType === 'password' ? (
-                <img src="/icons/ic_eye.png" className="w-full h-full" alt="" />
-              ) : (
-                <img
-                  src="/icons/ic_eye_close.png"
-                  className="w-full h-full"
-                  alt=""
-                />
-              )}
+              <img
+                src={`/icons/ic_eye${
+                  thisType !== 'password' ? '_close' : ''
+                }.png`}
+                className="w-full h-full"
+                alt=""
+              />
             </span>
           )}
         </div>

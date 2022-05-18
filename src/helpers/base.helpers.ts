@@ -99,6 +99,11 @@ export const getSplitPathName = (pathName: string, index: number) => {
   return pathName.split('/')[index] || '';
 };
 
+export const moneyConverter = (rawMoney: string | undefined) => {
+  if (!rawMoney) return '';
+  return +rawMoney.split('.').join('');
+};
+
 export const pushSearchQueries = (
   router: NextRouter,
   query: any,

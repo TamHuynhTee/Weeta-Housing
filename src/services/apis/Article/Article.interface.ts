@@ -2,8 +2,8 @@ import { GET_LIST_PARAMS } from '@/services/interfaces';
 
 export interface IReqCreateArticle {
   title: string;
-  district: string;
-  ward: string;
+  district: number;
+  ward: number;
   street: string;
   area: number;
   price: number;
@@ -19,4 +19,5 @@ export interface IParamGetArticle extends GET_LIST_PARAMS {
   'startDate[gte]': string;
   district: string;
   ward: string;
+  keyword: string;
 }

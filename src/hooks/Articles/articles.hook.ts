@@ -42,13 +42,13 @@ const useFilterPriceArticle = () => {
   const handleSelectMinPrice = (price: number) => {
     if (price === -1 && maxPrice === -1) setStatePriceFilter(initialText);
     else if (price !== -1 && maxPrice === -1)
-      setStatePriceFilter(`> ${formatMoney(price)}`);
+      setStatePriceFilter(`>= ${formatMoney(price)}`);
     else if (price === -1 && maxPrice !== -1)
-      setStatePriceFilter(`< ${formatMoney(maxPrice)}`);
+      setStatePriceFilter(`<= ${formatMoney(maxPrice)}`);
     else if (price !== -1 && maxPrice !== -1) {
       if (maxPrice <= price) {
         setMaxPrice(-1);
-        setStatePriceFilter(`> ${formatMoney(price)}`);
+        setStatePriceFilter(`>= ${formatMoney(price)}`);
         delete router.query.priceLTE;
         pushSearchQueries(router, { priceGTE: price });
       } else
@@ -65,13 +65,13 @@ const useFilterPriceArticle = () => {
   const handleSelectMaxPrice = (price: number) => {
     if (price === -1 && minPrice === -1) setStatePriceFilter(initialText);
     else if (price !== -1 && minPrice === -1)
-      setStatePriceFilter(`< ${formatMoney(price)}`);
+      setStatePriceFilter(`<= ${formatMoney(price)}`);
     else if (price === -1 && minPrice !== -1)
-      setStatePriceFilter(`> ${formatMoney(minPrice)}`);
+      setStatePriceFilter(`>= ${formatMoney(minPrice)}`);
     else if (price !== -1 && minPrice !== -1) {
       if (minPrice >= price) {
         setMinPrice(-1);
-        setStatePriceFilter(`< ${formatMoney(price)}`);
+        setStatePriceFilter(`<= ${formatMoney(price)}`);
         delete router.query.priceGTE;
         pushSearchQueries(router, { priceLTE: price });
       } else
@@ -108,12 +108,12 @@ const useFilterAreaArticle = () => {
 
   const handleSelectMinArea = (area: number) => {
     if (area === -1 && maxArea === -1) setStateAreaFilter(initialText);
-    else if (area !== -1 && maxArea === -1) setStateAreaFilter(`> ${area}`);
-    else if (area === -1 && maxArea !== -1) setStateAreaFilter(`< ${maxArea}`);
+    else if (area !== -1 && maxArea === -1) setStateAreaFilter(`>= ${area}`);
+    else if (area === -1 && maxArea !== -1) setStateAreaFilter(`<= ${maxArea}`);
     else if (area !== -1 && maxArea !== -1) {
       if (maxArea <= area) {
         setMaxArea(-1);
-        setStateAreaFilter(`> ${area}`);
+        setStateAreaFilter(`>= ${area}`);
         delete router.query.areaLTE;
         pushSearchQueries(router, { areaGTE: area });
       } else setStateAreaFilter(`${area} - ${maxArea}`);
@@ -129,13 +129,13 @@ const useFilterAreaArticle = () => {
   const handleSelectMaxArea = (area: number) => {
     if (area === -1 && minArea === -1) setStateAreaFilter(initialText);
     else if (area !== -1 && minArea === -1)
-      setStateAreaFilter(`< ${formatMoney(area)}`);
+      setStateAreaFilter(`<= ${formatMoney(area)}`);
     else if (area === -1 && minArea !== -1)
-      setStateAreaFilter(`> ${formatMoney(minArea)}`);
+      setStateAreaFilter(`>= ${formatMoney(minArea)}`);
     else if (area !== -1 && minArea !== -1) {
       if (minArea >= area) {
         setMinArea(-1);
-        setStateAreaFilter(`< ${formatMoney(area)}`);
+        setStateAreaFilter(`<= ${formatMoney(area)}`);
         delete router.query.areaGTE;
         pushSearchQueries(router, { areaLTE: area });
       } else

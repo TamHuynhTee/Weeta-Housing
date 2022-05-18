@@ -7,6 +7,8 @@ module.exports = {
         transparent: 'transparent',
         baseColor: 'rgb(0, 132, 137)',
         bannerHome: '#671C0B',
+        'text-warning': '#865711',
+        'bg-warning': '#FEF7E1',
 
         'white-100': '#F9F9F9',
         'white-200': '#F5F5F5',

@@ -27,11 +27,11 @@ const AreaFilter = () => {
         setMinArea(+areaGTE);
         setMaxArea(+areaLTE);
       } else if (areaGTE) {
-        setStateAreaFilter(`> ${areaGTE}`);
+        setStateAreaFilter(`>= ${areaGTE}`);
         setMinArea(+areaGTE);
         setMaxArea(-1);
       } else if (areaLTE) {
-        setStateAreaFilter(`< ${areaLTE}`);
+        setStateAreaFilter(`<= ${areaLTE}`);
         setMinArea(-1);
         setMaxArea(+areaLTE);
       }

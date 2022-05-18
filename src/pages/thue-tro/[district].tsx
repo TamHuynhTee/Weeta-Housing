@@ -48,6 +48,7 @@ const DistrictSearchPage = () => {
       district: district as string,
       ward: ward,
       page: currentPage,
+      keyword: router.query.q as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query]);
@@ -62,9 +63,20 @@ const DistrictSearchPage = () => {
       'startDate[gte]': router.query.startDate as string,
       district: district as string,
       ward: ward,
+      keyword: router.query.q as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query]);
+
+  React.useEffect(() => {
+    return () => {
+      actionArticle.setStoreArticleProperties({
+        article: { loading: false, list: [], isOver: false, total: 0 },
+        topArticle: { loading: false, list: [], isOver: false, total: 0 },
+      });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <React.Fragment>
@@ -199,7 +211,9 @@ const TopArticles = ({
         Tin TOP
       </div>
       {loading ? (
-        <BoxSkeletonArticle count={3} />
+        <div className="mt-[10px] grid grid-cols-3 gap-[10px]">
+          <BoxSkeletonArticle count={3} />
+        </div>
       ) : list.length > 0 ? (
         <div className="mt-[10px] grid grid-cols-3 gap-[10px]">
           {list.map((item, index) => (

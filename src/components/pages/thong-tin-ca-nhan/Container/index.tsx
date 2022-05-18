@@ -40,6 +40,19 @@ const ContainerProfile = (props: IProps) => {
                       Thông tin tài khoản
                     </a>
                   </Link>
+                  {stateAuth.role === ROLE.LESSOR && (
+                    <Link href="/thong-tin-ca-nhan/tai-khoan-moi-gioi">
+                      <a
+                        className={`mt-[16px] text-black text-[16px] hover:font-bold hover:text-green-600 ${
+                          isCurrentLink(
+                            '/thong-tin-ca-nhan/tai-khoan-moi-gioi'
+                          ) && 'font-bold text-green-600'
+                        } `}
+                      >
+                        Tài khoản môi giới
+                      </a>
+                    </Link>
+                  )}
                   <Link href="/thong-tin-ca-nhan/doi-mat-khau">
                     <a
                       className={`mt-[16px] text-black text-[16px] hover:font-bold hover:text-green-600 ${

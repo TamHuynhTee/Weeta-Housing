@@ -1,29 +1,37 @@
 import React from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 import { formatMoney } from '../../../helpers/base.helpers';
 
 interface Props {
   name: string;
-  placeholder: string;
-  className?: string;
-  disable?: boolean;
-  //   registerForm?: UseFormRegisterReturn;
+  id?: string;
+  placeholder?: string;
+  inputClassName?: string;
+  overrideInputClassName?: boolean;
+  disabled?: boolean;
+  register?: UseFormRegisterReturn;
   defaultValue?: number | string;
   setValue: (key: string, value: unknown) => void;
   clearError: (key: string) => void;
+  errors?: any;
 }
 
 const InputMoney = (props: Props) => {
   const {
     name,
-    placeholder,
-    className = '',
-    // registerForm = {},
-    disable = false,
+    placeholder = '',
+    register = {} as UseFormRegisterReturn,
+    disabled = false,
+    errors = {},
     defaultValue = '',
+    inputClassName = '',
+    id = '',
+    overrideInputClassName = false,
     setValue,
     clearError,
   } = props;
-  const refInput = React.useRef<HTMLInputElement>(null);
+  const refInput = React.useRef<HTMLInputElement | null>(null);
+  const { ref, ...rest } = register;
 
   React.useEffect(() => {
     if (refInput.current && defaultValue !== '') {
@@ -49,22 +57,32 @@ const InputMoney = (props: Props) => {
     const value = e.currentTarget.value.split('.').join('');
     setValue(name, value);
     clearError(name);
-    if (refInput.current) {
+    if (refInput.current && refInput.current.value) {
       refInput.current.value = formatMoney(+value);
     }
   };
+
   return (
     <input
-      name={name}
-      //   {...registerForm}
-      ref={refInput}
-      disabled={disable}
       type="text"
+      id={id}
+      {...rest}
+      ref={(e) => {
+        ref(e);
+        refInput.current = e;
+      }}
+      disabled={disabled}
+      name={name}
       onChange={onChange}
-      min={0}
       onKeyDown={checkCharacter}
       placeholder={placeholder}
-      className={`w-full pl-[16px] py-[8px] border outline-none border-gray-200 rounded-[10px] text-16px font-normal focus:border-green-600 ${className}`}
+      className={
+        overrideInputClassName
+          ? inputClassName
+          : `w-full bg-inherit border border-solid rounded-[3px] outline-none pl-[18px] pr-[18px] py-[4px] min-h-[48px] focus:shadow-[0_0_0_1px_rgb(0_132_137_/_20%)] border-[rgb(230_230_230)] ${
+              errors[name] && '!border-[rgb(249_80_61)]'
+            } ${inputClassName}`
+      }
     />
   );
 };

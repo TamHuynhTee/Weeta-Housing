@@ -40,22 +40,19 @@ const SearchPage = () => {
       'price[lte]': router.query.priceLTE as string,
       'startDate[gte]': router.query.startDate as string,
       page: currentPage,
+      keyword: router.query.q as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query]);
 
-  //   React.useEffect(() => {
-  //     actionArticle.getListTopArticleAsync({
-  //       page: 1,
-  //       limit: 4,
-  //     });
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   }, []);
-
-  //   const handleLoadMoreArticles = () => {
-  //     actionArticle.loadMoreArticleAsync({ ...query, page: page + 1 });
-  //     setPage((currentPage) => currentPage + 1);
-  //   };
+  React.useEffect(() => {
+    return () => {
+      actionArticle.setStoreArticleProperties({
+        article: { loading: false, list: [], isOver: false, total: 0 },
+      });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <React.Fragment>

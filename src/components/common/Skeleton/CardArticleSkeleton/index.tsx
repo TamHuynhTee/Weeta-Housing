@@ -10,9 +10,9 @@ export const CardArticleSkeleton = (props: Props) => {
   return showVertical ? (
     <div className="w-full min-h-[370px]">
       <Skeleton height={220} className="" />
-      <div className="px-[20px] py-[10px]">
+      <div className="pr-[20px] py-[10px]">
         <Skeleton height={24} />
-        <Skeleton height={24} width={250} className="mt-[20px]" />
+        <Skeleton height={24} className="mt-[20px]" />
         <Skeleton height={24} width={100} className="mt-[10px]" />
       </div>
     </div>

@@ -78,7 +78,7 @@ export const getListTopArticleAsync =
         setState({
           ...getState(),
           topArticle: {
-            ...getState().article,
+            ...getState().topArticle,
             list: result.data.data,
             total: result.data.total,
             isOver: result.data.isOver,
@@ -133,23 +133,35 @@ export const setDetailArticle =
     });
   };
 
-const setLoadingArticle = (loadingArticle: boolean) => (actions: Actions) => {
-  actions.setState({
-    ...actions.getState(),
-    article: {
-      ...actions.getState().article,
-      loading: loadingArticle,
-    },
-  });
-};
-
-const setLoadingTOPArticle =
-  (loadingArticle: boolean) => (actions: Actions) => {
-    actions.setState({
-      ...actions.getState(),
-      topArticle: {
-        ...actions.getState().topArticle,
+const setLoadingArticle =
+  (loadingArticle: boolean) =>
+  ({ setState, getState }: Actions) => {
+    setState({
+      ...getState(),
+      article: {
+        ...getState().article,
         loading: loadingArticle,
       },
+    });
+  };
+
+const setLoadingTOPArticle =
+  (loadingArticle: boolean) =>
+  ({ setState, getState }: Actions) => {
+    setState({
+      ...getState(),
+      topArticle: {
+        ...getState().topArticle,
+        loading: loadingArticle,
+      },
+    });
+  };
+
+export const setStoreArticleProperties =
+  (overrideProperties: Partial<State>) =>
+  ({ setState, getState }: Actions) => {
+    setState({
+      ...getState(),
+      ...overrideProperties,
     });
   };

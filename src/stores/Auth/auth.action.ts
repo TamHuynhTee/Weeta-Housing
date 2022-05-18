@@ -81,11 +81,10 @@ export const changePasswordAsync =
     if (result.error !== undefined) {
       if (!result.error) {
         notifySuccess('Đổi mật khẩu thành công');
-        return true;
+        return;
       }
     }
     notifyError(result.message);
-    return false;
   };
 
 export const getInfoByTokenAsync =

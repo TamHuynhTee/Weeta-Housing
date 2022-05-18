@@ -7,6 +7,7 @@ import {
   loadMoreArticleAsync,
   getDetailArticleAsync,
   setDetailArticle,
+  setStoreArticleProperties,
 } from './article.action';
 import { selector } from './article.selector';
 
@@ -49,6 +50,7 @@ const actions = {
   loadMoreArticleAsync,
   getDetailArticleAsync,
   setDetailArticle,
+  setStoreArticleProperties,
 };
 
 const Store = createStore({
