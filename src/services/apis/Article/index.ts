@@ -27,7 +27,7 @@ export const getDetailArticleService = (
 
 export const createArticleService = (
   payload: IReqCreateArticle
-): Promise<ReturnResponse<any>> => {
+): Promise<ReturnResponse<ARTICLE_MODEL>> => {
   return API.postFormDataFile(`${url}/createArticle`, {
     body: { ...payload },
   }) as any;

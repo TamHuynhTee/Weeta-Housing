@@ -110,19 +110,22 @@ export const getDetailArticleAsync =
     return false;
   };
 
-export const createArticleAsync = (payload: IReqCreateArticle) => async () => {
-  authInstance.actions.setAppLoading(true);
-  const result = await createArticleService(payload);
-  authInstance.actions.setAppLoading(false);
-  if (result.error !== undefined) {
-    if (!result.error) {
-      notifySuccess('Tạo bài viết thành công.');
-      return true;
+export const createArticleAsync =
+  (payload: IReqCreateArticle) =>
+  async ({ setState, getState }: Actions) => {
+    authInstance.actions.setAppLoading(true);
+    const result = await createArticleService(payload);
+    authInstance.actions.setAppLoading(false);
+    if (result.error !== undefined) {
+      if (!result.error) {
+        notifySuccess('Tạo bài viết thành công.');
+        setState({ ...getState(), articleDetail: result.data });
+        return { success: true, data: result.data };
+      }
     }
-  }
-  notifyError(result.message);
-  return false;
-};
+    notifyError(result.message);
+    return { success: false, data: undefined };
+  };
 
 export const setDetailArticle =
   (article: ARTICLE_MODEL | undefined) =>

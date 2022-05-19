@@ -26,6 +26,13 @@ export enum ENUM_MESSAGE_MODE {
   EDIT = 'EDIT',
 }
 
+export const DEFAULT_CENTER_COORDINATES = {
+  lat: 10.779454,
+  lng: 106.693039,
+};
+
+export const DEFAULT_CENTER_ZOOM = 13;
+
 export const DEFAULT_DATE_START = '2021-01-01';
 
 export const HOME_BANNER_CAROUSEL = [

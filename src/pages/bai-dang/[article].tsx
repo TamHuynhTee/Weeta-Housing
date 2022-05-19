@@ -1,3 +1,5 @@
+import Breadcrumb from '@/components/common/BreadCrumb';
+import GoogleMap from '@/components/common/GoogleMap';
 import LayoutCommon from '@/components/layout/LayoutCommon';
 import ImageSlide from '@/components/pages/bai-dang/ImageSlide';
 import WidgetLessor from '@/components/pages/bai-dang/WidgetLessor';
@@ -30,37 +32,46 @@ const ArticleDetail = () => {
   return (
     <React.Fragment>
       <LayoutCommon title="Bài đăng" isVisibleSearchBar>
-        <div className="px-[50px] py-[20px] grid grid-cols-6 gap-[30px] h-full">
-          {/* Detail */}
-          <div className="col-span-4 h-full w-full">
-            <ImageSlide images={data?.image} />
-            <div className="mt-[20px]">
-              <p className="font-bold text-[24px]">{data?.title}</p>
-              <p className="font-semibold text-[24px] mt-[10px]">
-                {data?.address}
-              </p>
-              <p className="text-[36px] font-bold max_line-2 text-baseColor mt-[10px]">
-                {formatMoney(data?.price || 0)}đ
-              </p>
-            </div>
-            <div className="mt-[20px]">
-              <p className="text-black-100 text-[18px] font-bold">
-                Thông tin chính
-              </p>
-              <ul className="list-disc list-inside mt-[10px] grid grid-cols-2">
-                <li className="col-span-1">
-                  Diện tích:{' '}
-                  <span className="text-baseColor">
-                    {data?.area} m<sup>2</sup>
-                  </span>
-                </li>
-                <li className="col-span-1">
-                  Ngày đăng:{' '}
-                  <span className="text-baseColor">
-                    {dayjs(data?.createdAt).format('DD/MM/YYYY')}
-                  </span>
-                </li>
-                {/* <li className="col-span-1">
+        <div className="px-[50px] py-[20px]">
+          <Breadcrumb
+            arr_link={[
+              { href: '/', value: 'Weeta' },
+              { href: '/thue-tro', value: 'Thuê trọ' },
+              { href: '/#!', value: `${data?.title}` },
+            ]}
+            classNameContainer="mb-[20px]"
+          />
+          <div className="grid grid-cols-6 gap-[30px] h-full">
+            {/* Detail */}
+            <div className="col-span-4 h-full w-full">
+              <ImageSlide images={data?.image} />
+              <div className="mt-[20px]">
+                <p className="font-bold text-[24px]">{data?.title}</p>
+                <p className="font-semibold text-[24px] mt-[10px]">
+                  {data?.address}
+                </p>
+                <p className="text-[36px] font-bold max_line-2 text-baseColor mt-[10px]">
+                  {formatMoney(data?.price || 0)}đ
+                </p>
+              </div>
+              <div className="mt-[20px]">
+                <p className="text-black-100 text-[18px] font-bold">
+                  Thông tin chính
+                </p>
+                <ul className="list-disc list-inside mt-[10px] grid grid-cols-2">
+                  <li className="col-span-1">
+                    Diện tích:{' '}
+                    <span className="text-baseColor">
+                      {data?.area} m<sup>2</sup>
+                    </span>
+                  </li>
+                  <li className="col-span-1">
+                    Ngày đăng:{' '}
+                    <span className="text-baseColor">
+                      {dayjs(data?.createdAt).format('DD/MM/YYYY')}
+                    </span>
+                  </li>
+                  {/* <li className="col-span-1">
                   Diện tích:{' '}
                   <span className="text-baseColor">{data?.area}</span>
                 </li>
@@ -68,16 +79,25 @@ const ArticleDetail = () => {
                   Diện tích:{' '}
                   <span className="text-baseColor">{data?.area}</span>
                 </li> */}
-              </ul>
+                </ul>
+              </div>
+              <div className="mt-[20px]">
+                <p className="text-black-100 text-[18px] font-bold">
+                  Giới thiệu
+                </p>
+                <p className="text-[16px] mt-[10px]">{data?.description}</p>
+              </div>
+              <div className="mt-[20px]">
+                <p className="text-black-100 text-[18px] font-bold">Bản đồ</p>
+                <div className="w-full h-[400px] mt-[10px]">
+                  <GoogleMap />
+                </div>
+              </div>
             </div>
-            <div className="mt-[20px]">
-              <p className="text-black-100 text-[18px] font-bold">Giới thiệu</p>
-              <p className="text-[16px] mt-[10px]">{data?.description}</p>
+            {/* Lessor */}
+            <div className="col-span-2 h-full w-full">
+              <WidgetLessor data={data?.lessor} />
             </div>
-          </div>
-          {/* Lessor */}
-          <div className="col-span-2 h-full w-full">
-            <WidgetLessor data={data?.lessor} />
           </div>
         </div>
       </LayoutCommon>

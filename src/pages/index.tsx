@@ -40,7 +40,7 @@ const Home = () => {
                 <div key={index} className="h-[calc(100vh-80px)]">
                   <img
                     src={item}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-fit"
                     alt={`home_banner_${index + 1}`}
                   />
                 </div>

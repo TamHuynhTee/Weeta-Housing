@@ -1,4 +1,6 @@
+import Breadcrumb from '@/components/common/BreadCrumb';
 import ErrorText from '@/components/common/ErrorText';
+import GoogleMap from '@/components/common/GoogleMap';
 import InputField from '@/components/common/InputField';
 import LimitedTextArea from '@/components/common/LimitedTextArea';
 import LineHorizontal from '@/components/common/LineHorizontal';
@@ -7,6 +9,7 @@ import LayoutCommon from '@/components/layout/LayoutCommon';
 import BoxSelectLocation from '@/components/pages/tao-tin-moi/BoxSelectLocation';
 import { DISTRICTS, WARDS } from '@/constants/location.constants';
 import { formatMoney, moneyConverter } from '@/helpers/base.helpers';
+import { notifyError } from '@/helpers/toast.helpers';
 import Authentication from '@/HOC/auth.hoc';
 import { useArticle } from '@/stores/Article';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -49,7 +52,13 @@ const CreatePostPage = () => {
   const preMoney = watch('price');
 
   const handleCreateArticle = async (data: any) => {
-    const { number, street, area, price, ...rest } = data;
+    const { number, street, area, price, files, ...rest } = data;
+    const listFiles = Object.values(files);
+    if (listFiles.length < 1) {
+      notifyError('Vui lòng đăng tải ít nhất 1 hình ảnh');
+      return;
+    }
+
     const payload = {
       ...rest,
       location: {
@@ -59,12 +68,12 @@ const CreatePostPage = () => {
       street: `${number} ${street}`,
       area: +area,
       price: moneyConverter(price),
-      files: Object.values(rest.files),
+      files: listFiles,
     };
     // console.log('payload', payload);
     const result = await actionArticle.createArticleAsync(payload);
-    if (result) {
-      router.push('/thong-tin-ca-nhan/quan-ly-bai-dang/chua-duyet');
+    if (result.success) {
+      router.push(`/tao-tin-moi/chon-goi-dang-tin/${result.data?._id}`);
     }
   };
 
@@ -91,74 +100,97 @@ const CreatePostPage = () => {
     <React.Fragment>
       <LayoutCommon title="Tạo tin" isVisibleSearchBar>
         <div className="w-full px-[50px] py-[10px]">
+          <Breadcrumb
+            arr_link={[
+              { href: '/', value: 'Weeta' },
+              { href: '/tao-tin-moi', value: 'Tạo tin mới' },
+            ]}
+            classNameContainer="mb-[20px]"
+          />
+          {/* title page */}
           <div className="h-[50px] bg-baseColor rounded-[3px] flex justify-center">
             <p className="text-[24px] text-white font-bold self-center">
               Đăng tin phòng trọ mới ở TP Hồ Chí Minh
             </p>
           </div>
+          {/* form */}
           <div className="mt-[20px] py-[20px] px-[60px] border border-[#d8d7d7] bg-white rounded-[3px] hover:shadow">
             <form
               className="w-full"
               onSubmit={handleSubmit(handleCreateArticle)}
             >
-              <p className="text-[20px] font-semibold text-baseColor text-center">
-                Vị trí
-              </p>
-              <div className="mt-[20px]">
-                <SelectBoxField
-                  label={'Quận, huyện'}
-                  id="district"
-                  state={district}
-                  registerForm={register('district')}
-                  name="district"
-                  errors={errors}
-                  isRequired
-                >
-                  <BoxSelectLocation
-                    items={DISTRICTS}
-                    handleSelectItem={handleSelectDistrict}
-                    htmlFor="district"
-                  />
-                </SelectBoxField>
-              </div>
-              <div className="mt-[20px]">
-                <SelectBoxField
-                  label={'Phường, xã'}
-                  id="ward"
-                  state={ward}
-                  registerForm={register('ward')}
-                  name="ward"
-                  errors={errors}
-                  isRequired
-                >
-                  <BoxSelectLocation
-                    items={WARDS(selectedDistrict)}
-                    handleSelectItem={handleSelectWard}
-                    htmlFor="ward"
-                  />
-                </SelectBoxField>
-              </div>
-              <div className="mt-[20px]">
-                <InputField
-                  type="text"
-                  register={register('street')}
-                  name="street"
-                  label="Đường"
-                  placeholder="Vui lòng nhập đúng tên đường"
-                  errors={errors}
-                  isRequired
-                />
-              </div>
-              <div className="mt-[20px]">
-                <InputField
-                  type="text"
-                  register={register('number')}
-                  name="number"
-                  label="Số nhà"
-                  placeholder="Nhập đúng (số hẻm)/số nhà"
-                  errors={errors}
-                  isRequired
-                />
+              <div className="grid grid-cols-4">
+                <div className="col-span-2 pr-[20px] border-r md:border-0 md:col-span-4 md:p-0">
+                  <p className="text-[20px] font-semibold text-baseColor text-center">
+                    Vị trí
+                  </p>
+                  <div className="mt-[20px]">
+                    <SelectBoxField
+                      label={'Quận, huyện'}
+                      id="district"
+                      state={district}
+                      registerForm={register('district')}
+                      name="district"
+                      errors={errors}
+                      isRequired
+                    >
+                      <BoxSelectLocation
+                        items={DISTRICTS}
+                        handleSelectItem={handleSelectDistrict}
+                        htmlFor="district"
+                      />
+                    </SelectBoxField>
+                  </div>
+                  <div className="mt-[20px]">
+                    <SelectBoxField
+                      label={'Phường, xã'}
+                      id="ward"
+                      state={ward}
+                      registerForm={register('ward')}
+                      name="ward"
+                      errors={errors}
+                      isRequired
+                    >
+                      <BoxSelectLocation
+                        items={WARDS(selectedDistrict)}
+                        handleSelectItem={handleSelectWard}
+                        htmlFor="ward"
+                      />
+                    </SelectBoxField>
+                  </div>
+                  <div className="mt-[20px]">
+                    <InputField
+                      type="text"
+                      register={register('street')}
+                      name="street"
+                      label="Đường"
+                      placeholder="Vui lòng nhập đúng tên đường"
+                      errors={errors}
+                      isRequired
+                    />
+                  </div>
+                  <div className="mt-[20px]">
+                    <InputField
+                      type="text"
+                      register={register('number')}
+                      name="number"
+                      label="Số nhà"
+                      placeholder="Nhập đúng (số hẻm)/số nhà"
+                      errors={errors}
+                      isRequired
+                    />
+                  </div>
+                </div>
+                <div className="col-span-2 pl-[20px] md:mt-[20px] md:col-span-4 md:h-[400px] md:p-0">
+                  <div className="w-full h-full flex flex-col">
+                    <p className="text-[20px] font-semibold text-baseColor text-center">
+                      Bản đồ
+                    </p>
+                    <div className="flex-1 w-full mt-[20px]">
+                      <GoogleMap />
+                    </div>
+                  </div>
+                </div>
               </div>
               <LineHorizontal className="my-[30px]" />
               <p className="text-[20px] font-semibold text-baseColor text-center">
@@ -190,10 +222,10 @@ const CreatePostPage = () => {
               </div>
               <div className="mt-[20px]">
                 <p className="block font-semibold text-baseColor mb-[10px]">
-                  Tạm tính (VND)
+                  Tạm tính
                 </p>
                 <div className="bg-green-200 px-[20px] py-[10px] rounded-[3px]">
-                  {formatMoney(+preMoney)}
+                  {formatMoney(+preMoney)} VND/tháng
                 </div>
               </div>
               <LineHorizontal className="my-[30px]" />
@@ -267,11 +299,15 @@ const ImagePicker = ({
   name: string;
   setValue: (key: string, value: unknown) => void;
 }) => {
+  const [images, setImages] = React.useState<Array<any>>([]);
   const [pickedImages, setPickedImages] = React.useState<Array<any>>([]);
 
   const handlePickImages = (e: React.FormEvent<HTMLInputElement>) => {
     const files = e.currentTarget.files || [];
-    // const preview = document.querySelector('#images_preview');
+    if (pickedImages.length + files.length > 10) {
+      notifyError('Không được đăng quá 10 ảnh');
+      return;
+    }
     [].forEach.call(files, function (file: any) {
       if (/image\/.*/.test(file.type)) {
         setPickedImages((images) => [
@@ -280,13 +316,16 @@ const ImagePicker = ({
         ]);
       }
     });
+    setImages(Object.values(files));
     setValue(name, Object.values(files));
   };
 
   const handleRemoveImage = (index: number) => {
-    const newImages = pickedImages.filter((_, i) => i !== index);
+    const newImages = pickedImages.filter((_, i) => i !== index); // string url, not files
+    const newImagesFiles = images.filter((_, i) => i !== index); // these are files
     setPickedImages(newImages);
-    setValue(name, newImages);
+    setImages(newImagesFiles);
+    setValue(name, newImagesFiles);
   };
 
   return (

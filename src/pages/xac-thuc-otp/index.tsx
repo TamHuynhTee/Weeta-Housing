@@ -65,7 +65,7 @@ const VerifyOTPPage = () => {
                     alt=""
                   />
                 </div>
-                <h3 className="text-[24px] font-bold text-[#85b6ff] ml-[10px]">
+                <h3 className="text-[24px] font-bold text-baseColor ml-[10px]">
                   Weeta Housing
                 </h3>
               </div>

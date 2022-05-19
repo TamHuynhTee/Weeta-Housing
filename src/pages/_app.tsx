@@ -40,7 +40,11 @@ const MyApp = ({ Component, pageProps }: any) => {
       <Layout>
         <Component {...pageProps} />
         {stateAuth.loading && <LoadingComponent />}
-        <Toaster reverseOrder={false} position="bottom-right" />
+        <Toaster
+          reverseOrder={false}
+          position="top-right"
+          containerStyle={{ top: 80 }}
+        />
       </Layout>
     </React.Fragment>
   );

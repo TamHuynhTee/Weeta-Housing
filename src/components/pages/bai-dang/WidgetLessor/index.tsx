@@ -26,14 +26,20 @@ const WidgetLessor = (props: Props) => {
                 {data?.fullname}
               </a>
             </Link>
-            <div
-              className="h-[24px] w-[24px] select-none"
-              title="Nhà môi giới đã được xác thực"
-            >
+            <div className="h-[24px] w-[24px] select-none">
               <img
-                src="/icons/ic_verified.png"
+                src={
+                  data?.isAutoApproved
+                    ? '/icons/ic_verified.png'
+                    : '/icons/ic_failed_cross.png'
+                }
                 className='className="w-full h-full object-cover rounded-[50%]"'
-                alt=""
+                alt="verification"
+                title={
+                  data?.isAutoApproved
+                    ? 'Nhà môi giới đã xác thực CNMD'
+                    : 'Nhà môi giới chưa xác thực CMND'
+                }
               />
             </div>
           </div>
