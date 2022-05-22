@@ -85,7 +85,6 @@ const DistrictSearchPage = () => {
         isVisibleSearchBar={false}
       >
         <div className="w-full px-[50px] py-[10px]">
-          <ArticleFilter />
           <Breadcrumb
             arr_link={[
               { href: '/', value: 'Weeta' },
@@ -96,6 +95,7 @@ const DistrictSearchPage = () => {
               },
             ]}
           />
+          <ArticleFilter />
           <div className="flex items-center justify-between my-[10px]">
             <p className="text-[20px] leading-[34px] font-bold max_line-1">
               Thuê trọ tại {district ? getProvince(+district)?.label : 'TPHCM'}.

@@ -33,7 +33,7 @@ const VerifyOTPPage = () => {
       token: params.get('token') as string,
     });
     if (result) {
-      router.push('/goi-dich-vu');
+      router.push('/goi-thanh-vien');
     }
   };
 

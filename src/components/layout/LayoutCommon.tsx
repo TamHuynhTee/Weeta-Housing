@@ -49,7 +49,7 @@ const LayoutCommon: FC<IProps> = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <Link href="/">
-                  <a className="font-bold text-[32px] md:text-[24px] text-back-100 mr-[25px] text-baseColor">
+                  <a className="font-bold text-[32px] md:text-[24px] mr-[25px] text-baseColor">
                     WEETA HOUSING
                   </a>
                 </Link>
@@ -78,14 +78,14 @@ const LayoutCommon: FC<IProps> = ({
                   {/* <Link href="#!">
                     <a className={`menu-link`}>Blog</a>
                   </Link> */}
-                  <Link href="/goi-dich-vu">
+                  <Link href="/goi-thanh-vien">
                     <a
                       className={`menu-link ${
                         getSplitPathName(router.pathname, 1) ===
-                          'goi-dich-vu' && 'active'
+                          'goi-thanh-vien' && 'active'
                       }`}
                     >
-                      Gói dịch vụ
+                      Gói thành viên
                     </a>
                   </Link>
                   {/* <NavLang /> */}

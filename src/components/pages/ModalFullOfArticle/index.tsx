@@ -10,7 +10,7 @@ const ModalFullOfArticle = (props: Props) => {
   const router = useRouter();
 
   const handleConfirm = () => {
-    router.push('/goi-dich-vu');
+    router.push('/goi-thanh-vien');
   };
 
   return (

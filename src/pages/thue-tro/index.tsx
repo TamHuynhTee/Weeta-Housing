@@ -58,7 +58,6 @@ const SearchPage = () => {
     <React.Fragment>
       <LayoutCommon title="Tìm trọ" isVisibleSearchBar={false}>
         <div className="w-full px-[50px] py-[10px]">
-          <ArticleFilter />
           {/* breadcrumb */}
           <Breadcrumb
             arr_link={[
@@ -66,6 +65,7 @@ const SearchPage = () => {
               { href: '/thue-tro', value: 'Thuê trọ TPHCM' },
             ]}
           />
+          <ArticleFilter />
 
           <div className="flex items-center justify-between my-[10px]">
             <p className="text-[20px] leading-[34px] font-bold my-[10px]">

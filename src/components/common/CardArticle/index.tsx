@@ -11,7 +11,7 @@ interface ErrorTextProps {
 const CardArticle = (props: ErrorTextProps) => {
   const { data, showVertical = true } = props;
   return showVertical ? (
-    <div className="w-full min-h-[370px] rounded-[5px] border">
+    <div className="w-full min-h-[370px] rounded-[5px] border relative">
       <div className="w-full h-[220px] rounded-tl-[5px] rounded-tr-[5px]">
         <img
           src={
@@ -35,6 +35,15 @@ const CardArticle = (props: ErrorTextProps) => {
         <p className="text-[20px] font-bold max_line-2 text-baseColor mt-[10px]">
           {formatMoney(data.price)}đ
         </p>
+      </div>
+      <div className="absolute top-[10px] right-[10px] cursor-pointer">
+        <div className="w-[30px] h-[30px] rounded-[50%] bg-green-100 p-1">
+          <img
+            src="/icons/ic_heart_fill.png"
+            alt="save"
+            className="h-full w-full object-contain"
+          />
+        </div>
       </div>
     </div>
   ) : (

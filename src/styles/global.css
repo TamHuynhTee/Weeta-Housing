@@ -148,9 +148,9 @@ input[type='email']:disabled {
 }
 
 .button-outline-primary-red {
-  @apply text-red-50;
+  @apply text-red-500;
   @apply border;
-  @apply border-red-50;
+  @apply border-red-500;
 }
 
 .button-outline-primary-blue {

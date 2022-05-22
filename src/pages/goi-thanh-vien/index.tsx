@@ -5,12 +5,12 @@ import React from 'react';
 const ServicePackage = () => {
   return (
     <React.Fragment>
-      <LayoutCommon title="Gói dịch vụ" isVisibleSearchBar>
+      <LayoutCommon title="Gói thành viên" isVisibleSearchBar>
         <div className="w-full min-h-[calc(100vh-94px)] mb-[50px]">
           <div className="mx-auto max-w-[1140px]">
             <div className="py-[60px] text-center">
               <p className="text-[25px] font-bold mb-[10px]">
-                Chọn gói dịch vụ của bạn
+                Chọn gói thành viên của bạn
               </p>
               <p className="leading-[18px] mb-[30px]">
                 Hãy chọn mua gói để đăng tin cho thuê hoặc bán nhà trọ.

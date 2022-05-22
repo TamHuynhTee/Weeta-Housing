@@ -1,3 +1,4 @@
+import { ENUM_TYPE_ARTICLE } from '@/constants/base.constants';
 import { GET_LIST_PARAMS } from '@/services/interfaces';
 
 export interface IReqCreateArticle {
@@ -20,4 +21,11 @@ export interface IParamGetArticle extends GET_LIST_PARAMS {
   district: string;
   ward: string;
   keyword: string;
+}
+
+export interface IReqPaymentArticle {
+  articleId: string;
+  servicePackageName: ENUM_TYPE_ARTICLE;
+  numOfDate: number;
+  prices: number;
 }
