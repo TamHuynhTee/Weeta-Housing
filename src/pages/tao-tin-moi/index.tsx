@@ -2,7 +2,6 @@ import Breadcrumb from '@/components/common/BreadCrumb';
 import ErrorText from '@/components/common/ErrorText';
 import GoogleMap from '@/components/common/GoogleMap';
 import InputField from '@/components/common/InputField';
-import LimitedTextArea from '@/components/common/LimitedTextArea';
 import LineHorizontal from '@/components/common/LineHorizontal';
 import SelectBoxField from '@/components/common/SelectBoxField';
 import LayoutCommon from '@/components/layout/LayoutCommon';
@@ -13,11 +12,19 @@ import { notifyError } from '@/helpers/toast.helpers';
 import Authentication from '@/HOC/auth.hoc';
 import { useArticle } from '@/stores/Article';
 import { yupResolver } from '@hookform/resolvers/yup';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm, UseFormRegisterReturn } from 'react-hook-form';
 import { batch } from 'react-sweet-state';
 import * as yup from 'yup';
+
+const CkEditorField = dynamic(
+  () => import('@/components/common/CkEditorField'),
+  {
+    ssr: false,
+  }
+);
 
 const schema = yup.object().shape({
   title: yup.string().required('Chưa nhập tiêu đề bài đăng'),
@@ -244,7 +251,7 @@ const CreatePostPage = () => {
                 />
               </div>
               <div className="mt-[20px]">
-                <label
+                {/* <label
                   htmlFor="description"
                   className="block font-semibold mb-[10px]"
                 >
@@ -256,6 +263,12 @@ const CreatePostPage = () => {
                   limit={1000}
                   value=""
                   placeholder="Giới thiệu chút về chỗ này"
+                /> */}
+                <CkEditorField
+                  name="description"
+                  setValue={setValue}
+                  defaultValue={''}
+                  label={'Mô tả'}
                 />
               </div>
               <LineHorizontal className="my-[30px]" />

@@ -85,7 +85,12 @@ const ArticleDetail = () => {
                 <p className="text-black-100 text-[18px] font-bold">
                   Giới thiệu
                 </p>
-                <p className="text-[16px] mt-[10px]">{data?.description}</p>
+                <p
+                  className="text-[16px] mt-[10px]"
+                  dangerouslySetInnerHTML={{
+                    __html: data?.description || '',
+                  }}
+                ></p>
               </div>
               <div className="mt-[20px]">
                 <p className="text-black-100 text-[18px] font-bold">Bản đồ</p>

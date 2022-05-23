@@ -57,7 +57,7 @@ const ChoosePostPackagePage = () => {
             <p className="my-[10px]">
               Vui lòng kiểm tra kỹ lại thông tin trước khi chọn gói và đăng tin.
             </p>
-            <div className="p-[30px] border-2 rounded-[3px] border-baseColor">
+            <div className="p-[30px] border-4 rounded-[3px] border-gray-200">
               <div className="grid grid-cols-6 gap-[30px] h-full">
                 {/* Preview */}
                 <div className="col-span-6 h-full w-full">
@@ -88,21 +88,18 @@ const ChoosePostPackagePage = () => {
                           {dayjs(data?.createdAt).format('DD/MM/YYYY')}
                         </span>
                       </li>
-                      {/* <li className="col-span-1">
-                  Diện tích:{' '}
-                  <span className="text-baseColor">{data?.area}</span>
-                </li>
-                <li className="col-span-1">
-                  Diện tích:{' '}
-                  <span className="text-baseColor">{data?.area}</span>
-                </li> */}
                     </ul>
                   </div>
                   <div className="mt-[20px]">
                     <p className="text-black-100 text-[18px] font-bold">
                       Giới thiệu
                     </p>
-                    <p className="text-[16px] mt-[10px]">{data?.description}</p>
+                    <p
+                      className="text-[16px] mt-[10px]"
+                      dangerouslySetInnerHTML={{
+                        __html: data?.description || '',
+                      }}
+                    ></p>
                   </div>
                   <div className="mt-[20px]">
                     <p className="text-black-100 text-[18px] font-bold">

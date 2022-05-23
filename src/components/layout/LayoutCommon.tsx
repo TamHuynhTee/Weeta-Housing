@@ -43,7 +43,7 @@ const LayoutCommon: FC<IProps> = ({
       <Head>
         <title>{title}</title>
       </Head>
-      <header className="w-full sticky top-0 bg-white z-[100]">
+      <header className="w-full sticky top-0 bg-white z-[100] shadow">
         <div className="w-full border-b border-grey-100">
           <div className="container_app mx-auto px-[50px]">
             <div className="flex items-center justify-between">
