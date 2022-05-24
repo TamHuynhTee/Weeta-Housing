@@ -9,6 +9,7 @@ import {
   getInfoByTokenService,
   loginService,
   registerAccountService,
+  saveArticleService,
   updateAvatarService,
   updateProfileService,
   verifyEmailService,
@@ -186,6 +187,21 @@ export const verifyEmailAsync =
     const result = await verifyEmailService(params);
     if (result.error !== undefined) {
       if (!result.error) {
+        return true;
+      }
+    }
+    notifyError(result.message);
+    return false;
+  };
+
+export const saveArticleAsync =
+  (articleId: string) =>
+  async ({ setState, getState }: Actions) => {
+    const result = await saveArticleService(articleId);
+    if (result.error !== undefined) {
+      if (!result.error) {
+        setState({ ...getState(), auth: result.data });
+        notifySuccess(result.message);
         return true;
       }
     }

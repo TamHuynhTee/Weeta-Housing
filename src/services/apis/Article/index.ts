@@ -2,11 +2,7 @@ import { ARTICLE_MODEL } from '@/models/Article.model';
 import { RouteApi } from '../../../constants/routeApi.constants';
 import API from '../_config/repositoryApi';
 import { ReturnResponse } from '../_config/response.interface';
-import {
-  IParamGetArticle,
-  IReqCreateArticle,
-  IReqPaymentArticle,
-} from './Article.interface';
+import { IParamGetArticle, IReqCreateArticle } from './Article.interface';
 import { resGetListArticle } from './Article.type';
 
 const url = RouteApi.article;
@@ -33,14 +29,6 @@ export const createArticleService = (
   payload: IReqCreateArticle
 ): Promise<ReturnResponse<ARTICLE_MODEL>> => {
   return API.postFormDataFile(`${url}/createArticle`, {
-    body: { ...payload },
-  }) as any;
-};
-
-export const paymentArticleService = (
-  payload: IReqPaymentArticle
-): Promise<ReturnResponse<string>> => {
-  return API.post(`${url}/payment-service-package`, {
     body: { ...payload },
   }) as any;
 };

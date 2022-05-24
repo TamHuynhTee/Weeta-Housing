@@ -75,6 +75,15 @@ export const formatChatMessageTime = (date: string | undefined) => {
   return dayjs(date).format('DD/MM/YYYY HH:mm');
 };
 
+export const formatArticleTime = (date: string | undefined) => {
+  const formatDate = dayjs(date).format('YYYY-MM-DD');
+  if (formatDate === dayjs().format('YYYY-MM-DD')) return `Hôm nay`;
+  const dayDistance = dayjs(formatDate).diff(dayjs(), 'days');
+  if (dayDistance === -1) return `Hôm qua`;
+  if (dayDistance < -1) return dayjs(date).format('DD/MM/YYYY');
+  return dayjs(date).format('DD/MM/YYYY');
+};
+
 export const isShowTimeMessageBetween = (time: number, time2: number) => {
   const currentTime = new Date().getTime();
   const timeMessage = new Date(currentTime - time).getTime();

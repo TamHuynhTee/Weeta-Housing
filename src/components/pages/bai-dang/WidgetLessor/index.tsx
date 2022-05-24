@@ -37,7 +37,7 @@ const WidgetLessor = (props: Props) => {
                 alt="verification"
                 title={
                   data?.isAutoApproved
-                    ? 'Nhà môi giới đã xác thực CNMD'
+                    ? 'Nhà môi giới đã xác thực CMND'
                     : 'Nhà môi giới chưa xác thực CMND'
                 }
               />

@@ -1020,28 +1020,7 @@ array.prototype.flatmap@^1.2.5:
     define-properties "^1.1.3"
     es-abstract "^1.19.0"
 
-"ask-any-ckeditor@file:./ckeditor5":
-  version "1.2.0"
-  dependencies:
-    "@ckeditor/ckeditor5-adapter-ckfinder" "^28.0.0"
-    "@ckeditor/ckeditor5-autoformat" "^28.0.0"
-    "@ckeditor/ckeditor5-basic-styles" "^28.0.0"
-    "@ckeditor/ckeditor5-block-quote" "^28.0.0"
-    "@ckeditor/ckeditor5-code-block" "28.0.0"
-    "@ckeditor/ckeditor5-editor-classic" "^28.0.0"
-    "@ckeditor/ckeditor5-essentials" "^28.0.0"
-    "@ckeditor/ckeditor5-heading" "^28.0.0"
-    "@ckeditor/ckeditor5-image" "^28.0.0"
-    "@ckeditor/ckeditor5-indent" "^28.0.0"
-    "@ckeditor/ckeditor5-link" "^28.0.0"
-    "@ckeditor/ckeditor5-list" "^28.0.0"
-    "@ckeditor/ckeditor5-media-embed" "^28.0.0"
-    "@ckeditor/ckeditor5-paragraph" "^28.0.0"
-    "@ckeditor/ckeditor5-paste-from-office" "^28.0.0"
-    "@ckeditor/ckeditor5-table" "^28.0.0"
-    "@ckeditor/ckeditor5-typing" "^28.0.0"
-
-"ask-any-ckeditor@file:.\\ckeditor5\\":
+"ask-any-ckeditor@file:ckeditor5":
   version "1.2.0"
   dependencies:
     "@ckeditor/ckeditor5-adapter-ckfinder" "^28.0.0"

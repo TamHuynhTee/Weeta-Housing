@@ -67,3 +67,9 @@ export const verifyEmailService = (params: {
   //   console.log(`payload`, payload);
   return API.get(`${url}/verify-email`, { ...params });
 };
+
+export const saveArticleService = (
+  articleId: string
+): Promise<ReturnResponse<ACCOUNT_MODEL>> => {
+  return API.get(`${`account`}/save-article/${articleId}`) as any;
+};

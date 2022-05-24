@@ -6,11 +6,14 @@ import WidgetLessor from '@/components/pages/bai-dang/WidgetLessor';
 import { formatMoney } from '@/helpers/base.helpers';
 import Authentication from '@/HOC/auth.hoc';
 import { useArticle } from '@/stores/Article';
+import { useAuth } from '@/stores/Auth';
 import dayjs from 'dayjs';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 
 const ArticleDetail = () => {
+  const [stateAuth] = useAuth();
   const [stateArticle, actionArticle] = useArticle();
   const router = useRouter();
   const articleId = router.query.article as string;
@@ -41,15 +44,35 @@ const ArticleDetail = () => {
             ]}
             classNameContainer="mb-[20px]"
           />
+
           <div className="grid grid-cols-6 gap-[30px] h-full">
             {/* Detail */}
             <div className="col-span-4 h-full w-full">
               <ImageSlide images={data?.image} />
+              {data?.lessor._id === stateAuth.authId && (
+                <div className="flex flex-row-reverse gap-3 mt-[5px]">
+                  <Link href="#!">
+                    <a className="">Chỉnh sửa</a>
+                  </Link>
+                  <Link href="#!">
+                    <a className="text-red-500">Ngưng bài đăng</a>
+                  </Link>
+                </div>
+              )}
               <div className="mt-[20px]">
                 <p className="font-bold text-[24px]">{data?.title}</p>
-                <p className="font-semibold text-[24px] mt-[10px]">
-                  {data?.address}
-                </p>
+                <div className="flex items-center mt-[10px]">
+                  <div className="h-[24px] w-[24px]">
+                    <img
+                      src="/icons/ic_location.png"
+                      className="w-full h-full object-contain"
+                      alt="location"
+                    />
+                  </div>
+                  <p className="font-normal text-[20px] leading-[30px]">
+                    {data?.address}
+                  </p>
+                </div>
                 <p className="text-[36px] font-bold max_line-2 text-baseColor mt-[10px]">
                   {formatMoney(data?.price || 0)}đ
                 </p>

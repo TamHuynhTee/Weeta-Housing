@@ -1,40 +1,18 @@
 import LineHorizontal from '@/components/common/LineHorizontal';
 import SelectBoxField from '@/components/common/SelectBoxField';
-import { ENUM_TYPE_ARTICLE } from '@/constants/base.constants';
+import {
+  ARTICLE_PACKAGES,
+  ENUM_PAYMENT_TYPE,
+  ENUM_TYPE_ARTICLE,
+} from '@/constants/base.constants';
 import { formatMoney } from '@/helpers/base.helpers';
 import { notifyError } from '@/helpers/toast.helpers';
 import { ARTICLE_PACKAGE_CARD_MODEL } from '@/models/ArticlePackage.model';
-import { paymentArticleService } from '@/services/apis/Article';
+import { paymentService } from '@/services/apis/Payment';
+import { IReqPaymentArticle } from '@/services/apis/Payment/Payment.interface';
 import { useRouter } from 'next/router';
 import React from 'react';
 import ArticlePackageCard from '../ArticlePackageCard';
-
-const ARTICLE_PACKAGES: Array<ARTICLE_PACKAGE_CARD_MODEL> = [
-  {
-    serviceName: ENUM_TYPE_ARTICLE.COMMON,
-    titleColor: 'rgb(4_153_168)',
-    title: 'COMMON',
-    price: 0,
-    description:
-      'Gói thường, tin đăng sẽ được hiển thị sắp xếp theo thời gian đăng, làm mới 1 lần/ngày',
-  },
-  {
-    serviceName: ENUM_TYPE_ARTICLE.UP,
-    titleColor: 'rgb(17_182_102)',
-    title: 'UP',
-    price: 20000,
-    description:
-      'Gói nâng cấp, tin đăng được hiển thị đầu danh sách mục tìm kiếm theo thứ tự thời gian đăng , làm mới 1 lần/ngày',
-  },
-  {
-    serviceName: ENUM_TYPE_ARTICLE.TOP,
-    titleColor: 'rgb(235_130_25)',
-    title: 'TOP',
-    price: 30000,
-    description:
-      'Gói cao cấp, tin đăng sẽ nằm ở mục ưu tiên trên đầu danh sách hiển thị, làm mới 1 lần/ngày',
-  },
-];
 
 const FormPickPackage = () => {
   const router = useRouter();
@@ -52,12 +30,14 @@ const FormPickPackage = () => {
 
   const handleProceedArticle = async () => {
     if (articleId) {
-      const result = await paymentArticleService({
+      const payload: IReqPaymentArticle = {
+        type: ENUM_PAYMENT_TYPE.SERVICE_PACKAGE,
         servicePackageName: articlePackage.serviceName,
         prices: articlePackage.price * pickedDays,
         numOfDate: pickedDays,
         articleId,
-      });
+      };
+      const result = await paymentService(payload);
       if (result) {
         window.location.href = result.data;
       } else notifyError('Có lỗi xảy ra, vui lòng thử lại');

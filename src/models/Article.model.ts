@@ -16,6 +16,7 @@ export interface ARTICLE_MODEL {
   isApproved: boolean;
   isAvailable: boolean;
   isDelete: boolean;
+  isPublished: boolean;
   createdAt: string;
   servicePackageId: string;
   servicePackageName: ENUM_TYPE_ARTICLE;

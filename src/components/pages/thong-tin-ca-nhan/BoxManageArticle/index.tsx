@@ -1,26 +1,36 @@
 import CardArticle from '@/components/common/CardArticle';
 import InputField from '@/components/common/InputField';
 import LineHorizontal from '@/components/common/LineHorizontal';
+import PaginationState from '@/components/common/PaginationState';
+import { IReqGetLessorArticles } from '@/services/apis/Lessor/Lessor.interface';
 import { useLessor } from '@/stores/Lessor';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { BaseSyntheticEvent } from 'react';
 import { useForm } from 'react-hook-form';
 
+const LIMIT = 5;
+
 const BoxManageArticle = () => {
   const [stateLessor, actionLessor] = useLessor();
   const router = useRouter();
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   const { register, handleSubmit } = useForm();
 
   const slug = router.query.slug as string;
   const keyword = router.query.q as string;
-  const status = slug === 'da-duyet' ? true : false;
+  const params: Partial<IReqGetLessorArticles> =
+    slug === 'da-duyet'
+      ? { isApproved: true, isPublished: true }
+      : slug === 'chua-duyet'
+      ? { isApproved: false, isPublished: true }
+      : { isPublished: false };
 
   React.useEffect(() => {
     actionLessor.getLessorArticleAsync({
-      limit: 5,
-      isApproved: status,
+      ...params,
+      limit: LIMIT,
       keyword,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -45,7 +55,7 @@ const BoxManageArticle = () => {
           <Link href={`/thong-tin-ca-nhan/quan-ly-bai-dang/da-duyet`}>
             <a
               className={`text-black py-[10px] min-w-[100px] ${
-                status && '!text-baseColor font-bold'
+                slug === 'da-duyet' && '!text-baseColor font-bold'
               }`}
             >
               Đã duyệt
@@ -54,7 +64,7 @@ const BoxManageArticle = () => {
           <Link href={`/thong-tin-ca-nhan/quan-ly-bai-dang/chua-duyet`}>
             <a
               className={`text-black py-[10px] min-w-[100px] ${
-                !status && '!text-baseColor font-bold'
+                slug === 'chua-duyet' && '!text-baseColor font-bold'
               }`}
             >
               Chưa duyệt
@@ -73,11 +83,23 @@ const BoxManageArticle = () => {
       </div>
       <LineHorizontal />
       <div className="mt-[20px]">
+        Có tổng cộng{' '}
+        <span className="text-baseColor font-bold">
+          {stateLessor.articles.total}
+        </span>{' '}
+        bài
         {stateLessor.articles.list.map((item, index) => (
           <CardArticle data={item} key={index} showVertical={false} />
         ))}
       </div>
-      <div className="mt-[20px]"></div>
+      <div className="mt-[20px]">
+        <PaginationState
+          total={stateLessor.articles.total}
+          limit={LIMIT}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      </div>
     </div>
   );
 };

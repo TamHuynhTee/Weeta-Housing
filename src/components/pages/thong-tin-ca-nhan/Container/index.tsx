@@ -1,8 +1,9 @@
 import ContainerModal from '@/components/common/ContainerModal';
 import { ROLE } from '@/constants/base.constants';
-import { isCurrentLink } from '@/helpers/base.helpers';
+import { getSplitPathName } from '@/helpers/base.helpers';
 import { useAuth } from '@/stores/Auth';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import BoxMenuAvatar from '../BoxAvatar';
 import ModalAvatar from '../ModalAvatar';
@@ -15,6 +16,7 @@ const ContainerProfile = (props: IProps) => {
   const [stateAuth] = useAuth();
   const { children } = props;
   const [modalAvatar, setModalAvatar] = React.useState(false);
+  const router = useRouter();
   return (
     <div className="w-full pb-[70px]">
       {/* <TabMenu /> */}
@@ -33,7 +35,7 @@ const ContainerProfile = (props: IProps) => {
                   <Link href="/thong-tin-ca-nhan">
                     <a
                       className={`mt-[16px] text-black text-[16px] hover:font-bold hover:text-green-600 ${
-                        isCurrentLink('/thong-tin-ca-nhan') &&
+                        getSplitPathName(router.pathname, 2) === '' &&
                         'font-bold text-green-600'
                       } `}
                     >
@@ -44,9 +46,8 @@ const ContainerProfile = (props: IProps) => {
                     <Link href="/thong-tin-ca-nhan/tai-khoan-moi-gioi">
                       <a
                         className={`mt-[16px] text-black text-[16px] hover:font-bold hover:text-green-600 ${
-                          isCurrentLink(
-                            '/thong-tin-ca-nhan/tai-khoan-moi-gioi'
-                          ) && 'font-bold text-green-600'
+                          getSplitPathName(router.pathname, 2) ===
+                            'tai-khoan-moi-gioi' && 'font-bold text-green-600'
                         } `}
                       >
                         Tài khoản môi giới
@@ -56,8 +57,8 @@ const ContainerProfile = (props: IProps) => {
                   <Link href="/thong-tin-ca-nhan/doi-mat-khau">
                     <a
                       className={`mt-[16px] text-black text-[16px] hover:font-bold hover:text-green-600 ${
-                        isCurrentLink('/thong-tin-ca-nhan/doi-mat-khau') &&
-                        'font-bold text-green-600'
+                        getSplitPathName(router.pathname, 2) ===
+                          'doi-mat-khau' && 'font-bold text-green-600'
                       } `}
                     >
                       Đổi mật khẩu
@@ -81,8 +82,8 @@ const ContainerProfile = (props: IProps) => {
                     <Link href="/thong-tin-ca-nhan/quan-ly-bai-dang/da-duyet">
                       <a
                         className={`mt-[16px] text-black text-[16px] hover:font-bold hover:text-green-600 ${
-                          isCurrentLink('/quan-ly-bai-dang') &&
-                          'font-bold text-green-600'
+                          getSplitPathName(router.pathname, 2) ===
+                            'quan-ly-bai-dang' && 'font-bold text-green-600'
                         } `}
                       >
                         Bài đăng của tôi

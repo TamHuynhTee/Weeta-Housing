@@ -15,6 +15,7 @@ import {
   registerLessorAsync,
   verifyOTPAsync,
   setAppLoading,
+  saveArticleAsync,
 } from './auth.action';
 import { selector } from './auth.selector';
 
@@ -46,6 +47,7 @@ const actions = {
   registerLessorAsync,
   verifyOTPAsync,
   setAppLoading,
+  saveArticleAsync,
 };
 
 const Store = createStore({

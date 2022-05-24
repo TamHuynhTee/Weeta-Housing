@@ -1,7 +1,13 @@
-import { formatMoney, getLengthArray } from '@/helpers/base.helpers';
+import {
+  formatArticleTime,
+  formatMoney,
+  getLengthArray,
+} from '@/helpers/base.helpers';
 import { ARTICLE_MODEL } from '@/models/Article.model';
+import { useAuth } from '@/stores/Auth';
 import Link from 'next/link';
 import React from 'react';
+import SaveArticleComponent from '../SaveArticleComponent';
 
 interface ErrorTextProps {
   data: ARTICLE_MODEL;
@@ -10,6 +16,8 @@ interface ErrorTextProps {
 
 const CardArticle = (props: ErrorTextProps) => {
   const { data, showVertical = true } = props;
+  const [stateAuth] = useAuth();
+  //   console.log(`data`, data);
   return showVertical ? (
     <div className="w-full min-h-[370px] rounded-[5px] border relative">
       <div className="w-full h-[220px] rounded-tl-[5px] rounded-tr-[5px]">
@@ -35,19 +43,18 @@ const CardArticle = (props: ErrorTextProps) => {
         <p className="text-[20px] font-bold max_line-2 text-baseColor mt-[10px]">
           {formatMoney(data.price)}đ
         </p>
+        <p className="text-[16px] font-semibold max_line-1 text-gray-400 mt-[10px]">
+          {formatArticleTime(data.createdAt)}
+        </p>
       </div>
-      <div className="absolute top-[10px] right-[10px] cursor-pointer">
-        <div className="w-[30px] h-[30px] rounded-[50%] bg-green-100 p-1">
-          <img
-            src="/icons/ic_heart_fill.png"
-            alt="save"
-            className="h-full w-full object-contain"
-          />
-        </div>
-      </div>
+      <SaveArticleComponent
+        className="top-[10px] right-[10px]"
+        articleId={data._id}
+        isSaved={stateAuth.auth?.saveArticle.includes(data._id)}
+      />
     </div>
   ) : (
-    <div className="w-full h-[220px] rounded-[3px] grid grid-cols-3 gap-4 py-[20px] border-b">
+    <div className="w-full h-[220px] rounded-[3px] grid grid-cols-3 gap-4 py-[20px] border-b last:border-b-0">
       <div className="col-span-1 h-full">
         <div className="w-full h-full rounded-[5px] border">
           <img
@@ -61,7 +68,7 @@ const CardArticle = (props: ErrorTextProps) => {
           />
         </div>
       </div>
-      <div className="col-span-2 h-full">
+      <div className="col-span-2 h-full relative">
         <Link href={`/bai-dang/${data._id}`}>
           <a className="text-[18px] text-black hover:text-baseColor font-semibold max_line-2 ">
             {data.title}
@@ -73,6 +80,14 @@ const CardArticle = (props: ErrorTextProps) => {
         <p className="text-[20px] font-bold max_line-2 text-baseColor mt-[10px]">
           {formatMoney(data.price)}đ
         </p>
+        <p className="text-[16px] font-semibold max_line-1 text-gray-400 mt-[10px]">
+          {formatArticleTime(data.createdAt)}
+        </p>
+        <SaveArticleComponent
+          className="bottom-[10px] right-[10px]"
+          articleId={data._id}
+          isSaved={stateAuth.auth?.saveArticle.includes(data._id)}
+        />
       </div>
     </div>
   );

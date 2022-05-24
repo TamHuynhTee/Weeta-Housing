@@ -10,6 +10,7 @@ export type IReqVerifyOPT = {
 };
 
 export type IReqGetLessorArticles = GET_LIST_PARAMS & {
+  isPublished: boolean;
   isApproved: boolean;
   keyword: string;
 };

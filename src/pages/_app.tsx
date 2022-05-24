@@ -43,7 +43,7 @@ const MyApp = ({ Component, pageProps }: any) => {
         <Toaster
           reverseOrder={false}
           position="top-right"
-          containerStyle={{ top: 80 }}
+          containerStyle={{ top: 90 }}
         />
       </Layout>
     </React.Fragment>

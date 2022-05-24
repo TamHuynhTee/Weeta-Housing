@@ -63,11 +63,13 @@ const NavLogged = ({
             </Link>
             {/* <div className="lineMenu"></div> */}
             <Link href="#!">
-              <a className="menuProfile menuLinkHover">Nhà trọ yêu thích</a>
+              <a className="menuProfile menuLinkHover">Bài đăng yêu thích</a>
             </Link>
-            <Link href="#!">
-              <a className="menuProfile menuLinkHover">Bài đăng đã lưu</a>
-            </Link>
+            {stateAuth.role === ROLE.LESSOR && (
+              <Link href="/thong-tin-ca-nhan/quan-ly-bai-dang/da-duyet">
+                <a className="menuProfile menuLinkHover">Bài đăng của tôi</a>
+              </Link>
+            )}
             <div className="lineMenu"></div>
             <button
               className="menuProfile menuLinkHover !text-red-700 font-bold"
