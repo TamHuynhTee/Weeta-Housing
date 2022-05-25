@@ -94,12 +94,12 @@ const ChoosePostPackagePage = () => {
                     <p className="text-black-100 text-[18px] font-bold">
                       Giới thiệu
                     </p>
-                    <p
-                      className="text-[16px] mt-[10px]"
+                    <div
+                      className="mt-[10px]"
                       dangerouslySetInnerHTML={{
                         __html: data?.description || '',
                       }}
-                    ></p>
+                    ></div>
                   </div>
                   <div className="mt-[20px]">
                     <p className="text-black-100 text-[18px] font-bold">

@@ -1,9 +1,13 @@
+import InputCheckbox from '@/components/common/InputCheckbox';
 import { notifyError } from '@/helpers/toast.helpers';
 import { useAuth } from '@/stores/Auth';
 import React from 'react';
+import { useForm } from 'react-hook-form';
 
 const BoxLessorAccount = () => {
   const [stateAuth] = useAuth();
+
+  const { register } = useForm();
 
   console.log('stateAuth', stateAuth.auth);
   const data = stateAuth.auth;
@@ -22,6 +26,12 @@ const BoxLessorAccount = () => {
               <InputImage name="front" />
               <InputImage name="back" />
             </div>
+            <InputCheckbox
+              register={register('accept')}
+              className="mt-[10px]"
+              name="accept"
+              label="Tôi cam kết chịu trách nhiệm về xác thực của mình"
+            />
           </>
         ) : (
           <div className="bg-green-100 text-green-500 p-[10px]">
@@ -47,19 +57,19 @@ const InputImage = ({ name }: { name: string }) => {
 
   return (
     <>
-      <div className="border-dashed w-[300px] h-[300px] mt-[10px] border-gray-300 rounded-[3px] border-2 flex justify-center items-center">
+      <div className="border-dashed bg-gray-100 w-[300px] h-[300px] mt-[10px] border-gray-300 rounded-[10px] border-2 flex justify-center items-center">
         <label
-          className="h-full w-full cursor-pointer"
-          htmlFor="article_images"
+          className="h-full w-full cursor-pointer active:scale-95"
+          htmlFor={name}
         >
           <img
             src={
               image
                 ? (URL || webkitURL).createObjectURL(image)
-                : '/icons/ic_add.png'
+                : '/icons/ic_add_image.png'
             }
             alt="add_image"
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain rounded-[10px]"
           />
         </label>
         <input

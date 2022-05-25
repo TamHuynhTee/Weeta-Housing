@@ -133,6 +133,15 @@ input[type='password']::-ms-reveal {
   -o-border-radius: 3px;
 }
 
+.button-primary:active,
+.button-no-outline-primary:active,
+.button-outline-primary:active,
+.button-outline-primary-red:active,
+.button-outline-primary-blue:active,
+.button-outline-primary-grey:active {
+  transform: scale(95%);
+}
+
 .button-no-outline-primary:hover,
 .button-outline-primary:hover,
 .button-outline-primary-red:hover,

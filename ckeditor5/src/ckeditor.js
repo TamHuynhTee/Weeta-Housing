@@ -37,6 +37,12 @@ import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specia
 import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation';
+import SpecialCharactersArrows from '@ckeditor/ckeditor5-special-characters/src/specialcharactersarrows.js';
+import SpecialCharactersCurrency from '@ckeditor/ckeditor5-special-characters/src/specialcharacterscurrency.js';
+import SpecialCharactersEssentials from '@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials.js';
+import SpecialCharactersLatin from '@ckeditor/ckeditor5-special-characters/src/specialcharacterslatin.js';
+import SpecialCharactersMathematical from '@ckeditor/ckeditor5-special-characters/src/specialcharactersmathematical.js';
+import SpecialCharactersText from '@ckeditor/ckeditor5-special-characters/src/specialcharacterstext.js';
 import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
 export default class ClassicEditor extends ClassicEditorBase {}
 
@@ -79,6 +85,12 @@ ClassicEditor.builtinPlugins = [
   Superscript,
   TodoList,
   Underline,
+  SpecialCharactersArrows,
+  SpecialCharactersEssentials,
+  SpecialCharactersCurrency,
+  SpecialCharactersLatin,
+  SpecialCharactersMathematical,
+  SpecialCharactersText,
 ];
 
 // Editor configuration.
@@ -92,10 +104,6 @@ ClassicEditor.defaultConfig = {
       'bold',
       'italic',
       'underline',
-      'subscript',
-      'superscript',
-      'blockquote',
-      'specialcharacters',
       '|',
       'fontfamily',
       'fontsize',
@@ -115,6 +123,11 @@ ClassicEditor.defaultConfig = {
       'insertTable',
       'tabletoolbar',
       'link',
+      '|',
+      'subscript',
+      'superscript',
+      'blockquote',
+      'specialcharacters',
       '|',
       'horizontalline',
       'pagebreak',

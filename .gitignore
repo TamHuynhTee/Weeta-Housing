@@ -35,3 +35,6 @@ local
 
 # vercel
 .vercel
+
+# ckeditor 5
+/ckeditor5

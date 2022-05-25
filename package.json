@@ -19,6 +19,7 @@
     "@hookform/resolvers": "^2.8.8",
     "ask-any-ckeditor": "file:.\\ckeditor5\\",
     "axios": "^0.26.0",
+    "ckeditor5": "^34.1.0",
     "dayjs": "^1.10.7",
     "google-map-react": "^2.1.10",
     "next": "^12.1.0",
@@ -35,6 +36,7 @@
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.4.1",
     "styled-jsx-plugin-postcss": "^4.0.1",
+    "weeta-housing": "file:",
     "yup": "^0.32.11"
   },
   "devDependencies": {
