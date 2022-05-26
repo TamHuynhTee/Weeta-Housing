@@ -23,10 +23,12 @@ import {
 } from '@/services/apis/Auth/Auth.interface';
 import {
   registerLessorService,
+  uploadIDCardService,
   verifyOTPService,
 } from '@/services/apis/Lessor';
 import {
   IReqSendOPT,
+  IReqUploadIDCard,
   IReqVerifyOPT,
 } from '@/services/apis/Lessor/Lessor.interface';
 import { State } from '.';
@@ -202,6 +204,21 @@ export const saveArticleAsync =
       if (!result.error) {
         setState({ ...getState(), auth: result.data });
         notifySuccess(result.message);
+        return true;
+      }
+    }
+    notifyError(result.message);
+    return false;
+  };
+
+export const uploadIDCardAsync =
+  (payload: IReqUploadIDCard) =>
+  async ({ setState, getState }: Actions) => {
+    const result = await uploadIDCardService(payload);
+    if (result.error !== undefined) {
+      if (!result.error) {
+        setState({ ...getState(), auth: result.data });
+        notifySuccess('Đã gửi ảnh xác thực');
         return true;
       }
     }

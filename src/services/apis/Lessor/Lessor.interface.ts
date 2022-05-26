@@ -14,3 +14,7 @@ export type IReqGetLessorArticles = GET_LIST_PARAMS & {
   isApproved: boolean;
   keyword: string;
 };
+
+export type IReqUploadIDCard = {
+  files: Array<File>;
+};

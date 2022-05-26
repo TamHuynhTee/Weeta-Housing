@@ -1,9 +1,11 @@
 import { RouteApi } from '@/constants/routeApi.constants';
+import { ACCOUNT_MODEL } from '@/models/Account.model';
 import API from '../_config/repositoryApi';
 import { ReturnResponse } from '../_config/response.interface';
 import {
   IReqGetLessorArticles,
   IReqSendOPT,
+  IReqUploadIDCard,
   IReqVerifyOPT,
 } from './Lessor.interface';
 import { resGetLessorArticles } from './Lessor.type';
@@ -30,4 +32,12 @@ export const getLessorArticleService = (
   params: Partial<IReqGetLessorArticles>
 ): Promise<ReturnResponse<resGetLessorArticles>> => {
   return API.get(`${url}/articles`, { ...params }) as any;
+};
+
+export const uploadIDCardService = (
+  payload: IReqUploadIDCard
+): Promise<ReturnResponse<ACCOUNT_MODEL>> => {
+  return API.postFormDataFile(`${url}/updoadIDCard`, {
+    body: { ...payload },
+  }) as any;
 };

@@ -16,6 +16,7 @@ import {
   verifyOTPAsync,
   setAppLoading,
   saveArticleAsync,
+  uploadIDCardAsync,
 } from './auth.action';
 import { selector } from './auth.selector';
 
@@ -48,6 +49,7 @@ const actions = {
   verifyOTPAsync,
   setAppLoading,
   saveArticleAsync,
+  uploadIDCardAsync,
 };
 
 const Store = createStore({
