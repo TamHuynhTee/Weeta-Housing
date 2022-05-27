@@ -1,5 +1,6 @@
 import Breadcrumb from '@/components/common/BreadCrumb';
 import CardArticle from '@/components/common/CardArticle';
+import LineHorizontal from '@/components/common/LineHorizontal';
 import BoxSkeletonArticle from '@/components/common/Skeleton/CardArticleSkeleton';
 import LayoutCommon from '@/components/layout/LayoutCommon';
 import ArticleFilter from '@/components/pages/thue-tro/ArticleFilter';
@@ -84,7 +85,7 @@ const DistrictSearchPage = () => {
         title={getProvince(Number(district))?.label}
         isVisibleSearchBar={false}
       >
-        <div className="w-full px-[50px] py-[10px]">
+        <div className="w-full px-[50px] py-[20px]">
           <Breadcrumb
             arr_link={[
               { href: '/', value: 'Weeta' },
@@ -96,6 +97,7 @@ const DistrictSearchPage = () => {
             ]}
           />
           <ArticleFilter />
+          <LineHorizontal className="!bg-gray-100" />
           <div className="flex items-center justify-between my-[10px]">
             <p className="text-[20px] leading-[34px] font-bold max_line-1">
               Thuê trọ tại {district ? getProvince(+district)?.label : 'TPHCM'}.
@@ -128,7 +130,7 @@ const DistrictSearchPage = () => {
                 </span>{' '}
                 kết quả
               </div>
-              <div className="mt-[10px] grid grid-cols-1 gap-[10px] col-span-2">
+              <div className="mt-[10px] grid grid-cols-1 col-span-2">
                 {stateArticle.articles.loading ? (
                   <BoxSkeletonArticle showVertical={false} count={3} />
                 ) : stateArticle.articles.list.length > 0 ? (
@@ -139,6 +141,7 @@ const DistrictSearchPage = () => {
                   <NoResults />
                 )}
               </div>
+              <LineHorizontal className="!bg-gray-100" />
               <Pagination
                 total={stateArticle.articles.total}
                 limit={ARTICLE_LIMIT}
@@ -152,7 +155,7 @@ const DistrictSearchPage = () => {
                 <p className="font-bold text-[18px] mb-[10px] text-center">
                   Phường, xã ở {getProvince(Number(district))?.label}
                 </p>
-                <ul className="list-disc list-inside">
+                <ul className="list-[disclosure-closed] list-inside">
                   <li
                     className="hover:underline cursor-pointer"
                     onClick={function () {

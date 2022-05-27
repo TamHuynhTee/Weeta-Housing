@@ -11,6 +11,12 @@ import { useForm } from 'react-hook-form';
 
 const LIMIT = 5;
 
+const TAB_MENU = [
+  { link: 'da-duyet', title: 'Đã duyệt' },
+  { link: 'chua-duyet', title: 'Chưa duyệt' },
+  { link: 'chua-dang', title: 'Chưa đăng' },
+];
+
 const BoxManageArticle = () => {
   const [stateLessor, actionLessor] = useLessor();
   const router = useRouter();
@@ -51,25 +57,21 @@ const BoxManageArticle = () => {
     <div className="container_shadow">
       <p className="text-black-100 text-[24px] font-bold">Quản lý bài đăng</p>
       <div className="my-[20px] grid grid-cols-2 gap-2">
-        <div className="flex gap-x-[20px] col-span-1">
-          <Link href={`/thong-tin-ca-nhan/quan-ly-bai-dang/da-duyet`}>
-            <a
-              className={`text-black py-[10px] min-w-[100px] ${
-                slug === 'da-duyet' && '!text-baseColor font-bold'
-              }`}
+        <div className="col-span-1 grid grid-cols-3">
+          {TAB_MENU.map((item, index) => (
+            <Link
+              key={index}
+              href={`/thong-tin-ca-nhan/quan-ly-bai-dang/${item.link}`}
             >
-              Đã duyệt
-            </a>
-          </Link>
-          <Link href={`/thong-tin-ca-nhan/quan-ly-bai-dang/chua-duyet`}>
-            <a
-              className={`text-black py-[10px] min-w-[100px] ${
-                slug === 'chua-duyet' && '!text-baseColor font-bold'
-              }`}
-            >
-              Chưa duyệt
-            </a>
-          </Link>
+              <a
+                className={`text-black text-center rounded-lg py-[10px] min-w-[100px] ${
+                  slug === item.link && '!text-white bg-baseColor font-bold'
+                }`}
+              >
+                {item.title}
+              </a>
+            </Link>
+          ))}
         </div>
         <form className="col-span-1" onSubmit={handleSubmit(handleSearch)}>
           <InputField

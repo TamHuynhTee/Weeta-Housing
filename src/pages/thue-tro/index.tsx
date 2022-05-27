@@ -1,5 +1,6 @@
 import Breadcrumb from '@/components/common/BreadCrumb';
 import CardArticle from '@/components/common/CardArticle';
+import LineHorizontal from '@/components/common/LineHorizontal';
 import BoxSkeletonArticle from '@/components/common/Skeleton/CardArticleSkeleton';
 import LayoutCommon from '@/components/layout/LayoutCommon';
 import ArticleFilter from '@/components/pages/thue-tro/ArticleFilter';
@@ -45,6 +46,8 @@ const SearchPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query]);
 
+  console.log('list', stateArticle.articles.list);
+
   React.useEffect(() => {
     return () => {
       actionArticle.setStoreArticleProperties({
@@ -57,7 +60,7 @@ const SearchPage = () => {
   return (
     <React.Fragment>
       <LayoutCommon title="Tìm trọ" isVisibleSearchBar={false}>
-        <div className="w-full px-[50px] py-[10px]">
+        <div className="w-full px-[50px] py-[20px]">
           {/* breadcrumb */}
           <Breadcrumb
             arr_link={[
@@ -66,7 +69,7 @@ const SearchPage = () => {
             ]}
           />
           <ArticleFilter />
-
+          <LineHorizontal className="!bg-gray-100" />
           <div className="flex items-center justify-between my-[10px]">
             <p className="text-[20px] leading-[34px] font-bold my-[10px]">
               Thuê trọ tại TPHCM. Giá thuê mới nhất tháng{' '}
@@ -96,7 +99,7 @@ const SearchPage = () => {
                 </span>{' '}
                 kết quả
               </div>
-              <div className="mt-[10px] grid grid-cols-1 gap-[10px] col-span-2">
+              <div className="mt-[10px] grid grid-cols-1 col-span-2">
                 {stateArticle.articles.loading ? (
                   <BoxSkeletonArticle showVertical={false} count={3} />
                 ) : stateArticle.articles.list.length > 0 ? (
@@ -107,6 +110,7 @@ const SearchPage = () => {
                   <NoResults />
                 )}
               </div>
+              <LineHorizontal className="!bg-gray-100" />
               <Pagination
                 total={stateArticle.articles.total}
                 limit={ARTICLE_LIMIT}

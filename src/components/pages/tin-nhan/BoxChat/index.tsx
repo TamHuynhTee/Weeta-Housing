@@ -164,17 +164,17 @@ const BoxChat = (props: BoxChatProps) => {
               <InputChat
                 registerForm={register(FORM_MESSAGE_NAME)}
                 name={FORM_MESSAGE_NAME}
-                className={`${styles.txtMessage}  `}
+                className={`${styles.txtMessage} flex-1`}
                 placeholder="Soạn tin nhắn..."
                 setValue={setValue}
               />
               {stateConversation.mode === ENUM_MESSAGE_MODE.CHAT ? (
                 <button
                   type="submit"
-                  className="w-[32px] h-[33px] cursor-pointer"
+                  className="bg-baseColor hover:opacity-90 rounded-[8px] px-[10px] py-[8px] min-w-[50px] h-full cursor-pointer"
                 >
                   <img
-                    src="/icons/ic_sendMess.png"
+                    src="/icons/ic_send_message.png"
                     className="w-full h-full object-contain"
                     alt="icon"
                   />

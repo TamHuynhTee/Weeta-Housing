@@ -1,4 +1,4 @@
-import { DEFAULT_AVATAR, ROLE } from '@/constants/base.constants';
+import { DEFAULT_AVATAR, ROLE, TYPE_MEMBER } from '@/constants/base.constants';
 import { useAuth } from '@/stores/Auth';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -15,7 +15,7 @@ const NavLogged = ({
 }: Props) => {
   const router = useRouter();
   const [stateAuth, actionAuth] = useAuth();
-  //   console.log(`stateAuth`, stateAuth);
+  console.log(`stateAuth`, stateAuth);
 
   const handleLogout = () => {
     actionAuth.logoutAsync();
@@ -51,17 +51,46 @@ const NavLogged = ({
         </div>
         <div className="wrap_contentHover">
           <div className="contentHover py-[16px]">
+            <div className="py-[5px] px-[20px]">
+              <p className="text-[14px] max_line-1">
+                {stateAuth.role === ROLE.LESSOR ? 'Nhà môi giới' : 'Người dùng'}
+                : <span className="font-bold">{stateAuth.auth?.fullname}</span>
+              </p>
+              <p className="text-[14px] max_line-1 my-[5px]">
+                Loại tài khoản:{' '}
+                {stateAuth.auth?.memberPackage ? (
+                  <Link href={`/goi-thanh-vien`}>
+                    <a
+                      className={`font-bold text-[${
+                        TYPE_MEMBER[stateAuth.auth.memberPackage].color
+                      }]`}
+                    >
+                      {TYPE_MEMBER[stateAuth.auth.memberPackage].name}
+                    </a>
+                  </Link>
+                ) : (
+                  ''
+                )}
+              </p>
+              {stateAuth.role === ROLE.LESSOR ? (
+                <p className="text-[14px] max_line-1 my-[5px]">
+                  Số bài đăng:{' '}
+                  <span className="font-bold">
+                    {stateAuth.auth?.articleUsed}/{stateAuth.auth?.articleTotal}
+                  </span>
+                </p>
+              ) : (
+                ''
+              )}
+            </div>
+            <div className="lineMenu"></div>
             <Link href="/thong-tin-ca-nhan">
               <a className="menuProfile menuLinkHover">Thông tin cá nhân</a>
             </Link>
             <div className="lineMenu"></div>
-            {/* <Link href="#!">
-              <a className="menuProfile menuLinkHover">Thông báo</a>
-            </Link> */}
             <Link href="/tin-nhan">
               <a className="menuProfile menuLinkHover">Tin nhắn</a>
             </Link>
-            {/* <div className="lineMenu"></div> */}
             <Link href="#!">
               <a className="menuProfile menuLinkHover">Bài đăng yêu thích</a>
             </Link>

@@ -82,6 +82,7 @@ input[type='password']::-ms-reveal {
   -moz-border-radius: 3px;
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
+  position: relative;
 }
 
 .button-no-outline-primary {
@@ -131,6 +132,7 @@ input[type='password']::-ms-reveal {
   -moz-border-radius: 3px;
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
+  position: relative;
 }
 
 .button-primary:active,
@@ -139,7 +141,8 @@ input[type='password']::-ms-reveal {
 .button-outline-primary-red:active,
 .button-outline-primary-blue:active,
 .button-outline-primary-grey:active {
-  transform: scale(95%);
+  /* transform: scale(99%); */
+  top: 1px;
 }
 
 .button-no-outline-primary:hover,
@@ -302,7 +305,7 @@ input[type='number'] {
 }
 
 .wrap_menuAvatar {
-  cursor: pointer;
+  /* cursor: pointer; */
   position: relative;
 }
 

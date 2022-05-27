@@ -30,6 +30,13 @@ export enum ENUM_TYPE_MEMBER {
   PREMIUM = 'PREMIUM',
 }
 
+export const TYPE_MEMBER = {
+  FREE: { name: 'MIỄN PHÍ', color: '#000' },
+  SAVE: { name: 'TIẾT KIỆM', color: 'rgb(17_182_102)' },
+  STANDARD: { name: 'TIÊU CHUẨN', color: 'rgb(4_153_168)' },
+  PREMIUM: { name: 'CAO CẤP', color: 'rgb(235_130_25)' },
+};
+
 export enum ENUM_MESSAGE_MODE {
   CHAT = 'CHAT',
   EDIT = 'EDIT',
