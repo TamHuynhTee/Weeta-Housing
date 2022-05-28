@@ -50,7 +50,7 @@ export const loadMoreArticleAsync =
     if (result.error !== undefined) {
       if (!result.error) {
         const currentList = [...getState().article.list, ...result.data.data];
-        console.log(`currentList`, currentList);
+        // console.log(`currentList`, currentList);
         setState({
           ...getState(),
           article: {

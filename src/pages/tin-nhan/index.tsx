@@ -51,7 +51,7 @@ const ChatPage = () => {
   return (
     <React.Fragment>
       <LayoutCommon title="Tin nhắn của tôi" isVisibleFooter={false}>
-        <div className="w-full h-[calc(100vh-81px)] px-[50px] py-[20px]">
+        <div className="w-full h-[calc(100vh-80px)] px-[50px] py-[20px]">
           <div className="w-full h-full grid grid-cols-7 shadow-[rgba(99,99,99,0.2)_0_2px_8px_0] rounded-[20px]">
             {/* Box channel */}
             <BoxChannel />

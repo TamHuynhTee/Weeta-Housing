@@ -3,12 +3,13 @@ import { ACCOUNT_MODEL } from '@/models/Account.model';
 import API from '../_config/repositoryApi';
 import { ReturnResponse } from '../_config/response.interface';
 import {
+  IParamsGetListTransaction,
   IReqGetLessorArticles,
   IReqSendOPT,
   IReqUploadIDCard,
   IReqVerifyOPT,
 } from './Lessor.interface';
-import { resGetLessorArticles } from './Lessor.type';
+import { resGetLessorArticles, resGetLessorTransactions } from './Lessor.type';
 
 const url = RouteApi.lessor;
 
@@ -40,4 +41,10 @@ export const uploadIDCardService = (
   return API.postFormDataFile(`${url}/updoadIDCard`, {
     body: { ...payload },
   }) as any;
+};
+
+export const getListTransactionService = (
+  params: Partial<IParamsGetListTransaction>
+): Promise<ReturnResponse<resGetLessorTransactions>> => {
+  return API.get(`${url}/list-transaction`, { ...params }) as any;
 };

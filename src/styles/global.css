@@ -42,20 +42,20 @@ input[type='password']::-ms-reveal {
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #e4e4e4;
-  border-radius: 10px;
+  background-color: transparent;
+  /* border-radius: 10px; */
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  border: 1px solid transparent;
+  /* border-radius: 2px; */
+  /* border: 0 solid transparent; */
   background-clip: content-box;
   /* background-color: #c4c4c4; */
-  @apply bg-baseColor;
+  @apply bg-gray-400;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgb(6, 153, 153);
+  @apply bg-gray-300;
 }
 
 .container_app {

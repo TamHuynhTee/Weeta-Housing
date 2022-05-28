@@ -56,8 +56,8 @@ const BoxManageArticle = () => {
   return (
     <div className="container_shadow">
       <p className="text-black-100 text-[24px] font-bold">Quản lý bài đăng</p>
-      <div className="my-[20px] grid grid-cols-2 gap-2">
-        <div className="col-span-1 grid grid-cols-3">
+      <div className="my-[20px] grid grid-cols-6 gap-2">
+        <div className="col-span-4 grid grid-cols-3">
           {TAB_MENU.map((item, index) => (
             <Link
               key={index}
@@ -73,7 +73,7 @@ const BoxManageArticle = () => {
             </Link>
           ))}
         </div>
-        <form className="col-span-1" onSubmit={handleSubmit(handleSearch)}>
+        <form className="col-span-2" onSubmit={handleSubmit(handleSearch)}>
           <InputField
             type="text"
             register={register('keyword')}

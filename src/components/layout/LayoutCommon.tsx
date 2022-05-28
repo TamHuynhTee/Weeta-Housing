@@ -44,64 +44,64 @@ const LayoutCommon: FC<IProps> = ({
         <title>{title}</title>
       </Head>
       <header className="w-full sticky top-0 bg-white z-[100] shadow">
-        <div className="w-full border-b border-grey-100">
-          <div className="container_app mx-auto px-[50px]">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <Link href="/">
-                  <a className="font-bold text-[32px] md:text-[24px] mr-[25px] text-baseColor">
-                    WEETA HOUSING
-                  </a>
-                </Link>
-                {isVisibleSearchBar && router.pathname !== '/thue-tro' && (
-                  <SearchBar
-                    className={`pb-[2 px] w-full h-[40px] text-[16px] text-back-100 placeholder-grey-50 border-0 outline-none md:hidden`}
-                  />
-                )}
-              </div>
+        {/* <div className="w-full border-b border-grey-100"> */}
+        <div className="container_app mx-auto px-[50px]">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <Link href="/">
+                <a className="font-bold text-[32px] md:text-[24px] mr-[25px] text-baseColor">
+                  WEETA HOUSING
+                </a>
+              </Link>
+              {isVisibleSearchBar && router.pathname !== '/thue-tro' && (
+                <SearchBar
+                  className={`pb-[2 px] w-full h-[40px] text-[16px] text-back-100 placeholder-grey-50 border-0 outline-none md:hidden`}
+                />
+              )}
+            </div>
 
+            <div className="flex items-center">
               <div className="flex items-center">
-                <div className="flex items-center">
-                  {/* <Link href="#!">
+                {/* <Link href="#!">
                     <a className={`menu-link mr-[30px]`}>Danh sách</a>
                   </Link> */}
-                  <Link href="/thue-tro">
-                    <a
-                      className={`menu-link ${
-                        getSplitPathName(router.pathname, 1) === 'thue-tro' &&
-                        'active'
-                      }`}
-                    >
-                      Thuê trọ
-                    </a>
-                  </Link>
-                  {/* <Link href="#!">
+                <Link href="/thue-tro">
+                  <a
+                    className={`menu-link ${
+                      getSplitPathName(router.pathname, 1) === 'thue-tro' &&
+                      'active'
+                    }`}
+                  >
+                    Thuê trọ
+                  </a>
+                </Link>
+                {/* <Link href="#!">
                     <a className={`menu-link`}>Blog</a>
                   </Link> */}
-                  <Link href="/goi-thanh-vien">
-                    <a
-                      className={`menu-link ${
-                        getSplitPathName(router.pathname, 1) ===
-                          'goi-thanh-vien' && 'active'
-                      }`}
-                    >
-                      Gói thành viên
-                    </a>
-                  </Link>
-                  {/* <NavLang /> */}
-                </div>
-                {stateAuth.isLoggedIn ? (
-                  <NavLogged
-                    openCreateLessorModal={openCreateLessorModal}
-                    openFullOfArticleModal={openFullOfArticleModal}
-                  />
-                ) : (
-                  <NavNotLogged />
-                )}
+                <Link href="/goi-thanh-vien">
+                  <a
+                    className={`menu-link ${
+                      getSplitPathName(router.pathname, 1) ===
+                        'goi-thanh-vien' && 'active'
+                    }`}
+                  >
+                    Gói thành viên
+                  </a>
+                </Link>
+                {/* <NavLang /> */}
               </div>
+              {stateAuth.isLoggedIn ? (
+                <NavLogged
+                  openCreateLessorModal={openCreateLessorModal}
+                  openFullOfArticleModal={openFullOfArticleModal}
+                />
+              ) : (
+                <NavNotLogged />
+              )}
             </div>
           </div>
         </div>
+        {/* </div> */}
       </header>
       <main className="container_app mx-auto">{children}</main>
       {isVisibleFooter && <Footer />}

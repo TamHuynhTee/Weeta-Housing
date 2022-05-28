@@ -1,3 +1,4 @@
+import { ENUM_PAYMENT_TYPE } from '@/constants/base.constants';
 import { GET_LIST_PARAMS } from '@/services/interfaces';
 
 export type IReqSendOPT = {
@@ -17,4 +18,8 @@ export type IReqGetLessorArticles = GET_LIST_PARAMS & {
 
 export type IReqUploadIDCard = {
   files: Array<File>;
+};
+
+export type IParamsGetListTransaction = GET_LIST_PARAMS & {
+  type: ENUM_PAYMENT_TYPE;
 };
