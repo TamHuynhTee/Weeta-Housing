@@ -81,7 +81,7 @@ const CardTransaction = ({
         >
           {data.status === ENUM_PAYMENT_STATUS.SUCCESS
             ? 'ĐÃ THANH TOÁN'
-            : 'ĐANG CHỜ THANH TOÁN'}
+            : 'ĐANG XỬ LÝ'}
         </p>
         <p className="mt-[10px] text-[14px] leading-[27px] font-normal text-right">
           {dayjs(data.createdAt).format('DD/MM/YYYY HH:mm')}

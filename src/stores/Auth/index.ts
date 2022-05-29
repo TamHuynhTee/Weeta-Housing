@@ -1,5 +1,6 @@
 import { ROLE } from '@/constants/base.constants';
 import { ACCOUNT_MODEL } from '@/models/Account.model';
+import { ARTICLE_MODEL } from '@/models/Article.model';
 import { createHook, createStore } from 'react-sweet-state';
 import {
   changePasswordAsync,
@@ -17,6 +18,7 @@ import {
   setAppLoading,
   saveArticleAsync,
   uploadIDCardAsync,
+  getListSaveArticleAsync,
 } from './auth.action';
 import { selector } from './auth.selector';
 
@@ -25,6 +27,12 @@ export type State = {
   auth: ACCOUNT_MODEL | undefined;
   role: ROLE;
   appLoading: boolean;
+  saveArticles: {
+    list: Array<ARTICLE_MODEL>;
+    isOver: boolean;
+    loading: boolean;
+    total: number;
+  };
 };
 
 const initialState: State = {
@@ -32,6 +40,12 @@ const initialState: State = {
   auth: undefined,
   role: ROLE.USER,
   appLoading: false,
+  saveArticles: {
+    list: [],
+    loading: false,
+    isOver: false,
+    total: 0,
+  },
 };
 
 const actions = {
@@ -50,6 +64,7 @@ const actions = {
   setAppLoading,
   saveArticleAsync,
   uploadIDCardAsync,
+  getListSaveArticleAsync,
 };
 
 const Store = createStore({

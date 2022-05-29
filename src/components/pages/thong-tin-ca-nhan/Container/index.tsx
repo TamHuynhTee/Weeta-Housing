@@ -83,12 +83,12 @@ const ContainerProfile = (props: IProps) => {
                   </Link>
                 </div>
               </div>
-              {stateAuth.role === ROLE.LESSOR && (
-                <div className="w-full mt-[24px]">
-                  <h2 className="text-[20px] font-bold text-baseColor">
-                    Quản lý bài đăng
-                  </h2>
-                  <div className="pl-[20px] grid">
+              <div className="w-full mt-[24px]">
+                <h2 className="text-[20px] font-bold text-baseColor">
+                  Quản lý bài đăng
+                </h2>
+                <div className="pl-[20px] grid">
+                  {stateAuth.role === ROLE.LESSOR && (
                     <Link href="/thong-tin-ca-nhan/quan-ly-bai-dang/da-duyet">
                       <a
                         className={`mt-[16px] text-black text-[16px] hover:font-bold hover:text-green-600 ${
@@ -99,9 +99,19 @@ const ContainerProfile = (props: IProps) => {
                         Bài đăng của tôi
                       </a>
                     </Link>
-                  </div>
+                  )}
+                  <Link href="/thong-tin-ca-nhan/bai-dang-da-luu">
+                    <a
+                      className={`mt-[16px] text-black text-[16px] hover:font-bold hover:text-green-600 ${
+                        getSplitPathName(router.pathname, 2) ===
+                          'bai-dang-da-luu' && 'font-bold text-green-600'
+                      } `}
+                    >
+                      Bài đăng đã lưu
+                    </a>
+                  </Link>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>

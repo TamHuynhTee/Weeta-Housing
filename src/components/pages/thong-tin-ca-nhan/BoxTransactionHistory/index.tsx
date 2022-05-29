@@ -2,6 +2,7 @@ import LineHorizontal from '@/components/common/LineHorizontal';
 import BoxSkeletonTransaction from '@/components/common/Skeleton/CardTransactionSkeleton';
 import { ENUM_PAYMENT_TYPE } from '@/constants/base.constants';
 import { useLessor } from '@/stores/Lessor';
+import dayjs from 'dayjs';
 import React from 'react';
 import NoResults from '../../thue-tro/NoResults';
 import CardTransaction from './CardTransaction';
@@ -70,13 +71,30 @@ const BoxTransactionHistory = () => {
             <BoxSkeletonTransaction count={3} />
           ) : stateLessor.transactions.list.length > 0 ? (
             <>
-              {stateLessor.transactions.list.map((item, index) => (
-                <CardTransaction
-                  key={index}
-                  data={item}
-                  type={typeTransaction}
-                />
-              ))}
+              {stateLessor.transactions.list.map((item, index) => {
+                if (
+                  index === 0 ||
+                  dayjs(item.createdAt).get('month') !==
+                    dayjs(
+                      stateLessor.transactions.list[index - 1]?.createdAt
+                    ).get('month')
+                )
+                  return (
+                    <span key={index}>
+                      <p className="text-gray-400 text-[18px] font-bold mb-3">
+                        Tháng {dayjs(item.createdAt).get('month') + 1}
+                      </p>
+                      <CardTransaction data={item} type={typeTransaction} />
+                    </span>
+                  );
+                return (
+                  <CardTransaction
+                    key={index}
+                    data={item}
+                    type={typeTransaction}
+                  />
+                );
+              })}
               {!stateLessor.transactions.isOver && (
                 <button
                   className="button-outline-primary self-center w-[200px]"

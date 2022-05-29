@@ -34,6 +34,8 @@ import {
 import { State } from '.';
 import { DEFAULT_SERVER_ERROR_MESSAGE } from '..';
 import socketService from '@/services/sockets/baseSocket';
+import { getListSaveArticleService } from '@/services/apis/Article';
+import { IParamGetArticle } from '@/services/apis/Article/Article.interface';
 
 type Actions = { setState: any; getState: () => State; dispatch: any };
 
@@ -261,5 +263,41 @@ export const setAppLoading =
     setState({
       ...getState(),
       appLoading: loading,
+    });
+  };
+
+export const getListSaveArticleAsync =
+  (params: Partial<IParamGetArticle>) =>
+  async ({ getState, setState, dispatch }: Actions) => {
+    dispatch(setLoadingArticle(true));
+    const result = await getListSaveArticleService(params);
+    dispatch(setLoadingArticle(false));
+    if (result.error !== undefined) {
+      if (!result.error) {
+        setState({
+          ...getState(),
+          saveArticles: {
+            ...getState().saveArticles,
+            list: result.data.saveArticle,
+            total: result.data.total,
+            isOver: result.data.isOver,
+          },
+        });
+        return true;
+      }
+    }
+    notifyError(result.message);
+    return false;
+  };
+
+const setLoadingArticle =
+  (loadingArticle: boolean) =>
+  ({ setState, getState }: Actions) => {
+    setState({
+      ...getState(),
+      saveArticles: {
+        ...getState().saveArticles,
+        loading: loadingArticle,
+      },
     });
   };

@@ -52,7 +52,7 @@ const CardArticle = (props: ErrorTextProps) => {
           {formatArticleTime(data.createdAt)}
         </p>
       </div>
-      {stateAuth.auth?._id !== data.lessor._id && (
+      {stateAuth.auth?._id !== data?.lessor?._id && (
         <SaveArticleComponent
           className="top-[10px] right-[10px]"
           articleId={data._id}
@@ -111,7 +111,7 @@ const CardArticle = (props: ErrorTextProps) => {
           {formatArticleTime(data.createdAt)}
         </p>
         {/* Save article */}
-        {stateAuth.auth?._id !== data.lessor._id && (
+        {stateAuth.auth?._id !== data?.lessor?._id && (
           <SaveArticleComponent
             className="bottom-[10px] right-[10px]"
             articleId={data._id}

@@ -2,12 +2,14 @@ import CardArticle from '@/components/common/CardArticle';
 import InputField from '@/components/common/InputField';
 import LineHorizontal from '@/components/common/LineHorizontal';
 import PaginationState from '@/components/common/PaginationState';
+import BoxSkeletonArticle from '@/components/common/Skeleton/CardArticleSkeleton';
 import { IReqGetLessorArticles } from '@/services/apis/Lessor/Lessor.interface';
 import { useLessor } from '@/stores/Lessor';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { BaseSyntheticEvent } from 'react';
 import { useForm } from 'react-hook-form';
+import NoResults from '../../thue-tro/NoResults';
 
 const LIMIT = 5;
 
@@ -38,9 +40,10 @@ const BoxManageArticle = () => {
       ...params,
       limit: LIMIT,
       keyword,
+      page: currentPage,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.query]);
+  }, [router.query, currentPage]);
 
   const handleSearch = (
     data: any,
@@ -90,9 +93,15 @@ const BoxManageArticle = () => {
           {stateLessor.articles.total}
         </span>{' '}
         bài
-        {stateLessor.articles.list.map((item, index) => (
-          <CardArticle data={item} key={index} showVertical={false} />
-        ))}
+        {stateLessor.articles.loading ? (
+          <BoxSkeletonArticle showVertical={false} count={3} />
+        ) : stateLessor.articles.list.length > 0 ? (
+          stateLessor.articles.list.map((item, index) => (
+            <CardArticle data={item} key={index} showVertical={false} />
+          ))
+        ) : (
+          <NoResults />
+        )}
       </div>
       <div className="mt-[20px]">
         <PaginationState

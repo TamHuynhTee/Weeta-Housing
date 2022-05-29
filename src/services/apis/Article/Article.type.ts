@@ -5,3 +5,9 @@ export type resGetListArticle = {
   total: number;
   isOver: boolean;
 };
+
+export type resGetListSaveArticle = {
+  saveArticle: Array<ARTICLE_MODEL>;
+  total: number;
+  isOver: boolean;
+};

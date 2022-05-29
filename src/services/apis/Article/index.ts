@@ -3,7 +3,7 @@ import { RouteApi } from '../../../constants/routeApi.constants';
 import API from '../_config/repositoryApi';
 import { ReturnResponse } from '../_config/response.interface';
 import { IParamGetArticle, IReqCreateArticle } from './Article.interface';
-import { resGetListArticle } from './Article.type';
+import { resGetListArticle, resGetListSaveArticle } from './Article.type';
 
 const url = RouteApi.article;
 
@@ -31,4 +31,10 @@ export const createArticleService = (
   return API.postFormDataFile(`${url}/createArticle`, {
     body: { ...payload },
   }) as any;
+};
+
+export const getListSaveArticleService = (
+  params: Partial<IParamGetArticle>
+): Promise<ReturnResponse<resGetListSaveArticle>> => {
+  return API.get(`${url}/get-save-article`, { ...params }) as any;
 };

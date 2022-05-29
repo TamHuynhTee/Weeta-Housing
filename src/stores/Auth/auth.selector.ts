@@ -6,5 +6,6 @@ export const selector = (state: State) => {
     authId: state.auth?._id || '',
     role: state.role,
     loading: state.appLoading,
+    saveArticles: state.saveArticles,
   };
 };
