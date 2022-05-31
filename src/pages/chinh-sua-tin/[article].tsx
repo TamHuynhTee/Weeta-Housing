@@ -30,22 +30,20 @@ const schema = yup.object().shape({
   title: yup.string().required('Chưa nhập tiêu đề bài đăng'),
   district: yup.string().required('Chưa chọn quận, huyện'),
   ward: yup.string().required('Chưa chọn phường, xã'),
-  street: yup.string().required('Chưa nhập đường'),
-  number: yup.string().required('Chưa nhập số nhà'),
+  street: yup.string().required('Chưa nhập địa chỉ'),
   price: yup.string().required('Chưa nhập giá cho thuê'),
   area: yup.string().required('Chưa nhập diện tích cho thuê'),
   description: yup.string(),
   //   files: yup.mixed().required('Chưa chọn ảnh chụp'),
 });
 
-const CreatePostPage = () => {
-  const [, actionArticle] = useArticle();
+const UpdatePostPage = () => {
+  const [stateArticle, actionArticle] = useArticle();
   const [selectedDistrict, setSelectedDistrict] = React.useState<
     number | undefined
   >(undefined);
   const [district, setDistrict] = React.useState('Chọn quận, huyện');
   const [ward, setWard] = React.useState('Chọn phường, xã');
-  const router = useRouter();
 
   const {
     register,
@@ -58,30 +56,72 @@ const CreatePostPage = () => {
 
   const preMoney = watch('price') || 0;
 
-  const handleCreateArticle = async (data: any) => {
-    const { number, street, area, price, files, ...rest } = data;
-    const listFiles = Object.values(files);
-    if (listFiles.length < 1) {
-      notifyError('Vui lòng đăng tải ít nhất 1 hình ảnh');
-      return;
-    }
+  const router = useRouter();
+  const articleId = router.query.article as string;
+  const data = stateArticle.articleDetail;
+  console.log(`data`, data);
 
-    const payload = {
-      ...rest,
-      location: {
-        latitude: 1,
-        longtitude: 1,
-      },
-      street: `${number} ${street}`,
-      area: +area,
-      price: moneyConverter(price),
-      files: listFiles,
+  React.useEffect(() => {
+    if (!stateArticle.articleDetail)
+      if (articleId) actionArticle.getDetailArticleAsync(articleId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [articleId, stateArticle.articleDetail]);
+
+  React.useEffect(() => {
+    return () => {
+      if (stateArticle.articleDetail) actionArticle.setDetailArticle(undefined);
     };
-    // console.log('payload', payload);
-    const result = await actionArticle.createArticleAsync(payload);
-    if (result.success) {
-      router.push(`/tao-tin-moi/chon-goi-dang-tin/${result.data?._id}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  React.useEffect(() => {
+    if (data) {
+      batch(() => {
+        setValue('district', data.district);
+        setDistrict(
+          DISTRICTS.find((item) => item.value === data.district)?.label || ''
+        );
+        setSelectedDistrict(data.district);
+        setWard(
+          WARDS(data.district).find((item) => item.value === data.ward)
+            ?.label || ''
+        );
+        setValue('ward', data.ward);
+        setValue('street', data.street);
+        setValue('area', data.area);
+        setValue('price', formatMoney(data.price));
+        setValue('title', data.title);
+        setValue('description', data.description);
+      });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  const handleUpdateArticle = async (data: any) => {
+    const { number, street, area, price, files, ...rest } = data;
+    console.log('data', data);
+    // const listFiles = Object.values(files);
+    // if (listFiles.length < 1) {
+    //   notifyError('Vui lòng đăng tải ít nhất 1 hình ảnh');
+    //   return;
+    // }
+
+    // const payload = {
+    //   ...rest,
+    //   location: {
+    //     latitude: 1,
+    //     longtitude: 1,
+    //   },
+    //   street: `${number} ${street}`,
+    //   area: +area,
+    //   price: moneyConverter(price),
+    //   files: listFiles,
+    // };
+    // // console.log('payload', payload);
+    // const result = await actionArticle.createArticleAsync(payload);
+    // if (result.success) {
+    //   router.push(`/tao-tin-moi/chon-goi-dang-tin/${result.data?._id}`);
+    // }
   };
 
   const handleSelectDistrict = (item: { label: string; value: string }) => {
@@ -105,26 +145,26 @@ const CreatePostPage = () => {
 
   return (
     <React.Fragment>
-      <LayoutCommon title="Tạo tin" isVisibleSearchBar>
+      <LayoutCommon title="Chỉnh sửa tin" isVisibleSearchBar>
         <div className="w-full px-[50px] py-[10px]">
           <Breadcrumb
             arr_link={[
               { href: '/', value: 'Weeta' },
-              { href: '/tao-tin-moi', value: 'Tạo tin mới' },
+              { href: '/tao-tin-moi', value: 'Chỉnh sửa' },
             ]}
             classNameContainer="mb-[20px]"
           />
           {/* title page */}
-          <div className="h-[50px] bg-baseColor rounded-[3px] flex justify-center">
+          <div className="h-[50px] bg-orange-400 rounded-[3px] flex justify-center">
             <p className="text-[24px] text-white font-bold self-center">
-              Đăng tin phòng trọ mới ở TP Hồ Chí Minh
+              Chỉnh sửa thông tin phòng trọ
             </p>
           </div>
           {/* form */}
           <div className="mt-[20px] py-[20px] px-[60px] border border-[#d8d7d7] bg-white rounded-[3px] hover:shadow">
             <form
               className="w-full"
-              onSubmit={handleSubmit(handleCreateArticle)}
+              onSubmit={handleSubmit(handleUpdateArticle)}
             >
               <div className="grid grid-cols-4">
                 <div className="col-span-2 pr-[20px] border-r md:border-0 md:col-span-4 md:p-0">
@@ -176,7 +216,7 @@ const CreatePostPage = () => {
                       isRequired
                     />
                   </div>
-                  <div className="mt-[20px]">
+                  {/* <div className="mt-[20px]">
                     <InputField
                       type="text"
                       register={register('number')}
@@ -186,7 +226,7 @@ const CreatePostPage = () => {
                       errors={errors}
                       isRequired
                     />
-                  </div>
+                  </div> */}
                 </div>
                 <div className="col-span-2 pl-[20px] md:mt-[20px] md:col-span-4 md:h-[400px] md:p-0">
                   <div className="w-full h-full flex flex-col">
@@ -251,23 +291,10 @@ const CreatePostPage = () => {
                 />
               </div>
               <div className="mt-[20px]">
-                {/* <label
-                  htmlFor="description"
-                  className="block font-semibold mb-[10px]"
-                >
-                  Mô tả
-                </label>
-                <LimitedTextArea
-                  name="description"
-                  registerForm={register('description')}
-                  limit={1000}
-                  value=""
-                  placeholder="Giới thiệu chút về chỗ này"
-                /> */}
                 <CkEditorField
                   name="description"
                   setValue={setValue}
-                  defaultValue={''}
+                  defaultValue={data?.description}
                   label={'Mô tả'}
                 />
               </div>
@@ -287,12 +314,19 @@ const CreatePostPage = () => {
                   setValue={setValue}
                 />
               </div>
-              <input
-                type="submit"
-                className="button-primary w-32 mt-[30px] h-[40px] md:mt-[20px] md:h-[30px]"
-                value={'Tạo'}
-                // disabled={isSubmitting}
-              />
+              <div className="mt-[30px] flex gap-x-[20px]">
+                <input
+                  type="submit"
+                  className="button-primary w-[128px] h-[40px]"
+                  value={'Cập nhật'}
+                />
+                <button
+                  type="button"
+                  className="button-outline-primary-red w-[128px] h-[40px]"
+                >
+                  Xóa
+                </button>
+              </div>
             </form>
           </div>
         </div>
@@ -301,4 +335,4 @@ const CreatePostPage = () => {
   );
 };
 
-export default Authentication(CreatePostPage, { requiredLogin: true });
+export default Authentication(UpdatePostPage, { requiredLogin: true });

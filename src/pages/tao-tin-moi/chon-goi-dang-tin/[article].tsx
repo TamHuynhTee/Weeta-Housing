@@ -8,6 +8,7 @@ import { formatMoney } from '@/helpers/base.helpers';
 import Authentication from '@/HOC/auth.hoc';
 import { useArticle } from '@/stores/Article';
 import dayjs from 'dayjs';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -113,12 +114,11 @@ const ChoosePostPackagePage = () => {
               </div>
             </div>
             <div className="flex flex-row-reverse items-center gap-3">
-              <button
-                type="button"
-                className="button-outline-primary w-32 mt-[30px] h-[40px] md:mt-[20px] md:h-[30px]"
-              >
-                Chỉnh sửa
-              </button>
+              <Link href={`/chinh-sua-tin/${articleId}`}>
+                <a className="button-outline-primary w-32 mt-[30px] h-[40px] md:mt-[20px] md:h-[30px]">
+                  Chỉnh sửa
+                </a>
+              </Link>
               <button
                 type="button"
                 className="button-outline-primary-red w-32 mt-[30px] h-[40px] md:mt-[20px] md:h-[30px]"

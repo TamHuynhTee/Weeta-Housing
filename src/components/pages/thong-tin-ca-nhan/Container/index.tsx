@@ -71,16 +71,18 @@ const ContainerProfile = (props: IProps) => {
                       Tin nhắn của tôi
                     </a>
                   </Link>
-                  <Link href="/thong-tin-ca-nhan/lich-su-giao-dich">
-                    <a
-                      className={`mt-[16px] text-black text-[16px] hover:font-bold hover:text-green-600 ${
-                        getSplitPathName(router.pathname, 2) ===
-                          'lich-su-giao-dich' && 'font-bold text-green-600'
-                      } `}
-                    >
-                      Lịch sử giao dịch
-                    </a>
-                  </Link>
+                  {stateAuth.role === ROLE.LESSOR && (
+                    <Link href="/thong-tin-ca-nhan/lich-su-giao-dich">
+                      <a
+                        className={`mt-[16px] text-black text-[16px] hover:font-bold hover:text-green-600 ${
+                          getSplitPathName(router.pathname, 2) ===
+                            'lich-su-giao-dich' && 'font-bold text-green-600'
+                        } `}
+                      >
+                        Lịch sử giao dịch
+                      </a>
+                    </Link>
+                  )}
                 </div>
               </div>
               <div className="w-full mt-[24px]">

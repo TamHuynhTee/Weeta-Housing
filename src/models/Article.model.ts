@@ -6,7 +6,10 @@ export interface ARTICLE_MODEL {
   title: boolean;
   image: Array<string>;
   price: number;
+  district: number;
+  ward: number;
   area: number;
+  street: string;
   address: string;
   location: {
     latitude: number;

@@ -3,6 +3,13 @@ import Link from 'next/link';
 import React from 'react';
 import LineHorizontal from '../LineHorizontal';
 
+const FooterIcons = [
+  '/images/img_banner_vnpay.png',
+  '/images/img_banner_momo.png',
+  '/icons/ic_facebook_footer.png',
+  '/icons/ic_google.png',
+];
+
 const Footer = () => {
   return (
     <footer className="w-full bg-white-100">
@@ -115,38 +122,23 @@ const Footer = () => {
             </p>
           </div>
           <div className="flex items-end">
-            <div>
-              <Link href="#!">
-                <a className="hover_icon">
-                  <span className="icon">
-                    <span>
+            {FooterIcons.map((item, i) => (
+              <div key={i}>
+                <Link href="#!">
+                  <a className="hover_icon ml-[25px]">
+                    <span className="icon">
                       <Image
-                        src="/icons/ic_facebook_footer.png"
+                        src={item}
                         alt="icon"
                         objectFit="cover"
                         width={27}
                         height={27}
                       />
                     </span>
-                  </span>
-                </a>
-              </Link>
-            </div>
-            <div>
-              <Link href="#!">
-                <a className="hover_icon ml-[25px]">
-                  <span className="icon">
-                    <Image
-                      src="/icons/ic_google.png"
-                      alt="icon"
-                      objectFit="cover"
-                      width={27}
-                      height={27}
-                    />
-                  </span>
-                </a>
-              </Link>
-            </div>
+                  </a>
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </div>

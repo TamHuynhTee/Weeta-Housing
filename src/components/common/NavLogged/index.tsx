@@ -15,7 +15,7 @@ const NavLogged = ({
 }: Props) => {
   const router = useRouter();
   const [stateAuth, actionAuth] = useAuth();
-  console.log(`stateAuth`, stateAuth);
+  //   console.log(`stateAuth`, stateAuth);
 
   const handleLogout = () => {
     actionAuth.logoutAsync();
