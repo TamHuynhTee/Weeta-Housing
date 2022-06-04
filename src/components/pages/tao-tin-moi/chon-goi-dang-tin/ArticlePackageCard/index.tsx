@@ -32,7 +32,7 @@ const ArticlePackageCard = (props: IPropsArticlePackageCard) => {
         onChange={() => setArticlePackage(itemPackage)}
       />
       <p
-        className={`text-[24px] text-center font-bold text-[${itemPackage.titleColor}]`}
+        className={`text-[24px] text-center font-bold ${itemPackage.titleColor}`}
       >
         {itemPackage.title}
       </p>

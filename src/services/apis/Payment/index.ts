@@ -1,12 +1,11 @@
-import { IReqPaymentArticle, IReqPaymentMember } from './Payment.interface';
+import { RouteApi } from '../../../constants/routeApi.constants';
 import API from '../_config/repositoryApi';
 import { ReturnResponse } from '../_config/response.interface';
-import { RouteApi } from '../../../constants/routeApi.constants';
 
 const url = RouteApi.payment;
 
 export const paymentService = (
-  payload: IReqPaymentArticle | IReqPaymentMember
+  payload: any
 ): Promise<ReturnResponse<string>> => {
   return API.post(`${url}/payment-package`, {
     body: { ...payload },

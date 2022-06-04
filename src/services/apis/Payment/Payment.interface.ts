@@ -1,5 +1,6 @@
 import {
   ENUM_PAYMENT_TYPE,
+  ENUM_PAYMENT_UNIT,
   ENUM_TYPE_ARTICLE,
   ENUM_TYPE_MEMBER,
 } from '@/constants/base.constants';
@@ -17,4 +18,18 @@ export interface IReqPaymentArticle extends IReqPayment {
 
 export interface IReqPaymentMember extends IReqPayment {
   memberPackageName: ENUM_TYPE_MEMBER;
+}
+
+export interface IPayment extends IReqPayment {
+  packageMember?: {
+    memberPackageName: ENUM_TYPE_MEMBER;
+  };
+  packageArticle?: {
+    articleId: string;
+    servicePackageName: ENUM_TYPE_ARTICLE;
+    numOfDate: number;
+  };
+  price: number;
+  quantity: number;
+  unit: ENUM_PAYMENT_UNIT;
 }

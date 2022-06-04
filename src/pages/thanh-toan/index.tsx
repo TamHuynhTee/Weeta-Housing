@@ -1,18 +1,81 @@
 import LineHorizontal from '@/components/common/LineHorizontal';
 import LayoutCommon from '@/components/layout/LayoutCommon';
-import { ENUM_PAYMENT_METHOD } from '@/constants/base.constants';
+import {
+  ENUM_PAYMENT_METHOD,
+  ENUM_PAYMENT_TYPE,
+  ENUM_PAYMENT_UNIT,
+} from '@/constants/base.constants';
 import { formatMoney } from '@/helpers/base.helpers';
+import { notifyError } from '@/helpers/toast.helpers';
 import Authentication from '@/HOC/auth.hoc';
+import { paymentService } from '@/services/apis/Payment';
+import {
+  IReqPaymentArticle,
+  IReqPaymentMember,
+} from '@/services/apis/Payment/Payment.interface';
 import { useAuth } from '@/stores/Auth';
+import { usePayment } from '@/stores/Payment';
 import dayjs from 'dayjs';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 const Payment = () => {
   const [stateAuth] = useAuth();
-
+  const [statePayment, actionPayment] = usePayment();
+  const router = useRouter();
   const [paymentMethod, setPaymentMethod] = React.useState<ENUM_PAYMENT_METHOD>(
     ENUM_PAYMENT_METHOD.VNPAY
   );
+
+  const renderPaymentName = `Gói ${
+    statePayment.payment_type === ENUM_PAYMENT_TYPE.MEMBER_PACKAGE
+      ? 'thành viên'
+      : 'đăng tin'
+  } ${
+    statePayment.payment_type === ENUM_PAYMENT_TYPE.MEMBER_PACKAGE
+      ? statePayment.payment_data?.packageMember?.memberPackageName
+      : statePayment.payment_data?.packageArticle?.servicePackageName
+  }`;
+
+  const renderPaymentUnit = `${
+    statePayment.payment_data?.unit === ENUM_PAYMENT_UNIT.MONTH
+      ? 'tháng'
+      : 'ngày'
+  }`;
+
+  React.useEffect(() => {
+    if (!statePayment.payment_data) {
+      router.back();
+    }
+
+    return () => {
+      actionPayment.setPayment(undefined, undefined);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [statePayment.payment_data]);
+
+  const handlePayment = async () => {
+    if (statePayment.payment_data) {
+      const payload: Partial<IReqPaymentArticle & IReqPaymentMember> = {
+        type: statePayment.payment_type,
+        prices: statePayment.payment_data.price,
+      };
+      if (statePayment.payment_type === ENUM_PAYMENT_TYPE.MEMBER_PACKAGE) {
+        payload.memberPackageName =
+          statePayment.payment_data.packageMember?.memberPackageName;
+      }
+      if (statePayment.payment_type === ENUM_PAYMENT_TYPE.SERVICE_PACKAGE) {
+        payload.servicePackageName =
+          statePayment.payment_data.packageArticle?.servicePackageName;
+        payload.numOfDate = statePayment.payment_data.packageArticle?.numOfDate;
+        payload.articleId = statePayment.payment_data.packageArticle?.articleId;
+      }
+      const result = await paymentService(payload);
+      if (result) {
+        window.location.href = result.data;
+      } else notifyError('Có lỗi xảy ra, vui lòng thử lại');
+    }
+  };
 
   return (
     <React.Fragment>
@@ -25,14 +88,14 @@ const Payment = () => {
               </p>
               <div className="grid grid-rows-2 gap-[30px]">
                 <CardPaymentType
-                  name="paymentType"
+                  //   name="paymentType"
                   method={ENUM_PAYMENT_METHOD.VNPAY}
                   banner="/images/img_banner_vnpay.png"
                   currentMethod={paymentMethod}
                   setCurrentMethod={setPaymentMethod}
                 />
                 <CardPaymentType
-                  name="paymentType"
+                  //   name="paymentType"
                   method={ENUM_PAYMENT_METHOD.MOMO}
                   banner="/images/img_banner_momo.png"
                   currentMethod={paymentMethod}
@@ -61,11 +124,16 @@ const Payment = () => {
                   <LineHorizontal />
                   <div className="items-center grid grid-cols-2 gap-[10px]">
                     <p className="font-semibold text-[18px]">Loại gói</p>
-                    <p className="text-right">Đăng tin</p>
+                    <p className="text-right">
+                      {statePayment.payment_type ===
+                      ENUM_PAYMENT_TYPE.MEMBER_PACKAGE
+                        ? 'Thành viên'
+                        : 'Đăng tin'}
+                    </p>
                   </div>
                   <div className="items-center grid grid-cols-2 gap-[10px]">
                     <p className="font-semibold text-[18px]">Tên gói</p>
-                    <p className="text-right">Gói đăng tin UP</p>
+                    <p className="text-right">{renderPaymentName}</p>
                   </div>
                   <div className="items-center grid grid-cols-2 gap-[10px]">
                     <p className="font-semibold text-[18px]">Loại thanh toán</p>
@@ -78,19 +146,31 @@ const Payment = () => {
                     <p className="text-right">Ví {paymentMethod}</p>
                   </div>
                   <div className="items-center grid grid-cols-2 gap-[10px]">
-                    <p className="font-semibold text-[18px]">Đơn giá (tháng)</p>
-                    <p className="text-right">{formatMoney(10000)} VND</p>
+                    <p className="font-semibold text-[18px]">
+                      Đơn giá ({renderPaymentUnit})
+                    </p>
+                    <p className="text-right">
+                      {formatMoney(statePayment.payment_data?.price || 0)} VND
+                    </p>
                   </div>
                   <div className="items-center grid grid-cols-2 gap-[10px]">
                     <p className="font-semibold text-[18px]">Thời hạn</p>
-                    <p className="text-right">3 tháng</p>
+                    <p className="text-right">
+                      {statePayment.payment_data?.quantity || 0}{' '}
+                      {renderPaymentUnit}
+                    </p>
                   </div>
                   <div className="items-center grid grid-cols-2 gap-[10px]">
                     <p className="font-semibold text-[18px]">
                       Gói hết hạn vào ngày
                     </p>
                     <p className="text-right">
-                      {dayjs().add(1, 'month').format('DD/MM/YYYY')}
+                      {dayjs()
+                        .add(
+                          statePayment.payment_data?.quantity || 0,
+                          statePayment.payment_data?.unit
+                        )
+                        .format('DD/MM/YYYY')}
                     </p>
                   </div>
                 </div>
@@ -100,11 +180,14 @@ const Payment = () => {
                 <div className="items-center grid grid-cols-2 gap-[10px]">
                   <p className="font-bold text-[24px]">Tổng cộng</p>
                   <p className="font-bold text-[20px] text-baseColor text-right">
-                    {formatMoney(30000)} VND
+                    {formatMoney(statePayment.payment_data?.prices || 0)} VND
                   </p>
                 </div>
               </div>
-              <button className="button-primary w-full mt-[20px]">
+              <button
+                className="button-primary w-full mt-[20px]"
+                onClick={handlePayment}
+              >
                 Thanh toán
               </button>
             </div>
@@ -116,13 +199,13 @@ const Payment = () => {
 };
 
 const CardPaymentType = ({
-  name,
+  //   name,
   method,
   banner,
   currentMethod,
   setCurrentMethod,
 }: {
-  name: string;
+  //   name: string;
   banner: string;
   method: ENUM_PAYMENT_METHOD;
   currentMethod: ENUM_PAYMENT_METHOD;
@@ -142,12 +225,12 @@ const CardPaymentType = ({
         }`}
       >
         <div className="flex items-center justify-around">
-          <input
+          {/* <input
             type="radio"
             name={name}
             id={`payment_method_${method}`}
             checked={currentMethod === method}
-          />
+          /> */}
           <p className="font-bold text-[20px]">Ví {method}</p>
           <div className="h-[100px] w-[100px]">
             <img src={banner} alt={method} className="h-full w-full" />

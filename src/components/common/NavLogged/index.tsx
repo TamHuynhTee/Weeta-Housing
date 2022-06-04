@@ -52,33 +52,37 @@ const NavLogged = ({
         <div className="wrap_contentHover">
           <div className="contentHover py-[16px]">
             <div className="py-[5px] px-[20px]">
-              <p className="text-[14px] max_line-1">
+              <p className="text-[14px] max_line-1 my-[5px]">
                 {stateAuth.role === ROLE.LESSOR ? 'Nhà môi giới' : 'Người dùng'}
                 : <span className="font-bold">{stateAuth.auth?.fullname}</span>
               </p>
-              <p className="text-[14px] max_line-1 my-[5px]">
-                Loại tài khoản:{' '}
-                {stateAuth.auth?.memberPackage ? (
-                  <Link href={`/goi-thanh-vien`}>
-                    <a
-                      className={`font-bold text-[${
-                        TYPE_MEMBER[stateAuth.auth.memberPackage].color
-                      }]`}
-                    >
-                      {TYPE_MEMBER[stateAuth.auth.memberPackage].name}
-                    </a>
-                  </Link>
-                ) : (
-                  ''
-                )}
-              </p>
+
               {stateAuth.role === ROLE.LESSOR ? (
-                <p className="text-[14px] max_line-1 my-[5px]">
-                  Số bài đăng:{' '}
-                  <span className="font-bold">
-                    {stateAuth.auth?.articleUsed}/{stateAuth.auth?.articleTotal}
-                  </span>
-                </p>
+                <>
+                  <p className="text-[14px] max_line-1 my-[5px]">
+                    Loại tài khoản:{' '}
+                    {stateAuth.auth?.memberPackage ? (
+                      <Link href={`/goi-thanh-vien`}>
+                        <a
+                          className={`font-bold text-[${
+                            TYPE_MEMBER[stateAuth.auth.memberPackage].color
+                          }]`}
+                        >
+                          {TYPE_MEMBER[stateAuth.auth.memberPackage].name}
+                        </a>
+                      </Link>
+                    ) : (
+                      ''
+                    )}
+                  </p>
+                  <p className="text-[14px] max_line-1 my-[5px]">
+                    Số bài đăng trong tháng:{' '}
+                    <span className="font-bold">
+                      {stateAuth.auth?.articleUsed}/
+                      {stateAuth.auth?.articleTotal}
+                    </span>
+                  </p>
+                </>
               ) : (
                 ''
               )}

@@ -3,19 +3,20 @@ import SelectBoxField from '@/components/common/SelectBoxField';
 import {
   ARTICLE_PACKAGES,
   ENUM_PAYMENT_TYPE,
+  ENUM_PAYMENT_UNIT,
   ENUM_TYPE_ARTICLE,
 } from '@/constants/base.constants';
 import { formatMoney } from '@/helpers/base.helpers';
-import { notifyError } from '@/helpers/toast.helpers';
 import { ARTICLE_PACKAGE_CARD_MODEL } from '@/models/ArticlePackage.model';
-import { paymentService } from '@/services/apis/Payment';
-import { IReqPaymentArticle } from '@/services/apis/Payment/Payment.interface';
+import { IPayment } from '@/services/apis/Payment/Payment.interface';
+import { usePayment } from '@/stores/Payment';
 import { useRouter } from 'next/router';
 import React from 'react';
 import ArticlePackageCard from '../ArticlePackageCard';
 
 const FormPickPackage = () => {
   const router = useRouter();
+  const [, actionPayment] = usePayment();
   const [articlePackage, setArticlePackage] =
     React.useState<ARTICLE_PACKAGE_CARD_MODEL>(
       ARTICLE_PACKAGES[0] as ARTICLE_PACKAGE_CARD_MODEL
@@ -30,17 +31,31 @@ const FormPickPackage = () => {
 
   const handleProceedArticle = async () => {
     if (articleId) {
-      const payload: IReqPaymentArticle = {
+      const payload: IPayment = {
         type: ENUM_PAYMENT_TYPE.SERVICE_PACKAGE,
-        servicePackageName: articlePackage.serviceName,
+        packageArticle: {
+          servicePackageName: articlePackage.serviceName,
+          numOfDate: pickedDays,
+          articleId,
+        },
         prices: articlePackage.price * pickedDays,
-        numOfDate: pickedDays,
-        articleId,
+        price: articlePackage.price,
+        quantity: pickedDays,
+        unit: ENUM_PAYMENT_UNIT.DAY,
       };
-      const result = await paymentService(payload);
-      if (result) {
-        window.location.href = result.data;
-      } else notifyError('Có lỗi xảy ra, vui lòng thử lại');
+      actionPayment.setPayment(ENUM_PAYMENT_TYPE.SERVICE_PACKAGE, payload);
+      router.push('/thanh-toan');
+      //   const payload: IReqPaymentArticle = {
+      //     type: ENUM_PAYMENT_TYPE.SERVICE_PACKAGE,
+      //     servicePackageName: articlePackage.serviceName,
+      //     prices: articlePackage.price * pickedDays,
+      //     numOfDate: pickedDays,
+      //     articleId,
+      //   };
+      //   const result = await paymentService(payload);
+      //   if (result) {
+      //     window.location.href = result.data;
+      //   } else notifyError('Có lỗi xảy ra, vui lòng thử lại');
     }
   };
 

@@ -1,4 +1,5 @@
 import { ARTICLE_PACKAGE_CARD_MODEL } from '@/models/ArticlePackage.model';
+import { MEMBER_PACKAGE_CARD_MODEL } from '@/models/MemberPackage.model';
 
 export enum BASE_CONSTANTS {
   BASE_URL = 'https://weetabe.herokuapp.com/api',
@@ -56,6 +57,10 @@ export enum ENUM_PAYMENT_STATUS {
   SUCCESS = 'SUCCESS',
   WAIT_FOR_PAYMENT = 'WAITFORPAYMENT',
 }
+export enum ENUM_PAYMENT_UNIT {
+  MONTH = 'month',
+  DAY = 'day',
+}
 
 export const DEFAULT_CENTER_COORDINATES = {
   lat: 10.779454,
@@ -77,7 +82,7 @@ export const HOME_BANNER_CAROUSEL = [
 export const ARTICLE_PACKAGES: Array<ARTICLE_PACKAGE_CARD_MODEL> = [
   {
     serviceName: ENUM_TYPE_ARTICLE.COMMON,
-    titleColor: 'rgb(4_153_168)',
+    titleColor: 'text-[rgb(4_153_168)]',
     title: 'COMMON',
     price: 0,
     description:
@@ -85,7 +90,7 @@ export const ARTICLE_PACKAGES: Array<ARTICLE_PACKAGE_CARD_MODEL> = [
   },
   {
     serviceName: ENUM_TYPE_ARTICLE.UP,
-    titleColor: 'rgb(17_182_102)',
+    titleColor: 'text-[rgb(17_182_102)]',
     title: 'UP',
     price: 20000,
     description:
@@ -93,10 +98,45 @@ export const ARTICLE_PACKAGES: Array<ARTICLE_PACKAGE_CARD_MODEL> = [
   },
   {
     serviceName: ENUM_TYPE_ARTICLE.TOP,
-    titleColor: 'rgb(235_130_25)',
+    titleColor: 'text-[rgb(235_130_25)]',
     title: 'TOP',
     price: 30000,
     description:
       'Gói cao cấp, tin đăng sẽ nằm ở mục ưu tiên trên đầu danh sách hiển thị, làm mới 1 lần/ngày',
+  },
+];
+
+export const MEMBER_PACKAGES: Array<MEMBER_PACKAGE_CARD_MODEL> = [
+  {
+    memberPackage: ENUM_TYPE_MEMBER.FREE,
+    packageName: 'Miễn phí',
+    titleColor: 'text-[#000]',
+    limitArticle: 3,
+    price: 0,
+    description: 'Gói miễn phí, làm mới 1 lần/ngày',
+  },
+  {
+    memberPackage: ENUM_TYPE_MEMBER.SAVE,
+    packageName: 'Tiết kiệm',
+    titleColor: 'text-[rgb(17_182_102)]',
+    limitArticle: 20,
+    price: 100000,
+    description: 'Gói tiết kiệm, làm mới 1 lần/ngày',
+  },
+  {
+    memberPackage: ENUM_TYPE_MEMBER.STANDARD,
+    packageName: 'Tiêu chuẩn',
+    titleColor: 'text-[rgb(4_153_168)]',
+    limitArticle: 100,
+    price: 300000,
+    description: 'Gói tiêu chuẩn, làm mới 1 lần/ngày',
+  },
+  {
+    memberPackage: ENUM_TYPE_MEMBER.PREMIUM,
+    packageName: 'Cao cấp',
+    titleColor: 'text-[rgb(235_130_25)]',
+    limitArticle: 300,
+    price: 500000,
+    description: 'Gói cao cấp, làm mới 1 lần/ngày',
   },
 ];
