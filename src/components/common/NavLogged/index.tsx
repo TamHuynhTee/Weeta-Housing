@@ -76,7 +76,7 @@ const NavLogged = ({
                     )}
                   </p>
                   <p className="text-[14px] max_line-1 my-[5px]">
-                    Số bài đăng trong tháng:{' '}
+                    Số bài viết trong tháng:{' '}
                     <span className="font-bold">
                       {stateAuth.auth?.articleUsed}/
                       {stateAuth.auth?.articleTotal}
@@ -95,12 +95,12 @@ const NavLogged = ({
             <Link href="/tin-nhan">
               <a className="menuProfile menuLinkHover">Tin nhắn</a>
             </Link>
-            <Link href="#!">
-              <a className="menuProfile menuLinkHover">Bài đăng yêu thích</a>
+            <Link href="/thong-tin-ca-nhan/bai-dang-da-luu">
+              <a className="menuProfile menuLinkHover">Lưu bài viết</a>
             </Link>
             {stateAuth.role === ROLE.LESSOR && (
               <Link href="/thong-tin-ca-nhan/quan-ly-bai-dang/da-duyet">
-                <a className="menuProfile menuLinkHover">Bài đăng của tôi</a>
+                <a className="menuProfile menuLinkHover">Bài viết của tôi</a>
               </Link>
             )}
             <div className="lineMenu"></div>

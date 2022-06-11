@@ -115,12 +115,14 @@ const DistrictSearchPage = () => {
           </div>
           <div className="w-full grid grid-cols-3 gap-4">
             <div className="col-span-2">
-              <TopArticles
-                list={stateArticle.topArticles.list}
-                loading={stateArticle.topArticles.loading}
-              />
+              {stateArticle.topArticles.list.length > 0 && (
+                <TopArticles
+                  list={stateArticle.topArticles.list}
+                  loading={stateArticle.topArticles.loading}
+                />
+              )}
 
-              <div className="px-[20px] py-[10px] bg-orange-100 rounded-[3px] mt-[10px]">
+              <div className="px-[20px] py-[10px] bg-orange-100 rounded-[3px]">
                 <span className="text-baseColor font-bold">
                   {showRangeResult}
                 </span>{' '}
@@ -209,7 +211,7 @@ const TopArticles = ({
   loading: boolean;
 }) => {
   return (
-    <>
+    <div className="mt-[10px]">
       <div className="px-[20px] py-[10px] bg-baseColor text-white font-bold rounded-[3px]">
         Tin TOP
       </div>
@@ -226,7 +228,7 @@ const TopArticles = ({
       ) : (
         <NoResults />
       )}
-    </>
+    </div>
   );
 };
 

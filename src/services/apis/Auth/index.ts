@@ -7,6 +7,7 @@ import {
   IReqForgotPassword,
   IReqLogin,
   IReqRegisterAccount,
+  IReqResetPassword,
   IReqUpdateAccount,
   IReqUpdateAvatar,
 } from './Auth.interface';
@@ -66,6 +67,12 @@ export const verifyEmailService = (params: {
 }): Promise<ReturnResponse<any>> => {
   //   console.log(`payload`, payload);
   return API.get(`${url}/verify-email`, { ...params });
+};
+
+export const resetPasswordService = (
+  payload: IReqResetPassword
+): Promise<ReturnResponse<any>> => {
+  return API.post(`${url}/reset-password`, { body: { ...payload } });
 };
 
 export const saveArticleService = (

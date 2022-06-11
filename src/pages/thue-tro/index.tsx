@@ -46,8 +46,6 @@ const SearchPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query]);
 
-  console.log('list', stateArticle.articles.list);
-
   React.useEffect(() => {
     return () => {
       actionArticle.setStoreArticleProperties({

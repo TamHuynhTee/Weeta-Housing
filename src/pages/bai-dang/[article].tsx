@@ -34,7 +34,7 @@ const ArticleDetail = () => {
 
   return (
     <React.Fragment>
-      <LayoutCommon title="Bài đăng" isVisibleSearchBar>
+      <LayoutCommon title="Bài viết" isVisibleSearchBar>
         <div className="px-[50px] py-[20px]">
           <Breadcrumb
             arr_link={[
@@ -55,7 +55,7 @@ const ArticleDetail = () => {
                     <a className="">Chỉnh sửa</a>
                   </Link>
                   <Link href="#!">
-                    <a className="text-red-500">Ngưng bài đăng</a>
+                    <a className="text-red-500">Ngưng Bài viết</a>
                   </Link>
                 </div>
               )}

@@ -27,7 +27,7 @@ const CkEditorField = dynamic(
 );
 
 const schema = yup.object().shape({
-  title: yup.string().required('Chưa nhập tiêu đề bài đăng'),
+  title: yup.string().required('Chưa nhập tiêu đề Bài viết'),
   district: yup.string().required('Chưa chọn quận, huyện'),
   ward: yup.string().required('Chưa chọn phường, xã'),
   street: yup.string().required('Chưa nhập đường'),

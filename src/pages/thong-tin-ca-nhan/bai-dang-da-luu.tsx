@@ -7,7 +7,7 @@ import React from 'react';
 const SaveArticleManagement = () => {
   return (
     <React.Fragment>
-      <LayoutCommon title="Bài đăng đã lưu" isVisibleSearchBar>
+      <LayoutCommon title="Bài viết đã lưu" isVisibleSearchBar>
         <ContainerProfile>
           <BoxManageSaveArticle />
         </ContainerProfile>

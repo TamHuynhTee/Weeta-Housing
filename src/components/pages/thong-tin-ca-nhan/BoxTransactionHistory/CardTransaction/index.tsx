@@ -84,7 +84,7 @@ const CardTransaction = ({
             : 'ĐANG XỬ LÝ'}
         </p>
         <p className="mt-[10px] text-[14px] leading-[27px] font-normal text-right">
-          {dayjs(data.createdAt).format('DD/MM/YYYY HH:mm')}
+          {dayjs(data.createdAt).format('DD-MM-YYYY HH:mm')}
         </p>
         <Link href={`#!`}>
           <a className="mt-[10px] text-[14px] leading-[27px] font-normal float-right">

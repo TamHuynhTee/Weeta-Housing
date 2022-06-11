@@ -10,9 +10,14 @@ import {
   TYPE_MEMBER,
 } from '@/constants/base.constants';
 import { formatMoney } from '@/helpers/base.helpers';
+import { notifySuccess } from '@/helpers/toast.helpers';
 import Authentication from '@/HOC/auth.hoc';
 import { MEMBER_PACKAGE_CARD_MODEL } from '@/models/MemberPackage.model';
-import { IPayment } from '@/services/apis/Payment/Payment.interface';
+import { paymentService } from '@/services/apis/Payment';
+import {
+  IPayment,
+  IReqPaymentMember,
+} from '@/services/apis/Payment/Payment.interface';
 import { useAuth } from '@/stores/Auth';
 import { usePayment } from '@/stores/Payment';
 import dayjs from 'dayjs';
@@ -24,11 +29,17 @@ const ServicePackage = () => {
   const [, actionPayment] = usePayment();
   const [selectedPackage, setSelectedPackage] =
     React.useState<MEMBER_PACKAGE_CARD_MODEL>();
-  //   console.log(`stateAuth`, stateAuth.auth);
-  const router = useRouter();
 
   const auth = stateAuth.auth;
-  const currentPackage = stateAuth.auth?.memberPackage;
+  // Warning
+  const changeWarning = auth
+    ? auth.articleUsed < auth.articleTotal &&
+      auth.memberPackage !== selectedPackage?.memberPackage
+    : false;
+
+  const router = useRouter();
+
+  const currentPackage = auth?.memberPackage;
 
   React.useEffect(() => {
     if (auth) {
@@ -43,12 +54,26 @@ const ServicePackage = () => {
   const handleCancel = () => {
     router.back();
   };
+
   const handleRegisterLessor = () => {
     router.push('/nhap-so-dien-thoai');
   };
 
-  const handleToPayment = () => {
+  const handleToPayment = async () => {
     if (selectedPackage) {
+      if (selectedPackage.memberPackage === ENUM_TYPE_MEMBER.FREE) {
+        const payload: IReqPaymentMember = {
+          type: ENUM_PAYMENT_TYPE.MEMBER_PACKAGE,
+          memberPackageName: selectedPackage.memberPackage,
+          prices: 0,
+        };
+        const result = await paymentService(payload);
+        if (result) {
+          router.push('/');
+          notifySuccess('Bạn đã chuyển gói thành công');
+        }
+        return;
+      }
       const payload: IPayment = {
         type: ENUM_PAYMENT_TYPE.MEMBER_PACKAGE,
         packageMember: {
@@ -67,7 +92,7 @@ const ServicePackage = () => {
   return (
     <React.Fragment>
       <LayoutCommon title="Gói thành viên" isVisibleSearchBar>
-        <div className="w-full min-h-[calc(100vh-80px)] pb-[50px]">
+        <div className="w-full min-h-[calc(100vh-80px)]">
           {stateAuth.role === ROLE.LESSOR ? (
             <div className="px-[50px] py-[30px]">
               <Breadcrumb
@@ -92,7 +117,7 @@ const ServicePackage = () => {
                   )}
                 </p>
                 <p className="max_line-1 my-[5px]">
-                  Số bài đăng trong tháng:{' '}
+                  Số bài viết trong tháng:{' '}
                   <span className="font-bold">
                     {stateAuth.auth?.articleUsed}/{stateAuth.auth?.articleTotal}
                   </span>
@@ -100,14 +125,14 @@ const ServicePackage = () => {
                 <p className="max_line-1 my-[5px]">
                   Gói được mua gần nhất lúc:{' '}
                   <span className="font-bold">
-                    {dayjs().format('DD/MM/YYYY HH:mm')}
+                    {dayjs().format('DD-MM-YYYY HH:mm')}
                   </span>
                 </p>
                 {stateAuth.auth?.memberPackage !== ENUM_TYPE_MEMBER.FREE && (
                   <p className="max_line-1 my-[5px]">
                     Gói hết hạn lúc:{' '}
                     <span className="font-bold">
-                      {dayjs().format('DD/MM/YYYY HH:mm')}
+                      {dayjs().add(1, 'month').format('DD-MM-YYYY HH:mm')}
                     </span>
                   </p>
                 )}
@@ -163,20 +188,10 @@ const ServicePackage = () => {
                           <p className="mt-[10px]">{item.description}</p>
                         </div>
                         <div className="col-span-3 flex justify-center">
-                          {currentPackage === item.memberPackage ? (
+                          {currentPackage === item.memberPackage && (
                             <div className="py-[5px] px-[10px] font-bold rounded-full bg-orange-400 text-white">
                               Gói hiện tại
                             </div>
-                          ) : (
-                            ''
-                            // <input
-                            //   type="radio"
-                            //   name="member_package"
-                            //   id={`member_package_${item.memberPackage}`}
-                            //   readOnly
-                            //   disabled={currentPackage === item.memberPackage}
-                            //   // checked={currentMethod === method}
-                            // />
                           )}
                         </div>
                       </div>
@@ -185,11 +200,18 @@ const ServicePackage = () => {
                 ))}
               </div>
               <div className="my-[20px]">
+                {changeWarning && (
+                  <p className="mb-[10px] text-red-500">
+                    * Lưu ý: Gói hiện tại của bạn vẫn còn lượt đăng tin, thay
+                    đổi gói thành viên sẽ ảnh hưởng đến số lượt đăng, nhấn đổi
+                    gói nếu bạn muốn tiếp tục
+                  </p>
+                )}
                 <input
                   type="button"
                   onClick={handleToPayment}
                   className="button-primary w-[128px] h-[40px]"
-                  disabled={currentPackage === selectedPackage}
+                  disabled={currentPackage === selectedPackage?.memberPackage}
                   value={'Đổi gói'}
                 />
               </div>

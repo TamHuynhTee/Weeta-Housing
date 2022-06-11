@@ -87,7 +87,7 @@ const ContainerProfile = (props: IProps) => {
               </div>
               <div className="w-full mt-[24px]">
                 <h2 className="text-[20px] font-bold text-baseColor">
-                  Quản lý bài đăng
+                  Quản lý Bài viết
                 </h2>
                 <div className="pl-[20px] grid">
                   {stateAuth.role === ROLE.LESSOR && (
@@ -98,7 +98,7 @@ const ContainerProfile = (props: IProps) => {
                             'quan-ly-bai-dang' && 'font-bold text-green-600'
                         } `}
                       >
-                        Bài đăng của tôi
+                        Bài viết của tôi
                       </a>
                     </Link>
                   )}
@@ -109,7 +109,7 @@ const ContainerProfile = (props: IProps) => {
                           'bai-dang-da-luu' && 'font-bold text-green-600'
                       } `}
                     >
-                      Bài đăng đã lưu
+                      Bài viết đã lưu
                     </a>
                   </Link>
                 </div>

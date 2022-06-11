@@ -8,7 +8,12 @@ import {
 } from '@/constants/base.constants';
 import { formatMoney } from '@/helpers/base.helpers';
 import { ARTICLE_PACKAGE_CARD_MODEL } from '@/models/ArticlePackage.model';
-import { IPayment } from '@/services/apis/Payment/Payment.interface';
+import { paymentService } from '@/services/apis/Payment';
+import {
+  IPayment,
+  IReqPaymentArticle,
+} from '@/services/apis/Payment/Payment.interface';
+import { useAuth } from '@/stores/Auth';
 import { usePayment } from '@/stores/Payment';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -16,6 +21,7 @@ import ArticlePackageCard from '../ArticlePackageCard';
 
 const FormPickPackage = () => {
   const router = useRouter();
+  const [stateAuth] = useAuth();
   const [, actionPayment] = usePayment();
   const [articlePackage, setArticlePackage] =
     React.useState<ARTICLE_PACKAGE_CARD_MODEL>(
@@ -30,6 +36,22 @@ const FormPickPackage = () => {
   }, [articlePackage]);
 
   const handleProceedArticle = async () => {
+    if (articlePackage.serviceName === ENUM_TYPE_ARTICLE.COMMON) {
+      const payload: IReqPaymentArticle = {
+        type: ENUM_PAYMENT_TYPE.SERVICE_PACKAGE,
+        servicePackageName: articlePackage.serviceName,
+        prices: 0,
+        numOfDate: 0,
+        articleId,
+      };
+      const result = await paymentService(payload);
+      if (result) {
+        if (stateAuth.auth?.isAutoApproved)
+          router.push('thong-tin-ca-nhan/quan-ly-bai-dang/da-duyet/');
+        else router.push('thong-tin-ca-nhan/quan-ly-bai-dang/chua-duyet/');
+      }
+      return;
+    }
     if (articleId) {
       const payload: IPayment = {
         type: ENUM_PAYMENT_TYPE.SERVICE_PACKAGE,
@@ -137,4 +159,4 @@ const FormPickPackage = () => {
   );
 };
 
-export default FormPickPackage;
+export default React.memo(FormPickPackage);

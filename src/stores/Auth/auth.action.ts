@@ -9,6 +9,7 @@ import {
   getInfoByTokenService,
   loginService,
   registerAccountService,
+  resetPasswordService,
   saveArticleService,
   updateAvatarService,
   updateProfileService,
@@ -18,6 +19,7 @@ import {
   IReqChangePassword,
   IReqLogin,
   IReqRegisterAccount,
+  IReqResetPassword,
   IReqUpdateAccount,
   IReqUpdateAvatar,
 } from '@/services/apis/Auth/Auth.interface';
@@ -189,6 +191,19 @@ export const verifyEmailAsync =
   (params: { token: string }) =>
   async ({}: Actions) => {
     const result = await verifyEmailService(params);
+    if (result.error !== undefined) {
+      if (!result.error) {
+        return true;
+      }
+    }
+    notifyError(result.message);
+    return false;
+  };
+
+export const resetPasswordAsync =
+  (payload: IReqResetPassword) =>
+  async ({}: Actions) => {
+    const result = await resetPasswordService(payload);
     if (result.error !== undefined) {
       if (!result.error) {
         return true;

@@ -19,6 +19,7 @@ import {
   saveArticleAsync,
   uploadIDCardAsync,
   getListSaveArticleAsync,
+  resetPasswordAsync,
 } from './auth.action';
 import { selector } from './auth.selector';
 
@@ -65,6 +66,7 @@ const actions = {
   saveArticleAsync,
   uploadIDCardAsync,
   getListSaveArticleAsync,
+  resetPasswordAsync,
 };
 
 const Store = createStore({

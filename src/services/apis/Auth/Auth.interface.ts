@@ -35,6 +35,11 @@ export interface IReqForgotPassword {
   email: string;
 }
 
+export interface IReqResetPassword {
+  token: string;
+  password: string;
+}
+
 export interface IReqVerifyCodeForgotPassword {
   email: string;
   code: string;
