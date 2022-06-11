@@ -62,7 +62,10 @@ input[type='password']::-ms-reveal {
   max-width: 1500px;
 }
 
-.button-primary {
+.button-primary,
+.button-blue,
+.button-red,
+.button-orange {
   color: white;
   background-color: rgb(0, 132, 137);
   display: flex;
@@ -83,6 +86,16 @@ input[type='password']::-ms-reveal {
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   position: relative;
+}
+
+.button-orange {
+  @apply bg-orange-400;
+}
+.button-blue {
+  @apply bg-blue-200;
+}
+.button-red {
+  @apply bg-red-500;
 }
 
 .button-no-outline-primary {
@@ -136,6 +149,9 @@ input[type='password']::-ms-reveal {
 }
 
 .button-primary:active,
+.button-blue:active,
+.button-red:active,
+.button-orange:active,
 .button-no-outline-primary:active,
 .button-outline-primary:active,
 .button-outline-primary-red:active,
@@ -154,6 +170,9 @@ input[type='password']::-ms-reveal {
 }
 
 .button-primary:disabled,
+.button-red:disabled,
+.button-blue:disabled,
+.button-orange:disabled,
 .button-no-outline-primary:disabled,
 .button-outline-primary:disabled,
 .button-outline-primary-red:disabled,

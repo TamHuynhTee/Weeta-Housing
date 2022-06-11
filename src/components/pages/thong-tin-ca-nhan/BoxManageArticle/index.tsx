@@ -58,7 +58,7 @@ const BoxManageArticle = () => {
 
   return (
     <div className="container_shadow">
-      <p className="text-black-100 text-[24px] font-bold">Quản lý Bài viết</p>
+      <p className="text-black-100 text-[24px] font-bold">Quản lý bài viết</p>
       <div className="my-[20px] grid grid-cols-6 gap-2">
         <div className="col-span-4 grid grid-cols-3">
           {TAB_MENU.map((item, index) => (

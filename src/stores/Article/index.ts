@@ -4,10 +4,11 @@ import {
   createArticleAsync,
   getListArticleAsync,
   getListTopArticleAsync,
-  loadMoreArticleAsync,
   getDetailArticleAsync,
   setDetailArticle,
   setStoreArticleProperties,
+  updateArticleAsync,
+  deleteArticleAsync,
 } from './article.action';
 import { selector } from './article.selector';
 
@@ -47,10 +48,11 @@ const actions = {
   createArticleAsync,
   getListArticleAsync,
   getListTopArticleAsync,
-  loadMoreArticleAsync,
   getDetailArticleAsync,
   setDetailArticle,
   setStoreArticleProperties,
+  updateArticleAsync,
+  deleteArticleAsync,
 };
 
 const Store = createStore({

@@ -20,7 +20,7 @@ const MyApp = ({ Component, pageProps }: any) => {
     if (token && stateAuth.isLoggedIn)
       (async () => {
         await socketService
-          .connect(BASE_CONSTANTS.BASE_URL_LOCAL, token)
+          .connect(BASE_CONSTANTS.BASE_URL, token)
           //   .then(() => console.log('connected to socket'))
           .catch((err: any) => {
             console.log('err', err);

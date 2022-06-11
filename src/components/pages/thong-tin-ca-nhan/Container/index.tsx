@@ -87,7 +87,7 @@ const ContainerProfile = (props: IProps) => {
               </div>
               <div className="w-full mt-[24px]">
                 <h2 className="text-[20px] font-bold text-baseColor">
-                  Quản lý Bài viết
+                  Quản lý bài viết
                 </h2>
                 <div className="pl-[20px] grid">
                   {stateAuth.role === ROLE.LESSOR && (

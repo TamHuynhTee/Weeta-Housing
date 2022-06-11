@@ -2,9 +2,11 @@ import { notifyError, notifySuccess } from '@/helpers/toast.helpers';
 import { ARTICLE_MODEL } from '@/models/Article.model';
 import {
   createArticleService,
+  deleteArticleService,
   getDetailArticleService,
   getListArticleService,
   getListTopArticleService,
+  updateArticleService,
 } from '@/services/apis/Article';
 import {
   IParamGetArticle,
@@ -118,13 +120,47 @@ export const createArticleAsync =
     authInstance.actions.setAppLoading(false);
     if (result.error !== undefined) {
       if (!result.error) {
-        notifySuccess('Tạo bài viết thành công.');
+        notifySuccess('Tạo bài viết thành công');
         setState({ ...getState(), articleDetail: result.data });
         return { success: true, data: result.data };
       }
     }
     notifyError(result.message);
     return { success: false, data: undefined };
+  };
+
+export const updateArticleAsync =
+  (articleId: string, payload: Partial<IReqCreateArticle>) =>
+  async ({ setState, getState }: Actions) => {
+    authInstance.actions.setAppLoading(true);
+    const result = await updateArticleService(articleId, payload);
+    authInstance.actions.setAppLoading(false);
+    if (result.error !== undefined) {
+      if (!result.error) {
+        notifySuccess('Đã cập nhật bài viết');
+        setState({ ...getState(), articleDetail: result.data });
+        return { success: true, data: result.data };
+      }
+    }
+    notifyError(result.message);
+    return { success: false, data: undefined };
+  };
+
+export const deleteArticleAsync =
+  (articleId: string) =>
+  async ({ setState, getState }: Actions) => {
+    authInstance.actions.setAppLoading(true);
+    const result = await deleteArticleService(articleId);
+    authInstance.actions.setAppLoading(false);
+    if (result.error !== undefined) {
+      if (!result.error) {
+        notifySuccess('Đã xóa bài viết');
+        setState({ ...getState(), articleDetail: result.data });
+        return true;
+      }
+    }
+    notifyError(result.message);
+    return false;
   };
 
 export const setDetailArticle =

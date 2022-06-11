@@ -8,7 +8,7 @@ import { BASE_CONSTANTS } from '../../../constants/base.constants';
 import { getFromLocalStorage } from '../../../helpers/base.helpers';
 
 const axiosClient = axios.create({
-  baseURL: BASE_CONSTANTS.BASE_URL_LOCAL,
+  baseURL: BASE_CONSTANTS.BASE_URL,
   timeout: 20000,
   headers: {
     'Content-Type': 'application/json',

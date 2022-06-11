@@ -1,10 +1,12 @@
 import Breadcrumb from '@/components/common/BreadCrumb';
+import ContainerModal from '@/components/common/ContainerModal';
 import GoogleMap from '@/components/common/GoogleMap';
 import InputField from '@/components/common/InputField';
 import LineHorizontal from '@/components/common/LineHorizontal';
 import SelectBoxField from '@/components/common/SelectBoxField';
 import LayoutCommon from '@/components/layout/LayoutCommon';
 import BoxSelectLocation from '@/components/pages/tao-tin-moi/BoxSelectLocation';
+import ModalConfirmDeleteArticle from '@/components/pages/tao-tin-moi/ModalConfirmDeleteArticle';
 import { DISTRICTS, WARDS } from '@/constants/location.constants';
 import { formatMoney, moneyConverter } from '@/helpers/base.helpers';
 import { notifyError } from '@/helpers/toast.helpers';
@@ -27,7 +29,7 @@ const CkEditorField = dynamic(
 );
 
 const schema = yup.object().shape({
-  title: yup.string().required('Chưa nhập tiêu đề Bài viết'),
+  title: yup.string().required('Chưa nhập tiêu đề bài đăng'),
   district: yup.string().required('Chưa chọn quận, huyện'),
   ward: yup.string().required('Chưa chọn phường, xã'),
   street: yup.string().required('Chưa nhập địa chỉ'),
@@ -42,8 +44,13 @@ const UpdatePostPage = () => {
   const [selectedDistrict, setSelectedDistrict] = React.useState<
     number | undefined
   >(undefined);
+
   const [district, setDistrict] = React.useState('Chọn quận, huyện');
   const [ward, setWard] = React.useState('Chọn phường, xã');
+
+  const [deleteModal, setDeleteModal] = React.useState(false);
+  const openDeleteModal = () => setDeleteModal(true);
+  const closeDeleteModal = () => setDeleteModal(false);
 
   const {
     register,
@@ -59,7 +66,7 @@ const UpdatePostPage = () => {
   const router = useRouter();
   const articleId = router.query.article as string;
   const data = stateArticle.articleDetail;
-  console.log(`data`, data);
+  const backURL = router.query.backURL as string;
 
   React.useEffect(() => {
     if (!stateArticle.articleDetail)
@@ -92,36 +99,38 @@ const UpdatePostPage = () => {
         setValue('price', formatMoney(data.price));
         setValue('title', data.title);
         setValue('description', data.description);
+        setValue('image', data.image);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  const handleUpdateArticle = async (data: any) => {
-    const { number, street, area, price, files, ...rest } = data;
-    console.log('data', data);
-    // const listFiles = Object.values(files);
-    // if (listFiles.length < 1) {
-    //   notifyError('Vui lòng đăng tải ít nhất 1 hình ảnh');
-    //   return;
-    // }
+  const handleUpdateArticle = async (formData: any) => {
+    if (data) {
+      const { area, price, files, image, ...rest } = formData;
+      const listFiles = Object.values(files);
+      if (listFiles.length + image.length < 1) {
+        notifyError('Vui lòng đăng tải ít nhất 1 hình ảnh');
+        return;
+      }
 
-    // const payload = {
-    //   ...rest,
-    //   location: {
-    //     latitude: 1,
-    //     longtitude: 1,
-    //   },
-    //   street: `${number} ${street}`,
-    //   area: +area,
-    //   price: moneyConverter(price),
-    //   files: listFiles,
-    // };
-    // // console.log('payload', payload);
-    // const result = await actionArticle.createArticleAsync(payload);
-    // if (result.success) {
-    //   router.push(`/tao-tin-moi/chon-goi-dang-tin/${result.data?._id}`);
-    // }
+      const payload = {
+        ...rest,
+        location: {
+          latitude: 1,
+          longtitude: 1,
+        },
+        area: +area,
+        price: moneyConverter(price),
+        files: listFiles,
+        image: image,
+      };
+      //   console.log('payload', payload);
+      const result = await actionArticle.updateArticleAsync(data._id, payload);
+      if (result.success) {
+        router.push(backURL || '/');
+      }
+    }
   };
 
   const handleSelectDistrict = (item: { label: string; value: string }) => {
@@ -216,17 +225,6 @@ const UpdatePostPage = () => {
                       isRequired
                     />
                   </div>
-                  {/* <div className="mt-[20px]">
-                    <InputField
-                      type="text"
-                      register={register('number')}
-                      name="number"
-                      label="Số nhà"
-                      placeholder="Nhập đúng (số hẻm)/số nhà"
-                      errors={errors}
-                      isRequired
-                    />
-                  </div> */}
                 </div>
                 <div className="col-span-2 pl-[20px] md:mt-[20px] md:col-span-4 md:h-[400px] md:p-0">
                   <div className="w-full h-full flex flex-col">
@@ -272,7 +270,12 @@ const UpdatePostPage = () => {
                   Tạm tính
                 </p>
                 <div className="bg-green-200 px-[20px] py-[10px] rounded-[3px]">
-                  {formatMoney(+preMoney)} VND/tháng
+                  {typeof preMoney === 'number'
+                    ? formatMoney(preMoney)
+                    : preMoney.includes('.')
+                    ? preMoney
+                    : formatMoney(+preMoney)}{' '}
+                  VND/tháng
                 </div>
               </div>
               <LineHorizontal className="my-[30px]" />
@@ -312,6 +315,7 @@ const UpdatePostPage = () => {
                   name="files"
                   errors={errors}
                   setValue={setValue}
+                  listImages={data?.image}
                 />
               </div>
               <div className="mt-[30px] flex gap-x-[20px]">
@@ -323,12 +327,17 @@ const UpdatePostPage = () => {
                 <button
                   type="button"
                   className="button-outline-primary-red w-[128px] h-[40px]"
+                  onClick={openDeleteModal}
                 >
                   Xóa
                 </button>
               </div>
             </form>
           </div>
+          {/* Modal */}
+          <ContainerModal isVisible={deleteModal} closeModal={closeDeleteModal}>
+            <ModalConfirmDeleteArticle closeModal={closeDeleteModal} />
+          </ContainerModal>
         </div>
       </LayoutCommon>
     </React.Fragment>

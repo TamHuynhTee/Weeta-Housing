@@ -11,45 +11,11 @@ const getFormData = (object: Record<string, unknown>) =>
     return formData;
   }, new FormData());
 
-// const getFormDataFile = (object: Record<string, unknown>) =>
-//   Object.keys(object).reduce((formData, key) => {
-//     const value: string | Blob =
-//       typeof object[key] === 'number'
-//         ? JSON.stringify(object[key])
-//         : (object[key] as string | Blob);
-//     formData.append(key, value);
-//     return formData;
-//   }, new FormData());
-
-// const getFormDataMultiFile = (object: Record<string, unknown>) =>
-//   Object.keys(object).reduce((formData, key) => {
-//     if (typeof object[key] === 'number') {
-//       formData.append(key, JSON.stringify(object[key]));
-//     } else if (typeof object[key] === 'string') {
-//       formData.append(key, object[key] as string);
-//     } else {
-//       const objectValue = Object.values(object[key] as Array<any>);
-//       if (objectValue.length > 0) {
-//         for (let i = 0; i < objectValue.length; i++) {
-//           formData.append(key, JSON.stringify(objectValue[i]));
-//         }
-//       } else {
-//         formData.append(key, JSON.stringify(object[key]));
-//       }
-//     }
-//     return formData;
-//   }, new FormData());
-
 export const getFormDataV2 = (object: Record<string, unknown>) =>
   Object.keys(object).reduce((formData, key) => {
     const listValue: Array<any> = Array.isArray(object[key])
       ? (object[key] as Array<any>)
       : [object[key]];
-    console.log(
-      `LHA:  ===> file: repositoryApi.ts ===> line 46 ===> listValue`,
-      Array.isArray(object[key]),
-      listValue
-    );
     listValue.forEach((value) => {
       if (typeof value === 'string' || isBlob(value) || isFile(value)) {
         formData.append(key, value);

@@ -33,6 +33,21 @@ export const createArticleService = (
   }) as any;
 };
 
+export const updateArticleService = (
+  articleId: string,
+  payload: Partial<IReqCreateArticle>
+): Promise<ReturnResponse<ARTICLE_MODEL>> => {
+  return API.putFormDataFile(`${url}/updateArticle/${articleId}`, {
+    body: { ...payload },
+  }) as any;
+};
+
+export const deleteArticleService = (
+  articleId: string
+): Promise<ReturnResponse<ARTICLE_MODEL>> => {
+  return API.patch(`${url}/deleteArticle/${articleId}`) as any;
+};
+
 export const getListSaveArticleService = (
   params: Partial<IParamGetArticle>
 ): Promise<ReturnResponse<resGetListSaveArticle>> => {

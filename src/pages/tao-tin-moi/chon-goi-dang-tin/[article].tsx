@@ -1,9 +1,11 @@
 import Breadcrumb from '@/components/common/BreadCrumb';
+import ContainerModal from '@/components/common/ContainerModal';
 import GoogleMap from '@/components/common/GoogleMap';
 import LineHorizontal from '@/components/common/LineHorizontal';
 import LayoutCommon from '@/components/layout/LayoutCommon';
 import ImageSlide from '@/components/pages/bai-dang/ImageSlide';
 import FormPickPackage from '@/components/pages/tao-tin-moi/chon-goi-dang-tin/FormPickArticle';
+import ModalConfirmDeleteArticle from '@/components/pages/tao-tin-moi/ModalConfirmDeleteArticle';
 import { formatMoney } from '@/helpers/base.helpers';
 import Authentication from '@/HOC/auth.hoc';
 import { useArticle } from '@/stores/Article';
@@ -14,6 +16,11 @@ import React from 'react';
 
 const ChoosePostPackagePage = () => {
   const [stateArticle, actionArticle] = useArticle();
+
+  const [deleteModal, setDeleteModal] = React.useState(false);
+  const openDeleteModal = () => setDeleteModal(true);
+  const closeDeleteModal = () => setDeleteModal(false);
+
   const router = useRouter();
   const articleId = router.query.article as string;
   React.useEffect(() => {
@@ -33,7 +40,7 @@ const ChoosePostPackagePage = () => {
 
   return (
     <React.Fragment>
-      <LayoutCommon title="Tạo tin" isVisibleSearchBar>
+      <LayoutCommon title="Chọn gói tin" isVisibleSearchBar>
         <div className="w-full px-[50px] py-[10px]">
           <Breadcrumb
             arr_link={[
@@ -43,11 +50,13 @@ const ChoosePostPackagePage = () => {
             ]}
             classNameContainer="mb-[20px]"
           />
+          {/* Header */}
           <div className="h-[50px] bg-orange-100 rounded-[3px] flex justify-center">
             <p className="text-[24px] text-black font-bold self-center">
               Bản xem trước và xác nhận
             </p>
           </div>
+          {/* Preview */}
           <div className="mt-[20px] py-[20px] px-[60px] border border-[#d8d7d7] bg-white rounded-[3px] hover:shadow">
             {/* Preview */}
             <div className="h-[50px] bg-baseColor rounded-[3px] flex justify-center mb-[10px]">
@@ -114,7 +123,9 @@ const ChoosePostPackagePage = () => {
               </div>
             </div>
             <div className="flex flex-row-reverse items-center gap-3">
-              <Link href={`/chinh-sua-tin/${articleId}`}>
+              <Link
+                href={`/chinh-sua-tin/${articleId}?backURL=/tao-tin-moi/chon-goi-dang-tin/${articleId}`}
+              >
                 <a className="button-outline-primary w-32 mt-[30px] h-[40px] md:mt-[20px] md:h-[30px]">
                   Chỉnh sửa
                 </a>
@@ -122,6 +133,7 @@ const ChoosePostPackagePage = () => {
               <button
                 type="button"
                 className="button-outline-primary-red w-32 mt-[30px] h-[40px] md:mt-[20px] md:h-[30px]"
+                onClick={openDeleteModal}
               >
                 Xóa
               </button>
@@ -137,6 +149,10 @@ const ChoosePostPackagePage = () => {
             </div>
             <FormPickPackage />
           </div>
+          {/* Modal */}
+          <ContainerModal isVisible={deleteModal} closeModal={closeDeleteModal}>
+            <ModalConfirmDeleteArticle closeModal={closeDeleteModal} />
+          </ContainerModal>
         </div>
       </LayoutCommon>
     </React.Fragment>
