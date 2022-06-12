@@ -24,6 +24,7 @@ const useInView = (targetRef: any, options: IntersectionObserverInit) => {
         observer.unobserve(currentTarget);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [optionsMemo]);
 
   return inView;

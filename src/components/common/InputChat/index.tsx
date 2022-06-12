@@ -17,9 +17,9 @@ const InputChat = (props: Props) => {
     placeholder = '',
     className = '',
     registerForm = {},
-    setValue = () => {
-      return;
-    },
+    // setValue = () => {
+    //   return;
+    // },
   } = props;
   //   const [message, setMessage] = React.useState('');
 

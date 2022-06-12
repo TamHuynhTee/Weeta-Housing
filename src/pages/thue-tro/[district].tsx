@@ -6,6 +6,7 @@ import LayoutCommon from '@/components/layout/LayoutCommon';
 import ArticleFilter from '@/components/pages/thue-tro/ArticleFilter';
 import NoResults from '@/components/pages/thue-tro/NoResults';
 import Pagination from '@/components/pages/thue-tro/Pagination';
+import TopArticlesSection from '@/components/pages/thue-tro/TopArticlesSection';
 import { DISTRICTS, WARDS } from '@/constants/location.constants';
 import {
   formatMoney,
@@ -13,7 +14,6 @@ import {
   pushSearchQueries,
 } from '@/helpers/base.helpers';
 import Authentication from '@/HOC/auth.hoc';
-import { ARTICLE_MODEL } from '@/models/Article.model';
 import { useArticle } from '@/stores/Article';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -116,7 +116,7 @@ const DistrictSearchPage = () => {
           <div className="w-full grid grid-cols-3 gap-4">
             <div className="col-span-2">
               {stateArticle.topArticles.list.length > 0 && (
-                <TopArticles
+                <TopArticlesSection
                   list={stateArticle.topArticles.list}
                   loading={stateArticle.topArticles.loading}
                 />
@@ -200,35 +200,6 @@ const DistrictSearchPage = () => {
         </div>
       </LayoutCommon>
     </React.Fragment>
-  );
-};
-
-const TopArticles = ({
-  list,
-  loading,
-}: {
-  list: Array<ARTICLE_MODEL>;
-  loading: boolean;
-}) => {
-  return (
-    <div className="mt-[10px]">
-      <div className="px-[20px] py-[10px] bg-baseColor text-white font-bold rounded-[3px]">
-        Tin TOP
-      </div>
-      {loading ? (
-        <div className="mt-[10px] grid grid-cols-3 gap-[10px]">
-          <BoxSkeletonArticle count={3} />
-        </div>
-      ) : list.length > 0 ? (
-        <div className="mt-[10px] grid grid-cols-3 gap-[10px]">
-          {list.map((item, index) => (
-            <CardArticle data={item} key={index} />
-          ))}
-        </div>
-      ) : (
-        <NoResults />
-      )}
-    </div>
   );
 };
 

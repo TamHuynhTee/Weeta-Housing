@@ -6,6 +6,7 @@ import LayoutCommon from '@/components/layout/LayoutCommon';
 import ArticleFilter from '@/components/pages/thue-tro/ArticleFilter';
 import NoResults from '@/components/pages/thue-tro/NoResults';
 import Pagination from '@/components/pages/thue-tro/Pagination';
+import TopArticlesSection from '@/components/pages/thue-tro/TopArticlesSection';
 import { DISTRICTS } from '@/constants/location.constants';
 import { formatMoney } from '@/helpers/base.helpers';
 import Authentication from '@/HOC/auth.hoc';
@@ -41,6 +42,21 @@ const SearchPage = () => {
       'price[lte]': router.query.priceLTE as string,
       'startDate[gte]': router.query.startDate as string,
       page: currentPage,
+      keyword: router.query.q as string,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.query]);
+
+  React.useEffect(() => {
+    actionArticle.getListTopArticleAsync({
+      limit: 3,
+      'area[gte]': router.query.areaGTE as string,
+      'area[lte]': router.query.areaLTE as string,
+      'price[gte]': router.query.priceGTE as string,
+      'price[lte]': router.query.priceLTE as string,
+      'startDate[gte]': router.query.startDate as string,
+      //   district: district as string,
+      //   ward: ward,
       keyword: router.query.q as string,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,7 +101,12 @@ const SearchPage = () => {
 
           <div className="w-full grid grid-cols-3 gap-4">
             <div className="col-span-2">
-              {/* <TopArticles list={stateArticle.topArticles.list} /> */}
+              {stateArticle.topArticles.list.length > 0 && (
+                <TopArticlesSection
+                  list={stateArticle.topArticles.list}
+                  loading={stateArticle.topArticles.loading}
+                />
+              )}
 
               <div className="px-[20px] py-[10px] bg-orange-100 rounded-[3px]">
                 <span className="text-baseColor font-bold">

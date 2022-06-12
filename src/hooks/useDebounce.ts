@@ -9,6 +9,7 @@ const useDebounce = <F extends (...args: any) => any>(
 
   useEffect(() => {
     savedFunc.current = func;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [waitFor]);
 
   return useCallback((...args: any) => {
@@ -18,6 +19,7 @@ const useDebounce = <F extends (...args: any) => any>(
     }
 
     timer.current = setTimeout(() => savedFunc.current?.(...args), waitFor);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) as (...args: Parameters<F>) => ReturnType<F>;
 };
 
