@@ -30,7 +30,7 @@ const PaymentSuccess = () => {
             .
           </p>
           <div className="flex gap-3 mt-[20px]">
-            <Link href={`#!`}>
+            <Link href={`/thong-tin-ca-nhan/lich-su-giao-dich`}>
               <a className="button-primary">Chi tiết hóa đơn</a>
             </Link>
             {type === ENUM_PAYMENT_TYPE.SERVICE_PACKAGE && (

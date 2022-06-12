@@ -8,8 +8,8 @@ import {
   MEMBER_TRANSACTION_MODEL,
   SERVICE_TRANSACTION_MODEL,
 } from '@/models/Payment.model';
+import { useLessor } from '@/stores/Lessor';
 import dayjs from 'dayjs';
-import Link from 'next/link';
 
 const CardTransaction = ({
   data,
@@ -18,6 +18,12 @@ const CardTransaction = ({
   data: MEMBER_TRANSACTION_MODEL & SERVICE_TRANSACTION_MODEL;
   type: ENUM_PAYMENT_TYPE;
 }) => {
+  const [, actionLessor] = useLessor();
+
+  const handleSelectTransaction = () => {
+    actionLessor.setDetailTransaction(data);
+  };
+
   return (
     <div
       className={`rounded-[10px] px-[20px] py-[10px] ${
@@ -86,11 +92,12 @@ const CardTransaction = ({
         <p className="mt-[10px] text-[14px] leading-[27px] font-normal text-right">
           {dayjs(data.createdAt).format('DD-MM-YYYY HH:mm')}
         </p>
-        <Link href={`#!`}>
-          <a className="mt-[10px] text-[14px] leading-[27px] font-normal float-right">
-            Chi tiết {'>'}
-          </a>
-        </Link>
+        <a
+          className="mt-[10px] text-[14px] leading-[27px] font-normal float-right cursor-pointer"
+          onClick={handleSelectTransaction}
+        >
+          Chi tiết {'>'}
+        </a>
       </div>
     </div>
   );

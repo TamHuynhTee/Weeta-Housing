@@ -18,7 +18,7 @@ export interface ARTICLE_MODEL {
   description: string;
   isApproved: boolean;
   isAvailable: boolean;
-  isDelete: boolean;
+  isDeleted: boolean;
   isPublished: boolean;
   createdAt: string;
   servicePackageId: string;

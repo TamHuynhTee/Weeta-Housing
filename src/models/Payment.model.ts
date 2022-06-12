@@ -21,5 +21,6 @@ export interface MEMBER_TRANSACTION_MODEL extends TRANSACTION_MODEL {
 
 export interface SERVICE_TRANSACTION_MODEL extends TRANSACTION_MODEL {
   readonly articleId: string;
+  numOfDate: number;
   servicePackageName: ENUM_TYPE_ARTICLE;
 }

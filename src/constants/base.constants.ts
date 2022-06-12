@@ -24,6 +24,11 @@ export enum ENUM_TYPE_ARTICLE {
   UP = 'UP',
 }
 
+export enum ENUM_TYPE_REASON {
+  ARTICLE = 'article',
+  LESSOR = 'lessor',
+}
+
 export enum ENUM_TYPE_MEMBER {
   FREE = 'FREE',
   SAVE = 'SAVE',

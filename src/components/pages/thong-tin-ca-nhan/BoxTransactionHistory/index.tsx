@@ -1,3 +1,4 @@
+import ContainerModal from '@/components/common/ContainerModal';
 import LineHorizontal from '@/components/common/LineHorizontal';
 import BoxSkeletonTransaction from '@/components/common/Skeleton/CardTransactionSkeleton';
 import { ENUM_PAYMENT_TYPE } from '@/constants/base.constants';
@@ -6,6 +7,7 @@ import dayjs from 'dayjs';
 import React from 'react';
 import NoResults from '../../thue-tro/NoResults';
 import CardTransaction from './CardTransaction';
+import ModalDetailTransaction from './ModalDetailTransaction';
 
 const TAB_MENU = [
   { type: ENUM_PAYMENT_TYPE.SERVICE_PACKAGE, title: 'Gói dịch vụ' },
@@ -108,6 +110,14 @@ const BoxTransactionHistory = () => {
             <NoResults type="payment" text="Không có giao dịch" />
           )}
         </div>
+        <ContainerModal
+          isVisible={!!stateLessor.transactionDetail}
+          closeModal={() => actionLessor.setDetailTransaction(undefined)}
+        >
+          <ModalDetailTransaction
+            closeModal={() => actionLessor.setDetailTransaction(undefined)}
+          />
+        </ContainerModal>
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import {
   getLessorArticleAsync,
   getLessorTransactionAsync,
   loadMoreLessorTransactionAsync,
+  setDetailTransaction,
 } from './lessor.action';
 import { selector } from './lessor.selector';
 
@@ -25,6 +26,9 @@ export type State = {
     total: number;
     page: number;
   };
+  transactionDetail:
+    | (MEMBER_TRANSACTION_MODEL & SERVICE_TRANSACTION_MODEL)
+    | undefined;
 };
 
 const initialState: State = {
@@ -41,12 +45,14 @@ const initialState: State = {
     total: 0,
     page: 1,
   },
+  transactionDetail: undefined,
 };
 
 const actions = {
   getLessorArticleAsync,
   getLessorTransactionAsync,
   loadMoreLessorTransactionAsync,
+  setDetailTransaction,
 };
 
 const Store = createStore({

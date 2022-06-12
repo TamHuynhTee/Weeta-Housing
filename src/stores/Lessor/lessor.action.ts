@@ -1,5 +1,9 @@
 import { notifyError } from '@/helpers/toast.helpers';
 import {
+  MEMBER_TRANSACTION_MODEL,
+  SERVICE_TRANSACTION_MODEL,
+} from '@/models/Payment.model';
+import {
   getLessorArticleService,
   getListTransactionService,
 } from '@/services/apis/Lessor';
@@ -108,5 +112,18 @@ const setLoadingTransaction =
         ...getState().transactions,
         loading: loading,
       },
+    });
+  };
+
+export const setDetailTransaction =
+  (
+    transaction:
+      | (MEMBER_TRANSACTION_MODEL & SERVICE_TRANSACTION_MODEL)
+      | undefined
+  ) =>
+  ({ setState, getState }: Actions) => {
+    setState({
+      ...getState(),
+      transactionDetail: transaction,
     });
   };

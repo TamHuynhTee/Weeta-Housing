@@ -59,6 +59,8 @@ const Payment = () => {
       const payload: Partial<IReqPaymentArticle & IReqPaymentMember> = {
         type: statePayment.payment_type,
         prices: statePayment.payment_data.price,
+        // set cứng method
+        paymentMethod: ENUM_PAYMENT_METHOD.VNPAY,
       };
       if (statePayment.payment_type === ENUM_PAYMENT_TYPE.MEMBER_PACKAGE) {
         payload.memberPackageName =
@@ -88,14 +90,12 @@ const Payment = () => {
               </p>
               <div className="grid grid-rows-2 gap-[30px]">
                 <CardPaymentType
-                  //   name="paymentType"
                   method={ENUM_PAYMENT_METHOD.VNPAY}
                   banner="/images/img_banner_vnpay.png"
                   currentMethod={paymentMethod}
                   setCurrentMethod={setPaymentMethod}
                 />
                 <CardPaymentType
-                  //   name="paymentType"
                   method={ENUM_PAYMENT_METHOD.MOMO}
                   banner="/images/img_banner_momo.png"
                   currentMethod={paymentMethod}
@@ -111,68 +111,51 @@ const Payment = () => {
                   <LineHorizontal />
                 </div>
                 <div className="grid gap-y-[20px]">
-                  <div className="items-center grid grid-cols-2 gap-[10px]">
-                    <p className="font-semibold text-[18px]">Khách hàng</p>
-                    <p className="text-right">{stateAuth.auth?.fullname}</p>
-                  </div>
-                  <div className="items-center grid grid-cols-2 gap-[10px]">
-                    <p className="font-semibold text-[18px]">Thanh toán lúc</p>
-                    <p className="text-right">
-                      {dayjs().format('DD/MM/YYYY HH:mm')}
-                    </p>
-                  </div>
+                  <RowPaymentData
+                    label="Khách hàng"
+                    data={stateAuth.auth?.fullname}
+                  />
+                  <RowPaymentData
+                    label="Thanh toán lúc"
+                    data={dayjs().format('DD-MM-YYYY HH:mm')}
+                  />
                   <LineHorizontal />
-                  <div className="items-center grid grid-cols-2 gap-[10px]">
-                    <p className="font-semibold text-[18px]">Loại gói</p>
-                    <p className="text-right">
-                      {statePayment.payment_type ===
+                  <RowPaymentData
+                    label="Loại gói"
+                    data={
+                      statePayment.payment_type ===
                       ENUM_PAYMENT_TYPE.MEMBER_PACKAGE
                         ? 'Thành viên'
-                        : 'Đăng tin'}
-                    </p>
-                  </div>
-                  <div className="items-center grid grid-cols-2 gap-[10px]">
-                    <p className="font-semibold text-[18px]">Tên gói</p>
-                    <p className="text-right">{renderPaymentName}</p>
-                  </div>
-                  <div className="items-center grid grid-cols-2 gap-[10px]">
-                    <p className="font-semibold text-[18px]">Loại thanh toán</p>
-                    <p className="text-right">Online</p>
-                  </div>
-                  <div className="items-center grid grid-cols-2 gap-[10px]">
-                    <p className="font-semibold text-[18px]">
-                      Hình thức thanh toán
-                    </p>
-                    <p className="text-right">Ví {paymentMethod}</p>
-                  </div>
-                  <div className="items-center grid grid-cols-2 gap-[10px]">
-                    <p className="font-semibold text-[18px]">
-                      Đơn giá ({renderPaymentUnit})
-                    </p>
-                    <p className="text-right">
-                      {formatMoney(statePayment.payment_data?.price || 0)} VND
-                    </p>
-                  </div>
-                  <div className="items-center grid grid-cols-2 gap-[10px]">
-                    <p className="font-semibold text-[18px]">Thời hạn</p>
-                    <p className="text-right">
-                      {statePayment.payment_data?.quantity || 0}{' '}
-                      {renderPaymentUnit}
-                    </p>
-                  </div>
-                  <div className="items-center grid grid-cols-2 gap-[10px]">
-                    <p className="font-semibold text-[18px]">
-                      Gói hết hạn vào ngày
-                    </p>
-                    <p className="text-right">
-                      {dayjs()
-                        .add(
-                          statePayment.payment_data?.quantity || 0,
-                          statePayment.payment_data?.unit
-                        )
-                        .format('DD/MM/YYYY')}
-                    </p>
-                  </div>
+                        : 'Đăng tin'
+                    }
+                  />
+                  <RowPaymentData label="Tên gói" data={renderPaymentName} />
+                  <RowPaymentData label="Loại thanh toán" data={'Online'} />
+                  <RowPaymentData
+                    label="Hình thức thanh toán"
+                    data={`Ví ${paymentMethod}`}
+                  />
+                  <RowPaymentData
+                    label={`Đơn giá (${renderPaymentUnit})`}
+                    data={`${formatMoney(
+                      statePayment.payment_data?.price || 0
+                    )} VND`}
+                  />
+                  <RowPaymentData
+                    label="Thời hạn"
+                    data={`${
+                      statePayment.payment_data?.quantity || 0
+                    } ${renderPaymentUnit}`}
+                  />
+                  <RowPaymentData
+                    label="Gói hết hạn vào ngày"
+                    data={dayjs()
+                      .add(
+                        statePayment.payment_data?.quantity || 0,
+                        statePayment.payment_data?.unit
+                      )
+                      .format('DD-MM-YYYY')}
+                  />
                 </div>
                 <div className="my-[20px]">
                   <LineHorizontal />
@@ -195,6 +178,21 @@ const Payment = () => {
         </div>
       </LayoutCommon>
     </React.Fragment>
+  );
+};
+
+const RowPaymentData = ({
+  label,
+  data,
+}: {
+  label: string;
+  data: string | undefined;
+}) => {
+  return (
+    <div className="items-center grid grid-cols-2 gap-[10px]">
+      <p className="font-semibold text-[18px]">{label}</p>
+      <p className="text-right">{data}</p>
+    </div>
   );
 };
 
@@ -225,12 +223,6 @@ const CardPaymentType = ({
         }`}
       >
         <div className="flex items-center justify-around">
-          {/* <input
-            type="radio"
-            name={name}
-            id={`payment_method_${method}`}
-            checked={currentMethod === method}
-          /> */}
           <p className="font-bold text-[20px]">Ví {method}</p>
           <div className="h-[100px] w-[100px]">
             <img src={banner} alt={method} className="h-full w-full" />

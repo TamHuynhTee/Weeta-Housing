@@ -1,4 +1,5 @@
 import {
+  ENUM_PAYMENT_METHOD,
   ENUM_PAYMENT_TYPE,
   ENUM_PAYMENT_UNIT,
   ENUM_TYPE_ARTICLE,
@@ -14,6 +15,7 @@ export interface IReqPaymentArticle extends IReqPayment {
   articleId: string;
   servicePackageName: ENUM_TYPE_ARTICLE;
   numOfDate: number;
+  paymentMethod: ENUM_PAYMENT_METHOD;
 }
 
 export interface IReqPaymentMember extends IReqPayment {

@@ -2,6 +2,7 @@ import LineHorizontal from '@/components/common/LineHorizontal';
 import SelectBoxField from '@/components/common/SelectBoxField';
 import {
   ARTICLE_PACKAGES,
+  ENUM_PAYMENT_METHOD,
   ENUM_PAYMENT_TYPE,
   ENUM_PAYMENT_UNIT,
   ENUM_TYPE_ARTICLE,
@@ -40,6 +41,7 @@ const FormPickPackage = () => {
       const payload: IReqPaymentArticle = {
         type: ENUM_PAYMENT_TYPE.SERVICE_PACKAGE,
         servicePackageName: articlePackage.serviceName,
+        paymentMethod: ENUM_PAYMENT_METHOD.VNPAY,
         prices: 0,
         numOfDate: 0,
         articleId,

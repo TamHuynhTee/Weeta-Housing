@@ -43,32 +43,6 @@ export const getListArticleAsync =
     return false;
   };
 
-export const loadMoreArticleAsync =
-  (params: Partial<IParamGetArticle>) =>
-  async ({ getState, setState }: Actions) => {
-    authInstance.actions.setAppLoading(true);
-    const result = await getListArticleService(params);
-    authInstance.actions.setAppLoading(false);
-    if (result.error !== undefined) {
-      if (!result.error) {
-        const currentList = [...getState().article.list, ...result.data.data];
-        // console.log(`currentList`, currentList);
-        setState({
-          ...getState(),
-          article: {
-            ...getState().article,
-            list: currentList,
-            total: result.data.total,
-            isOver: result.data.isOver,
-          },
-        });
-        return true;
-      }
-    }
-    notifyError(result.message);
-    return false;
-  };
-
 export const getListTopArticleAsync =
   (params: Partial<IParamGetArticle>) =>
   async ({ getState, setState, dispatch }: Actions) => {

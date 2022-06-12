@@ -5,4 +5,5 @@ export enum RouteApi {
   conversation = 'conversation',
   message = 'message',
   payment = 'payment',
+  reportReason = 'report-reason',
 }
