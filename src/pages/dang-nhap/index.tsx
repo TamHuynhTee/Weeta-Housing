@@ -1,3 +1,4 @@
+import FacebookLoginButton from '@/components/common/FacebookLoginButton';
 import InputField from '@/components/common/InputField';
 import ToggleSwitch from '@/components/common/ToggleSwitch';
 import { useAuth } from '@/stores/Auth';
@@ -139,11 +140,15 @@ const LoginPage = () => {
               <div className="mb-[20px] flex items-center px-[30px]">
                 <div className="h-[1px] flex-1 bg-white md:bg-[rgb(119_119_119)]"></div>
                 <span className="text-center font-bold text-white md:text-[rgb(119_119_119)] px-[30px]">
-                  Hoặc đăng nhập với
+                  Hoặc
                 </span>
                 <div className="h-[1px] flex-1 bg-white md:bg-[rgb(119_119_119)]"></div>
               </div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2 items-center">
+                <div id="google_sign_in_button"></div>
+                <FacebookLoginButton />
+              </div>
+              {/* <div className="grid grid-cols-2 gap-2">
                 <button className="w-full h-[57px] bg-[rgb(59_89_152)] border-[rgb(59_89_152)] text-white font-bold rounded-[3px] flex items-center justify-center gap-2">
                   <div className="h-[16px] w-[16px]">
                     <img
@@ -164,7 +169,7 @@ const LoginPage = () => {
                   </div>
                   Google
                 </button>
-              </div>
+              </div> */}
               <div className="mt-[30px] flex justify-center">
                 Bạn chưa có tài khoản?{' '}
                 <Link href={`/dang-ky`}>

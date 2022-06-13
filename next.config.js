@@ -14,4 +14,9 @@ module.exports = withBundleAnalyzer({
   // So, the source code is "basePath-ready".
   // You can remove `basePath` if you don't need it.
   reactStrictMode: true,
+  env: {
+    API_KEY_GOOGLE_MAP: process.env.API_KEY_GOOGLE_MAP,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID,
+  },
 });

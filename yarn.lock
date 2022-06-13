@@ -820,6 +820,11 @@
   dependencies:
     "@types/react" "*"
 
+"@types/google.accounts@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@types/google.accounts/-/google.accounts-0.0.2.tgz#4e03bd249fe490f004f4f8d6423343fc51f5614a"
+  integrity sha512-wmnbDIiGZNr3dJ+NCGiWme78rhsf5gn1YJM6uRjf3FCb8lrRptybQeAnHQ+GDfKSo+z2hRxhS32VRDXJEAvCmg==
+
 "@types/json-schema@^7.0.9":
   version "7.0.9"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.9.tgz#97edc9037ea0c38585320b28964dde3b39e4660d"
@@ -849,6 +854,13 @@
   version "15.7.4"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.4.tgz#fcf7205c25dff795ee79af1e30da2c9790808f11"
   integrity sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==
+
+"@types/react-facebook-login@^4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@types/react-facebook-login/-/react-facebook-login-4.1.5.tgz#a27c7c54e9d4b53f098dc4cb0fd84c0fb4d4e12c"
+  integrity sha512-adYUfzgeOa0I0dtgFsG/KzigvslSEY8KWXyAp9RjjPp7aWzbpNbkw8KR1RaGb98m+xO0udf9OnjDlpGsPcfCvA==
+  dependencies:
+    "@types/react" "*"
 
 "@types/react-slick@^0.23.8":
   version "0.23.8"
@@ -2837,6 +2849,11 @@ json5@^1.0.1:
     array-includes "^3.1.3"
     object.assign "^4.1.2"
 
+jwt-decode@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-3.1.2.tgz#3fb319f3675a2df0c2895c8f5e9fa4b67b04ed59"
+  integrity sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==
+
 language-subtag-registry@~0.3.2:
   version "0.3.21"
   resolved "https://registry.yarnpkg.com/language-subtag-registry/-/language-subtag-registry-0.3.21.tgz#04ac218bea46f04cb039084602c6da9e788dd45a"
@@ -3769,6 +3786,11 @@ react-dom@^17.0.2:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
+react-facebook-login@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/react-facebook-login/-/react-facebook-login-4.1.1.tgz#005121236a6ac0dee02099976fb1a3265f9d633e"
+  integrity sha512-COnHEHlYGTKipz4963safFAK9PaNTcCiXfPXMS/yxo8El+/AJL5ye8kMJf23lKSSGGPgqFQuInskIHVqGqTvSw==
+
 react-hook-form@^7.27.0:
   version "7.27.0"
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.27.0.tgz#2c05e54ca557f71c55f645311ff612ec936c6c7c"
@@ -4569,21 +4591,24 @@ webpack-bundle-analyzer@4.3.0:
     sirv "^1.0.7"
     ws "^7.3.1"
 
-"weeta-housing@file:":
+"weeta-housing@file:.":
   version "1.0.0"
   dependencies:
     "@ckeditor/ckeditor5-build-classic" "^34.0.0"
     "@ckeditor/ckeditor5-react" "^5.0.1"
     "@hookform/resolvers" "^2.8.8"
-    ask-any-ckeditor "file:../../AppData/Local/Yarn/Cache/v6/npm-weeta-housing-1.0.0-8d1263a1-bc8f-431c-ad18-b6331d0ee69e-1653468905225/node_modules/weeta-housing/ckeditor5"
+    ask-any-ckeditor "file:../../AppData/Local/Yarn/Cache/v6/npm-weeta-housing-1.0.0-46f70420-193d-40fd-bfa4-7cee5a4c18ba-1655147255289/node_modules/weeta-housing/ckeditor5"
     axios "^0.26.0"
+    ckeditor5 "^34.1.0"
     dayjs "^1.10.7"
     google-map-react "^2.1.10"
+    jwt-decode "^3.1.2"
     next "^12.1.0"
     next-seo "^5.1.0"
     query-string "^7.1.1"
     react "^17.0.2"
     react-dom "^17.0.2"
+    react-facebook-login "^4.1.1"
     react-hook-form "^7.27.0"
     react-hot-toast "^2.2.0"
     react-loading-skeleton "^3.1.0"
@@ -4593,6 +4618,7 @@ webpack-bundle-analyzer@4.3.0:
     slick-carousel "^1.8.1"
     socket.io-client "^4.4.1"
     styled-jsx-plugin-postcss "^4.0.1"
+    weeta-housing "file:../../AppData/Local/Yarn/Cache/v6/npm-weeta-housing-1.0.0-46f70420-193d-40fd-bfa4-7cee5a4c18ba-1655147255289/node_modules/weeta-housing"
     yup "^0.32.11"
 
 which-boxed-primitive@^1.0.2:
