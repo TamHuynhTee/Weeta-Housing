@@ -1,8 +1,10 @@
 import FacebookLoginButton from '@/components/common/FacebookLoginButton';
 import InputField from '@/components/common/InputField';
 import ToggleSwitch from '@/components/common/ToggleSwitch';
+import { useScript } from '@/hooks/useScript';
 import { useAuth } from '@/stores/Auth';
 import { yupResolver } from '@hookform/resolvers/yup';
+import jwtDecode from 'jwt-decode';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -28,6 +30,24 @@ const schemaLogin = yup.object().shape({
 const LoginPage = () => {
   const [, actionAuth] = useAuth();
   const router = useRouter();
+
+  const onCallBack = (e: any) => {
+    console.log('google', jwtDecode(e.credential));
+  };
+
+  useScript('https://accounts.google.com/gsi/client', () => {
+    window.google.accounts.id.initialize({
+      client_id: process.env.GOOGLE_CLIENT_ID as string,
+      callback: onCallBack,
+      auto_select: false,
+    });
+
+    window.google.accounts.id.renderButton(
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      document.getElementById('google_sign_in_button')!,
+      { theme: 'outline', type: 'standard', size: 'large' }
+    );
+  });
 
   const {
     register,

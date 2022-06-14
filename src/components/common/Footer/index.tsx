@@ -1,6 +1,4 @@
-import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 import LineHorizontal from '../LineHorizontal';
 
 const FooterIcons = [
@@ -127,13 +125,18 @@ const Footer = () => {
                 <Link href="#!">
                   <a className="hover_icon ml-[25px]">
                     <span className="icon">
-                      <Image
+                      <img
+                        src={item}
+                        className="w-[27px] h-[27px] object-cover"
+                        alt="icon"
+                      />
+                      {/* <Image
                         src={item}
                         alt="icon"
                         objectFit="cover"
                         width={27}
                         height={27}
-                      />
+                      /> */}
                     </span>
                   </a>
                 </Link>

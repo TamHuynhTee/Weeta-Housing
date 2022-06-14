@@ -1,6 +1,5 @@
 import { useAuth } from '@/stores/Auth';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -43,12 +42,17 @@ const VerifyEmailToken = () => {
             )}
             {result === Result_Type.SUCCESS && (
               <div className="flex flex-col items-center justify-center">
-                <Image
+                <img
+                  src={'/icons/ic_success_check.png'}
+                  className="w-[30px] h-[30px]"
+                  alt="success"
+                />
+                {/* <Image
                   src={'/icons/ic_success_check.png'}
                   alt=""
                   width={30}
                   height={30}
-                />
+                /> */}
                 <p className="my-[30px] text-[18px]">
                   Tài khoản của bạn đã được xác thực, hãy đăng nhập để tiếp tục.
                 </p>
@@ -61,12 +65,17 @@ const VerifyEmailToken = () => {
             )}
             {result === Result_Type.FAILED && (
               <div className="flex flex-col items-center justify-center">
-                <Image
+                <img
+                  src={'/icons/ic_failed_cross.png'}
+                  className="w-[30px] h-[30px]"
+                  alt="success"
+                />
+                {/* <Image
                   src={'/icons/ic_failed_cross.png'}
                   alt=""
                   width={30}
                   height={30}
-                />
+                /> */}
                 <p className="my-[30px] text-[18px] text-center">
                   Email đã xác nhận không thành công, có lỗi xảy ra. Vui lòng
                   liên hệ với chúng tôi để được tư vấn qua email{' '}

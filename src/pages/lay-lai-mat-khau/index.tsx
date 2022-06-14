@@ -2,7 +2,6 @@ import InputField from '@/components/common/InputField';
 import { useAuth } from '@/stores/Auth';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -87,12 +86,17 @@ const ResetPassword = () => {
             )}
             {result === Result_Type.SUCCESS && (
               <div className="flex flex-col items-center justify-center">
-                <Image
+                <img
+                  src={'/icons/ic_success_check.png'}
+                  className="w-[30px] h-[30px] object-cover"
+                  alt="success"
+                />
+                {/* <Image
                   src={'/icons/ic_success_check.png'}
                   alt="success"
                   width={30}
                   height={30}
-                />
+                /> */}
                 <p className="my-[30px] text-[18px]">
                   Mật khẩu được cập nhật thành công.
                 </p>
@@ -105,12 +109,17 @@ const ResetPassword = () => {
             )}
             {result === Result_Type.FAILED && (
               <div className="flex flex-col items-center justify-center">
-                <Image
+                <img
+                  src={'/icons/ic_failed_cross.png'}
+                  className="w-[30px] h-[30px]"
+                  alt="failed"
+                />
+                {/* <Image
                   src={'/icons/ic_failed_cross.png'}
                   alt="failed"
                   width={30}
                   height={30}
-                />
+                /> */}
                 <p className="my-[30px] text-[18px] text-center">
                   Đổi mật khẩu không thành công, có lỗi xảy ra.{' '}
                   <a
