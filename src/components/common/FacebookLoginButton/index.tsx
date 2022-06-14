@@ -6,7 +6,7 @@ const FacebookLoginButton = () => {
     <div className="">
       <FacebookLogin
         appId={process.env.FACEBOOK_APP_ID as string}
-        autoLoad={true}
+        autoLoad={false}
         callback={(userInfo) => console.log('userInfo', userInfo)}
         fields="name,email,picture"
         icon="fa-facebook"
