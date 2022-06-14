@@ -97,7 +97,7 @@ const ArticleDetail = () => {
                       {data.lessor._id === stateAuth.authId ? (
                         <>
                           <Link
-                            href={`/chinh-sua-tin/${data._id}&backURL=/bai-dang/${data._id}`}
+                            href={`/chinh-sua-tin/${data._id}?backURL=/bai-dang/${data._id}`}
                           >
                             <a className="">Chỉnh sửa</a>
                           </Link>

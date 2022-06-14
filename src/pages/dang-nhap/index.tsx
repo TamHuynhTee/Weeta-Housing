@@ -1,7 +1,10 @@
+import ContainerModal from '@/components/common/ContainerModal';
 import FacebookLoginButton from '@/components/common/FacebookLoginButton';
 import InputField from '@/components/common/InputField';
 import ToggleSwitch from '@/components/common/ToggleSwitch';
+import { ENUM_SOCIAL_LOGIN } from '@/constants/base.constants';
 import { useScript } from '@/hooks/useScript';
+import { checkAccountExistService } from '@/services/apis/Auth';
 import { useAuth } from '@/stores/Auth';
 import { yupResolver } from '@hookform/resolvers/yup';
 import jwtDecode from 'jwt-decode';
@@ -29,16 +32,44 @@ const schemaLogin = yup.object().shape({
 
 const LoginPage = () => {
   const [, actionAuth] = useAuth();
+  const [modalOverride, setModalOverride] = React.useState({
+    visible: false,
+    data: undefined,
+    type: ENUM_SOCIAL_LOGIN.GOOGLE,
+  });
+
+  const openModal = (data: any, type: ENUM_SOCIAL_LOGIN) =>
+    setModalOverride({ visible: true, data: data, type });
+  const closeModal = () =>
+    setModalOverride({ ...modalOverride, visible: false, data: undefined });
+
   const router = useRouter();
 
-  const onCallBack = (e: any) => {
-    console.log('google', jwtDecode(e.credential));
+  const handleLoginWithGoogle = async (
+    e: google.accounts.id.CredentialResponse
+  ) => {
+    const info = jwtDecode(e.credential) as any;
+    if (info && info.email) {
+      const result = await checkAccountExistService(info.email);
+      if (result.data.isExist) {
+        openModal(info, ENUM_SOCIAL_LOGIN.GOOGLE);
+      } else {
+        const result = await actionAuth.loginWithGoogleAsync({
+          email: info.email,
+          fullname: info.name,
+          avatar: info.picture,
+        });
+        if (result) {
+          router.push('/');
+        }
+      }
+    }
   };
 
   useScript('https://accounts.google.com/gsi/client', () => {
     window.google.accounts.id.initialize({
       client_id: process.env.GOOGLE_CLIENT_ID as string,
-      callback: onCallBack,
+      callback: handleLoginWithGoogle,
       auto_select: false,
     });
 
@@ -166,30 +197,8 @@ const LoginPage = () => {
               </div>
               <div className="grid grid-cols-2 gap-2 items-center">
                 <div id="google_sign_in_button"></div>
-                <FacebookLoginButton />
+                <FacebookLoginButton openModal={openModal} />
               </div>
-              {/* <div className="grid grid-cols-2 gap-2">
-                <button className="w-full h-[57px] bg-[rgb(59_89_152)] border-[rgb(59_89_152)] text-white font-bold rounded-[3px] flex items-center justify-center gap-2">
-                  <div className="h-[16px] w-[16px]">
-                    <img
-                      className="w-full h-full object-contain"
-                      src="/icons/ic_facebook.png"
-                      alt="..."
-                    />
-                  </div>{' '}
-                  Facebook
-                </button>
-                <button className="w-full h-[57px] bg-[rgb(221_75_57)] border-[rgb(221_75_57)] text-white font-bold rounded-[3px] flex items-center justify-center gap-2">
-                  <div className="h-[16px] w-[16px]">
-                    <img
-                      className="w-full h-full object-contain"
-                      src="/icons/ic_google.png"
-                      alt="..."
-                    />
-                  </div>
-                  Google
-                </button>
-              </div> */}
               <div className="mt-[30px] flex justify-center">
                 Bạn chưa có tài khoản?{' '}
                 <Link href={`/dang-ky`}>
@@ -203,8 +212,80 @@ const LoginPage = () => {
             </div>
           </div>
         </div>
+        <ContainerModal
+          isVisible={modalOverride.visible}
+          closeModal={closeModal}
+        >
+          <ModalOverrideAccount
+            closeModal={closeModal}
+            data={modalOverride.data}
+            social_type={modalOverride.type}
+          />
+        </ContainerModal>
       </div>
     </React.Fragment>
+  );
+};
+
+const ModalOverrideAccount = ({
+  closeModal,
+  data,
+  social_type,
+}: {
+  closeModal: () => void;
+  data: any;
+  social_type: ENUM_SOCIAL_LOGIN;
+}) => {
+  const [, actionAuth] = useAuth();
+  const router = useRouter();
+
+  const handleConfirm = async () => {
+    if (data) {
+      const payload = {
+        email: data.email,
+        fullname: data.name,
+        avatar: data.picture,
+      };
+      let result;
+      if (social_type === ENUM_SOCIAL_LOGIN.GOOGLE) {
+        result = await actionAuth.loginWithGoogleAsync(payload);
+      }
+      if (social_type === ENUM_SOCIAL_LOGIN.FACEBOOK) {
+        result = await actionAuth.loginWithFacebookAsync(payload);
+      }
+      if (result) {
+        router.push('/');
+      }
+    }
+  };
+
+  return (
+    <div className="px-[18px] py-[25px] bg-white rounded-[5px] min-w-[300px]">
+      <p className="text-[24px] font-bold text-center mb-[16px]">Thông báo</p>
+      <p className="text-[18px] font-semibold text-black-100 text-center mb-[30px]">
+        Hiện email của tài khoản này đã được tạo trên hệ thống, chọn đồng ý thì
+        thông tin người dùng của{' '}
+        <span className="uppercase font-bold text-baseColor">
+          {social_type}
+        </span>{' '}
+        sẽ thay thế thông tin cá nhân tài khoản của bạn, bạn có muốn tiếp tục
+        không?
+      </p>
+      <div className="grid grid-cols-2 gap-2">
+        <button
+          className="button-outline-primary-grey w-full col-span-1"
+          onClick={closeModal}
+        >
+          Hủy
+        </button>
+        <button
+          className="button-primary w-full col-span-1"
+          onClick={handleConfirm}
+        >
+          Đồng ý
+        </button>
+      </div>
+    </div>
   );
 };
 

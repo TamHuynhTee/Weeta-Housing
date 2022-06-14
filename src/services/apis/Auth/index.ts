@@ -6,6 +6,7 @@ import {
   IReqChangePassword,
   IReqForgotPassword,
   IReqLogin,
+  IReqLoginSocial,
   IReqRegisterAccount,
   IReqResetPassword,
   IReqUpdateAccount,
@@ -19,6 +20,28 @@ export const loginService = (
   payload: IReqLogin
 ): Promise<ReturnResponse<resLogin>> => {
   return API.post(`${url}/login`, {
+    body: { ...payload },
+  }) as any;
+};
+
+export const checkAccountExistService = (
+  email: string
+): Promise<ReturnResponse<{ isExist: boolean }>> => {
+  return API.get(`${url}/check-account-exist/${email}`) as any;
+};
+
+export const loginGoogleService = (
+  payload: IReqLoginSocial
+): Promise<ReturnResponse<resLogin>> => {
+  return API.post(`${url}/login-google`, {
+    body: { ...payload },
+  }) as any;
+};
+
+export const loginFacebookService = (
+  payload: IReqLoginSocial
+): Promise<ReturnResponse<resLogin>> => {
+  return API.post(`${url}/login-facebook`, {
     body: { ...payload },
   }) as any;
 };

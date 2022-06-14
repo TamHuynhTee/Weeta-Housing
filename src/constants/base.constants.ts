@@ -58,6 +58,11 @@ export enum ENUM_PAYMENT_METHOD {
   MOMO = 'MOMO',
 }
 
+export enum ENUM_SOCIAL_LOGIN {
+  FACEBOOK = 'facebook',
+  GOOGLE = 'google',
+}
+
 export enum ENUM_PAYMENT_STATUS {
   SUCCESS = 'SUCCESS',
   WAIT_FOR_PAYMENT = 'WAITFORPAYMENT',
