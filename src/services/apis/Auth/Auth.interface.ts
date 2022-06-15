@@ -11,6 +11,12 @@ export interface IReqLogin {
   password: string;
 }
 
+export interface IReqLoginSocial {
+  email: string;
+  fullname: string;
+  avatar: string;
+}
+
 export interface IReqVerifyAccount {
   email: string;
   code: string;

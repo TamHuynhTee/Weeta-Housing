@@ -1,39 +1,19 @@
+import { BASE_CONSTANTS } from '@/constants/base.constants';
+import { getFromLocalStorage } from '@/helpers/base.helpers';
+import socketService from '@/services/sockets/baseSocket';
+import { useAuth } from '@/stores/Auth';
 import Head from 'next/head';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
-import 'tailwindcss/tailwind.css';
-import '../styles/global.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
-import 'react-loading-skeleton/dist/skeleton.css';
-import { useAuth } from '@/stores/Auth';
-import { getFromLocalStorage } from '@/helpers/base.helpers';
-import socketService from '@/services/sockets/baseSocket';
-import { BASE_CONSTANTS } from '@/constants/base.constants';
-import jwtDecode from 'jwt-decode';
-import { useScript } from '@/hooks/useScript';
+import 'tailwindcss/tailwind.css';
+import '../styles/global.css';
 
 const MyApp = ({ Component, pageProps }: any) => {
   const Layout = Component.Layout || EmptyLayout;
   const [stateAuth] = useAuth();
-
-  const onCallBack = (e: any) => {
-    console.log('google', jwtDecode(e.credential));
-  };
-
-  useScript('https://accounts.google.com/gsi/client', () => {
-    window.google.accounts.id.initialize({
-      client_id: process.env.GOOGLE_CLIENT_ID as string,
-      callback: onCallBack,
-      auto_select: false,
-    });
-
-    window.google.accounts.id.renderButton(
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      document.getElementById('google_sign_in_button')!,
-      { theme: 'outline', type: 'standard', size: 'large' }
-    );
-  });
 
   React.useEffect(() => {
     const token = getFromLocalStorage('token');
@@ -56,29 +36,6 @@ const MyApp = ({ Component, pageProps }: any) => {
           name="viewport"
           content="width=device-width, user-scalable=no"
         ></meta>
-        {/* <script>
-            {
-            window.fbAsyncInit = function() {
-                FB.init({
-                appId      : '2039707479550560',
-                cookie     : true,
-                xfbml      : true,
-                version    : '{api-version}'
-                });
-                
-                FB.AppEvents.logPageView();   
-                
-            };
-
-            (function(d, s, id){
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s); js.id = id;
-                js.src = "https://connect.facebook.net/en_US/sdk.js";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-            }
-</script> */}
       </Head>
       <Layout>
         <Component {...pageProps} />

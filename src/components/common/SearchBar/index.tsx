@@ -1,5 +1,4 @@
 import { pushSearchQueries } from '@/helpers/base.helpers';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -34,12 +33,10 @@ const SearchBar = (props: { className?: string; placeholder?: string }) => {
         type="submit"
         className="flex items-center ml-[10px] absolute right-[10px] top-[50%] translate-y-[-50%]"
       >
-        <Image
+        <img
           src="/icons/ic_search.png"
+          className="w-[16px] h-[16px] object-cover"
           alt="icon"
-          objectFit="cover"
-          width={16}
-          height={16}
         />
       </button>
     </form>

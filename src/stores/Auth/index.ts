@@ -20,6 +20,8 @@ import {
   uploadIDCardAsync,
   getListSaveArticleAsync,
   resetPasswordAsync,
+  loginWithGoogleAsync,
+  loginWithFacebookAsync,
 } from './auth.action';
 import { selector } from './auth.selector';
 
@@ -67,6 +69,8 @@ const actions = {
   uploadIDCardAsync,
   getListSaveArticleAsync,
   resetPasswordAsync,
+  loginWithGoogleAsync,
+  loginWithFacebookAsync,
 };
 
 const Store = createStore({

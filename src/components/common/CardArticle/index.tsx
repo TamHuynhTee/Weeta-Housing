@@ -7,9 +7,7 @@ import {
 } from '@/helpers/base.helpers';
 import { ARTICLE_MODEL } from '@/models/Article.model';
 import { useAuth } from '@/stores/Auth';
-import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 import SaveArticleComponent from '../SaveArticleComponent';
 
 interface ErrorTextProps {
@@ -91,10 +89,9 @@ const CardArticle = (props: ErrorTextProps) => {
           </Link>
           {data.servicePackageName === ENUM_TYPE_ARTICLE.UP && (
             <span className="bg-yellow-100 text-yellow-800 flex gap-1 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-200 dark:text-yellow-900">
-              <Image
+              <img
                 src="/icons/ic_up_article.png"
-                width="20"
-                height="20"
+                className="h-[20px] w-[20px]"
                 alt=""
               />
               UP

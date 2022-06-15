@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import styles from './styles.module.css';
@@ -69,13 +68,18 @@ const SelectField = (props: Props) => {
               </span>
             </>
           }
-          <Image
+          <img
+            src={'/icons/ic_dropdown.png'}
+            className="w-[40px] h-[40px] object-cover"
+            alt="icon"
+          />
+          {/* <Image
             src="/icons/ic_dropdown.png"
             alt="icon"
             objectFit="cover"
             width={40}
             height={40}
-          />
+          /> */}
         </div>
       </label>
       <input

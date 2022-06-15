@@ -7,6 +7,8 @@ import {
   changePasswordService,
   forgotPasswordService,
   getInfoByTokenService,
+  loginFacebookService,
+  loginGoogleService,
   loginService,
   registerAccountService,
   resetPasswordService,
@@ -18,6 +20,7 @@ import {
 import {
   IReqChangePassword,
   IReqLogin,
+  IReqLoginSocial,
   IReqRegisterAccount,
   IReqResetPassword,
   IReqUpdateAccount,
@@ -55,6 +58,37 @@ export const loginAsync = (payload: IReqLogin) => async () => {
   notifyError(result.message);
   return false;
 };
+
+export const loginWithGoogleAsync = (payload: IReqLoginSocial) => async () => {
+  const result = await loginGoogleService(payload);
+  if (result.error !== undefined) {
+    if (!result.error) {
+      saveToLocalStorage('token', result.data.token);
+      notifySuccess('Đăng nhập thành công');
+      return true;
+    }
+    notifyError(result.message);
+    return false;
+  }
+  notifyError(result.message);
+  return false;
+};
+
+export const loginWithFacebookAsync =
+  (payload: IReqLoginSocial) => async () => {
+    const result = await loginFacebookService(payload);
+    if (result.error !== undefined) {
+      if (!result.error) {
+        saveToLocalStorage('token', result.data.token);
+        notifySuccess('Đăng nhập thành công');
+        return true;
+      }
+      notifyError(result.message);
+      return false;
+    }
+    notifyError(result.message);
+    return false;
+  };
 
 export const registerAccountAsync =
   (payload: IReqRegisterAccount) => async () => {
