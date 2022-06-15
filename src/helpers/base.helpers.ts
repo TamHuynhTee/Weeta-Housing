@@ -49,6 +49,12 @@ export const isBlob = (input: any) => {
   else return false;
 };
 
+export const detectMediaString = (media: string): 'image' | 'video' => {
+  const checkImage =
+    /^(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))$/.test(media);
+  return checkImage ? 'image' : 'video';
+};
+
 export const isCurrentLink = (link: string) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();

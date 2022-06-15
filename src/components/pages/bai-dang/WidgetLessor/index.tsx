@@ -65,24 +65,37 @@ const BoxLessorAction = ({ data, openReportModal }: Props) => {
   return (
     <div className="mt-[20px]">
       <button
-        className="button-primary w-full"
+        className="button-primary flex items-center gap-x-[5px] w-full"
         onClick={() => setShowPhone(!showPhone)}
         disabled={!stateArticle.articleDetail?.isAvailable}
       >
+        <span className="h-[20px] w-[20px] object-contain">
+          <img src="/icons/ic_call.png" alt="image" />
+        </span>
         Liên hệ:{' '}
         {showPhone
           ? data?.phoneNumber
           : `${data?.phoneNumber?.slice(0, -3)}xxx`}
       </button>
-      <Link href={`/tin-nhan?receiverId=${data?._id}`}>
-        <a className="button-outline-primary w-full mt-[10px]">Nhắn tin</a>
-      </Link>
-      <button
-        className="button-outline-primary-red w-full mt-[10px]"
-        onClick={openReportModal}
-      >
-        Báo cáo
-      </button>
+      <div className="grid grid-cols-2 gap-x-[10px] mt-[10px]">
+        <Link href={`/tin-nhan?receiverId=${data?._id}`}>
+          <a className="button-blue flex items-center gap-x-[5px] w-full">
+            <span className="h-[20px] w-[20px] object-contain">
+              <img src="/icons/ic_message.png" alt="image" />
+            </span>
+            Nhắn tin
+          </a>
+        </Link>
+        <button
+          onClick={openReportModal}
+          className="button-red flex items-center gap-x-[5px] w-full"
+        >
+          <span className="h-[20px] w-[20px] object-contain">
+            <img src="/icons/ic_report.png" alt="image" />
+          </span>
+          Báo cáo
+        </button>
+      </div>
     </div>
   );
 };

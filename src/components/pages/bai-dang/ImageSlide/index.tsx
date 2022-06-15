@@ -1,7 +1,8 @@
 import SliderCustom from '@/components/common/Slider';
 import SliderArrow from '@/components/common/Slider/SliderArrow';
-import { getLengthArray } from '@/helpers/base.helpers';
+import { detectMediaString, getLengthArray } from '@/helpers/base.helpers';
 import React from 'react';
+import ReactPlayer from 'react-player';
 
 const ImageSlide = ({ images }: { images: Array<string> | undefined }) => {
   const [currentImage, setCurrentImage] = React.useState(0);
@@ -34,11 +35,31 @@ const ImageSlide = ({ images }: { images: Array<string> | undefined }) => {
           {images.map((item, index) => {
             return (
               <div className="h-[500px]" key={index}>
-                <img
-                  src={item}
-                  className="h-full w-full object-contain"
-                  alt="image"
-                />
+                {detectMediaString(item) === 'image' ? (
+                  <img
+                    src={item}
+                    className="h-full w-full object-contain"
+                    alt="image"
+                  />
+                ) : (
+                  <ReactPlayer
+                    url={item}
+                    controls
+                    volume={0.1}
+                    // playing={currentImage === index}
+                    width={'100%'}
+                    // light
+                    height={'100%'}
+                    // onClickPreview={(env) => console.log(env)}
+                    // playIcon={
+                    //   <img
+                    //     src="/icons/ic_error.png"
+                    //     alt="play"
+                    //     className="h-[50px] w-[50px]"
+                    //   />
+                    // }
+                  />
+                )}
               </div>
             );
           })}

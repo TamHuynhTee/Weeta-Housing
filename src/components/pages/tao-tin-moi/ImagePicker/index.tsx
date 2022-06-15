@@ -72,7 +72,7 @@ const ImagePicker = ({
         {pickedImages.length > 0 || currentImages.length > 0 ? (
           <div
             id="images_preview"
-            className={`grid grid-cols-5 gap-3 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2`}
+            className={`w-full grid grid-cols-5 gap-3 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2`}
           >
             {/* Apis images */}
             {currentImages.map((item, index) => (

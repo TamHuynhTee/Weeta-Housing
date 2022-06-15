@@ -53,6 +53,12 @@ export enum ENUM_PAYMENT_TYPE {
   SERVICE_PACKAGE = 'SERVICEPACKAGE',
 }
 
+export enum ENUM_ACCOUNT_TYPE {
+  NORMAL = 'normal',
+  GOOGLE = 'google',
+  FACEBOOK = 'facebook',
+}
+
 export enum ENUM_PAYMENT_METHOD {
   VNPAY = 'VNPAY',
   MOMO = 'MOMO',

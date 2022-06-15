@@ -1,5 +1,6 @@
 import {
   ACCOUNT_GENDER,
+  ENUM_ACCOUNT_TYPE,
   ENUM_TYPE_MEMBER,
   ROLE,
 } from '@/constants/base.constants';
@@ -18,6 +19,8 @@ export interface ACCOUNT_MODEL {
   avatar: string;
   introduction: string;
   saveArticle: Array<string>;
+  accountType: ENUM_ACCOUNT_TYPE;
+
   //   lessor model
   IDCard: Array<string>;
   lessorId: string;

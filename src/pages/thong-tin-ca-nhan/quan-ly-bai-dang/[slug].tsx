@@ -7,7 +7,7 @@ import React from 'react';
 const ArticleManagement = () => {
   return (
     <React.Fragment>
-      <LayoutCommon title="Quản lý Bài viết" isVisibleSearchBar>
+      <LayoutCommon title="Quản lý bài viết" isVisibleSearchBar>
         <ContainerProfile>
           <BoxManageArticle />
         </ContainerProfile>

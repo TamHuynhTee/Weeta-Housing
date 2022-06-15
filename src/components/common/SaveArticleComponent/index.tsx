@@ -27,10 +27,10 @@ const SaveArticleComponent = (props: ISaveArticle) => {
 
   return (
     <div
-      className={`absolute ${className} hover:scale-105 cursor-pointer`}
+      className={`${className} flex justify-center items-center p-2 rounded-[5px] bg-red-200`}
       onClick={handleSave}
     >
-      <div className="w-[30px] h-[30px] rounded-[50%]">
+      <div className="w-[25px] h-[25px] rounded-[50%] hover:scale-105 cursor-pointer">
         <img
           src={`/icons/ic_heart_${!saved ? 'outlined' : 'fill'}.png`}
           alt="save"

@@ -1,9 +1,11 @@
 import Breadcrumb from '@/components/common/BreadCrumb';
 import ContainerModal from '@/components/common/ContainerModal';
 import GoogleMap from '@/components/common/GoogleMap';
+import SaveArticleComponent from '@/components/common/SaveArticleComponent';
 import LayoutCommon from '@/components/layout/LayoutCommon';
 import ImageSlide from '@/components/pages/bai-dang/ImageSlide';
 import ModalConfirmPauseArticle from '@/components/pages/bai-dang/ModalConfirmPauseArticle';
+import ModalConfirmContinueArticle from '@/components/pages/bai-dang/ModalConfirmContinueArticle';
 import ModalReportArticle from '@/components/pages/bai-dang/ModalReportArticle';
 import ModalReportLessor from '@/components/pages/bai-dang/ModalReportLessor';
 import WidgetLessor from '@/components/pages/bai-dang/WidgetLessor';
@@ -36,6 +38,11 @@ const ArticleDetail = () => {
 
   const openPauseArticleModal = () => setPauseArticleModal(true);
   const closePauseArticleModal = () => setPauseArticleModal(false);
+
+  const [continueArticleModal, setContinueArticleModal] = React.useState(false);
+
+  const openContinueArticleModal = () => setContinueArticleModal(true);
+  const closeContinueArticleModal = () => setContinueArticleModal(false);
 
   //   Router
   const router = useRouter();
@@ -71,21 +78,36 @@ const ArticleDetail = () => {
                   classNameContainer="mb-[20px]"
                 />
                 {data.lessor._id === stateAuth.authId ? (
-                  <div
-                    className={`p-[10px] mb-[20px] text-white rounded-md ${
-                      data.isApproved ? 'bg-green-400' : 'bg-orange-500'
-                    }`}
-                  >
-                    {data.isApproved
-                      ? 'Bài viết đã được duyệt'
-                      : 'Bài viết đang đợi duyệt'}
-                  </div>
+                  <>
+                    <div
+                      className={`p-[10px] mb-[10px] text-white rounded-md ${
+                        data.isApproved ? 'bg-green-400' : 'bg-orange-500'
+                      }`}
+                    >
+                      {data.isApproved
+                        ? 'Bài viết đã được duyệt'
+                        : 'Bài viết đang đợi duyệt'}
+                    </div>
+                    {!data.isAvailable && (
+                      <div
+                        className={`p-[10px] mb-[20px] text-white rounded-md bg-red-400 flex items-center gap-x-[10px]`}
+                      >
+                        <span>Bạn đã ngưng bài viết này</span>{' '}
+                        <button
+                          className="button-blue"
+                          onClick={openContinueArticleModal}
+                        >
+                          Mở lại
+                        </button>
+                      </div>
+                    )}
+                  </>
                 ) : (
                   !data.isAvailable && (
                     <div
-                      className={`p-[10px] mb-[20px] text-white rounded-md bg-red-500`}
+                      className={`p-[10px] mb-[20px] text-white rounded-md bg-red-400`}
                     >
-                      Người cho thuê đã ngưng bài viết
+                      Bài viết không còn khả dụng
                     </div>
                   )
                 )}
@@ -97,24 +119,46 @@ const ArticleDetail = () => {
                       {data.lessor._id === stateAuth.authId ? (
                         <>
                           <Link
-                            href={`/chinh-sua-tin/${data._id}&backURL=/bai-dang/${data._id}`}
+                            href={`/chinh-sua-tin/${data._id}?backURL=/bai-dang/${data._id}`}
                           >
-                            <a className="">Chỉnh sửa</a>
+                            <a className="button-blue flex items-center gap-x-[5px]">
+                              <span className="h-[20px] w-[20px] object-contain">
+                                <img src="/icons/ic_edit.png" alt="image" />
+                              </span>
+                              Chỉnh sửa
+                            </a>
                           </Link>
-                          <a
-                            className="text-red-500 cursor-pointer"
-                            onClick={openPauseArticleModal}
-                          >
-                            Ngưng bài viết
-                          </a>
+                          {data.isAvailable && (
+                            <a
+                              onClick={openPauseArticleModal}
+                              className="button-red flex items-center gap-x-[5px]"
+                            >
+                              <span className="h-[20px] w-[20px] object-contain">
+                                <img src="/icons/ic_postpone.png" alt="image" />
+                              </span>
+                              Ngưng bài viết
+                            </a>
+                          )}
                         </>
                       ) : (
-                        <a
-                          className="text-red-500 cursor-pointer"
-                          onClick={openReportArticleModal}
-                        >
-                          Báo cáo bài viết
-                        </a>
+                        <>
+                          <SaveArticleComponent
+                            className=""
+                            articleId={data._id}
+                            isSaved={stateAuth.auth?.saveArticle.includes(
+                              data._id
+                            )}
+                          />
+                          <a
+                            onClick={openReportArticleModal}
+                            className="button-red flex items-center gap-x-[5px]"
+                          >
+                            <span className="h-[20px] w-[20px] object-contain">
+                              <img src="/icons/ic_report.png" alt="image" />
+                            </span>
+                            Báo cáo
+                          </a>
+                        </>
                       )}
                     </div>
                     <div className="mt-[20px]">
@@ -140,7 +184,7 @@ const ArticleDetail = () => {
                         Thông tin chính
                       </p>
                       <ul className="list-disc list-inside mt-[10px] grid grid-cols-2">
-                        <li className="col-span-2">
+                        <li className="col-span-1">
                           Diện tích:{' '}
                           <span className="text-baseColor">
                             {data?.area} m<sup>2</sup>
@@ -199,6 +243,14 @@ const ArticleDetail = () => {
                   >
                     <ModalConfirmPauseArticle
                       closeModal={closePauseArticleModal}
+                    />
+                  </ContainerModal>
+                  <ContainerModal
+                    isVisible={continueArticleModal}
+                    closeModal={closeContinueArticleModal}
+                  >
+                    <ModalConfirmContinueArticle
+                      closeModal={closeContinueArticleModal}
                     />
                   </ContainerModal>
                 </div>

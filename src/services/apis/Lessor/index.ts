@@ -1,5 +1,6 @@
 import { RouteApi } from '@/constants/routeApi.constants';
 import { ACCOUNT_MODEL } from '@/models/Account.model';
+import { ARTICLE_MODEL } from '@/models/Article.model';
 import API from '../_config/repositoryApi';
 import { ReturnResponse } from '../_config/response.interface';
 import {
@@ -47,4 +48,11 @@ export const getListTransactionService = (
   params: Partial<IParamsGetListTransaction>
 ): Promise<ReturnResponse<resGetLessorTransactions>> => {
   return API.get(`${url}/list-transaction`, { ...params }) as any;
+};
+
+export const setArticleAvailabilityService = (
+  articleId: string,
+  params: { isShow: boolean }
+): Promise<ReturnResponse<ARTICLE_MODEL>> => {
+  return API.patch(`${url}/show-hiden-article/${articleId}`, { params }) as any;
 };

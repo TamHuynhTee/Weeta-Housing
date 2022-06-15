@@ -12,6 +12,7 @@ import {
   IParamGetArticle,
   IReqCreateArticle,
 } from '@/services/apis/Article/Article.interface';
+import { setArticleAvailabilityService } from '@/services/apis/Lessor';
 import { defaultRegistry } from 'react-sweet-state';
 import { State } from '.';
 import { Store } from '../Auth';
@@ -130,6 +131,29 @@ export const deleteArticleAsync =
       if (!result.error) {
         notifySuccess('Đã xóa bài viết');
         setState({ ...getState(), articleDetail: result.data });
+        return true;
+      }
+    }
+    notifyError(result.message);
+    return false;
+  };
+
+export const setArticleAvailabilityAsync =
+  (articleId: string, params: { isShow: boolean }) =>
+  async ({ setState, getState }: Actions) => {
+    authInstance.actions.setAppLoading(true);
+    const result = await setArticleAvailabilityService(articleId, params);
+    authInstance.actions.setAppLoading(false);
+    if (result.error !== undefined) {
+      if (!result.error) {
+        notifySuccess(`Đã ${params.isShow ? 'mở lại' : 'ngưng'} bài viết`);
+        setState({
+          ...getState(),
+          articleDetail: {
+            ...getState().articleDetail,
+            isAvailable: params.isShow,
+          },
+        });
         return true;
       }
     }

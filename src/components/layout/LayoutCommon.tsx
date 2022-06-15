@@ -13,6 +13,7 @@ import NavLogged from '../common/NavLogged';
 import NavNotLogged from '../common/NavNotLogged';
 import ModalCreateLessor from '../pages/ModalCreateLessor';
 import ModalFullOfArticle from '../pages/ModalFullOfArticle';
+import { ROLE } from '@/constants/base.constants';
 
 interface IProps {
   children: React.ReactElement;
@@ -78,17 +79,18 @@ const LayoutCommon: FC<IProps> = ({
                 {/* <Link href="#!">
                     <a className={`menu-link`}>Blog</a>
                   </Link> */}
-                <Link href="/goi-thanh-vien">
-                  <a
-                    className={`menu-link ${
-                      getSplitPathName(router.pathname, 1) ===
-                        'goi-thanh-vien' && 'active'
-                    }`}
-                  >
-                    Gói thành viên
-                  </a>
-                </Link>
-                {/* <NavLang /> */}
+                {stateAuth.role === ROLE.LESSOR && (
+                  <Link href="/goi-thanh-vien">
+                    <a
+                      className={`menu-link ${
+                        getSplitPathName(router.pathname, 1) ===
+                          'goi-thanh-vien' && 'active'
+                      }`}
+                    >
+                      Gói thành viên
+                    </a>
+                  </Link>
+                )}
               </div>
               {stateAuth.isLoggedIn ? (
                 <NavLogged

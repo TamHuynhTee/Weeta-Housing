@@ -1,7 +1,7 @@
 import { useArticle } from '@/stores/Article';
 import { useRouter } from 'next/router';
 
-const ModalConfirmPauseArticle = ({
+const ModalConfirmContinueArticle = ({
   closeModal,
 }: {
   closeModal: () => void;
@@ -10,9 +10,9 @@ const ModalConfirmPauseArticle = ({
   const router = useRouter();
   const articleId = router.query.article as string;
 
-  const handleContinueArticle = async () => {
+  const handlePauseArticle = async () => {
     const result = await actionArticle.setArticleAvailabilityAsync(articleId, {
-      isShow: false,
+      isShow: true,
     });
     if (result) closeModal();
   };
@@ -20,11 +20,10 @@ const ModalConfirmPauseArticle = ({
   return (
     <div className="px-[18px] py-[25px] bg-white rounded-[5px] min-w-[500px]">
       <p className="text-[20px] font-bold text-center mb-[16px]">
-        Bạn xác nhận muốn ngưng bài viết?
+        Bạn xác nhận mở lại bài viết?
       </p>
       <p className="text-[16px] font-normal text-center mb-[16px]">
-        Bài viết của bạn sẽ không còn hiển thị lên danh sách thuê trọ và sẽ hiện
-        tag báo cho người dùng khác
+        Bài viết của bạn sẽ hiển thị lại lên danh sách thuê trọ.
       </p>
       <div className="grid grid-cols-2 gap-x-[10px] mt-[10px]">
         <button
@@ -37,7 +36,7 @@ const ModalConfirmPauseArticle = ({
         <button
           type="submit"
           className="button-primary w-full col-span-1"
-          onClick={handleContinueArticle}
+          onClick={handlePauseArticle}
         >
           Xác nhận
         </button>
@@ -46,4 +45,4 @@ const ModalConfirmPauseArticle = ({
   );
 };
 
-export default ModalConfirmPauseArticle;
+export default ModalConfirmContinueArticle;

@@ -37,6 +37,7 @@ const ChoosePostPackagePage = () => {
   }, []);
 
   const data = stateArticle.articleDetail;
+  console.log(`data`, data);
 
   return (
     <React.Fragment>

@@ -5,6 +5,7 @@ import LineHorizontal from '@/components/common/LineHorizontal';
 import SelectBoxField from '@/components/common/SelectBoxField';
 import LayoutCommon from '@/components/layout/LayoutCommon';
 import BoxSelectLocation from '@/components/pages/tao-tin-moi/BoxSelectLocation';
+import VideoPicker from '@/components/pages/tao-tin-moi/VideoPicker';
 import { DISTRICTS, WARDS } from '@/constants/location.constants';
 import { formatMoney, moneyConverter } from '@/helpers/base.helpers';
 import { notifyError } from '@/helpers/toast.helpers';
@@ -27,7 +28,7 @@ const CkEditorField = dynamic(
 );
 
 const schema = yup.object().shape({
-  title: yup.string().required('Chưa nhập tiêu đề Bài viết'),
+  title: yup.string().required('Chưa nhập tiêu đề bài viết'),
   district: yup.string().required('Chưa chọn quận, huyện'),
   ward: yup.string().required('Chưa chọn phường, xã'),
   street: yup.string().required('Chưa nhập đường'),
@@ -59,12 +60,15 @@ const CreatePostPage = () => {
   const preMoney = watch('price') || 0;
 
   const handleCreateArticle = async (data: any) => {
-    const { number, street, area, price, files, ...rest } = data;
+    const { number, street, area, price, files, video, ...rest } = data;
+    console.log(`video`, files);
     const listFiles = Object.values(files);
     if (listFiles.length < 1) {
       notifyError('Vui lòng đăng tải ít nhất 1 hình ảnh');
       return;
     }
+
+    if (video) listFiles.push(video);
 
     const payload = {
       ...rest,
@@ -251,19 +255,6 @@ const CreatePostPage = () => {
                 />
               </div>
               <div className="mt-[20px]">
-                {/* <label
-                  htmlFor="description"
-                  className="block font-semibold mb-[10px]"
-                >
-                  Mô tả
-                </label>
-                <LimitedTextArea
-                  name="description"
-                  registerForm={register('description')}
-                  limit={1000}
-                  value=""
-                  placeholder="Giới thiệu chút về chỗ này"
-                /> */}
                 <CkEditorField
                   name="description"
                   setValue={setValue}
@@ -287,6 +278,15 @@ const CreatePostPage = () => {
                   setValue={setValue}
                 />
               </div>
+              <LineHorizontal className="my-[30px]" />
+              <p className="text-[20px] font-semibold text-baseColor text-center">
+                Video giới thiệu
+              </p>
+              <div className="mt-[20px]">
+                <p className="">Tải video giới thiệu ở đây (tối đa 1 video)</p>
+                <VideoPicker setValue={setValue} name="video" />
+              </div>
+              <LineHorizontal className="my-[30px]" />
               <input
                 type="submit"
                 className="button-primary w-32 mt-[30px] h-[40px] md:mt-[20px] md:h-[30px]"

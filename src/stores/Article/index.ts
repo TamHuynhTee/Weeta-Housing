@@ -9,6 +9,7 @@ import {
   setStoreArticleProperties,
   updateArticleAsync,
   deleteArticleAsync,
+  setArticleAvailabilityAsync,
 } from './article.action';
 import { selector } from './article.selector';
 
@@ -53,6 +54,7 @@ const actions = {
   setStoreArticleProperties,
   updateArticleAsync,
   deleteArticleAsync,
+  setArticleAvailabilityAsync,
 };
 
 const Store = createStore({

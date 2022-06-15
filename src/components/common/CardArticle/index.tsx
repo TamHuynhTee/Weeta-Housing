@@ -1,5 +1,6 @@
 import { ENUM_TYPE_ARTICLE } from '@/constants/base.constants';
 import {
+  detectMediaString,
   formatArticleTime,
   formatMoney,
   getLengthArray,
@@ -32,9 +33,10 @@ const CardArticle = (props: ErrorTextProps) => {
           className="w-full h-full object-cover rounded-tl-[5px] rounded-tr-[5px]"
           alt=""
         />
-        <div className="border-double border-2 px-[10px] py-[5px] bg-black rounded-lg border-green-200 absolute bottom-[10px] right-[10px] text-white">
-          {getLengthArray(data.image)}
-        </div>
+        <MediaCount
+          className="border-double border-2 px-[10px] py-[5px] bg-black rounded-lg border-green-200 absolute bottom-[10px] right-[10px] text-white"
+          media={data.image}
+        />
       </div>
       <div className="px-[20px] py-[10px]">
         <Link href={`/bai-dang/${data._id}`}>
@@ -54,7 +56,7 @@ const CardArticle = (props: ErrorTextProps) => {
       </div>
       {stateAuth.auth?._id !== data?.lessor?._id && (
         <SaveArticleComponent
-          className="top-[10px] right-[10px]"
+          className="absolute top-[10px] right-[10px]"
           articleId={data._id}
           isSaved={stateAuth.auth?.saveArticle.includes(data._id)}
         />
@@ -73,9 +75,10 @@ const CardArticle = (props: ErrorTextProps) => {
             className="w-full h-[180px] object-cover rounded-[5px]"
             alt=""
           />
-          <div className="border-double border-2 px-[10px] py-[5px] bg-black rounded-lg border-green-200 absolute bottom-[10px] right-[10px] text-white">
-            {getLengthArray(data.image)}
-          </div>
+          <MediaCount
+            className="border-double border-2 px-[10px] py-[5px] bg-black rounded-lg border-green-200 absolute bottom-[10px] right-[10px] text-white"
+            media={data.image}
+          />
         </div>
       </div>
       <div className="col-span-2 h-full relative flex flex-col">
@@ -113,12 +116,45 @@ const CardArticle = (props: ErrorTextProps) => {
         {/* Save article */}
         {stateAuth.auth?._id !== data?.lessor?._id && (
           <SaveArticleComponent
-            className="bottom-[10px] right-[10px]"
+            className="absolute bottom-[10px] right-[10px]"
             articleId={data._id}
             isSaved={stateAuth.auth?.saveArticle.includes(data._id)}
           />
         )}
       </div>
+    </div>
+  );
+};
+
+const MediaCount = ({
+  media,
+  className = '',
+}: {
+  media: string[];
+  className?: string;
+}) => {
+  const imageLength = getLengthArray(
+    media.filter((item) => detectMediaString(item) === 'image')
+  );
+  const videoLength = getLengthArray(
+    media.filter((item) => detectMediaString(item) === 'video')
+  );
+  return (
+    <div className={className}>
+      <div className="flex gap-x-[5px] items-center">
+        {imageLength}
+        <span className="h-[20px] w-[20px] object-contain">
+          <img src="/icons/ic_image.png" alt="image" />
+        </span>
+      </div>
+      {videoLength > 0 && (
+        <div className="flex gap-x-[5px] items-center">
+          {videoLength}
+          <span className="h-[20px] w-[20px] object-contain">
+            <img src="/icons/ic_video.png" alt="video" />
+          </span>
+        </div>
+      )}
     </div>
   );
 };

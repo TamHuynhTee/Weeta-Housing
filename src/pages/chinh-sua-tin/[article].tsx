@@ -7,8 +7,13 @@ import SelectBoxField from '@/components/common/SelectBoxField';
 import LayoutCommon from '@/components/layout/LayoutCommon';
 import BoxSelectLocation from '@/components/pages/tao-tin-moi/BoxSelectLocation';
 import ModalConfirmDeleteArticle from '@/components/pages/tao-tin-moi/ModalConfirmDeleteArticle';
+import VideoPicker from '@/components/pages/tao-tin-moi/VideoPicker';
 import { DISTRICTS, WARDS } from '@/constants/location.constants';
-import { formatMoney, moneyConverter } from '@/helpers/base.helpers';
+import {
+  detectMediaString,
+  formatMoney,
+  moneyConverter,
+} from '@/helpers/base.helpers';
 import { notifyError } from '@/helpers/toast.helpers';
 import Authentication from '@/HOC/auth.hoc';
 import { useArticle } from '@/stores/Article';
@@ -67,6 +72,14 @@ const UpdatePostPage = () => {
   const articleId = router.query.article as string;
   const data = stateArticle.articleDetail;
   const backURL = router.query.backURL as string;
+
+  const images = data?.image?.filter(
+    (item) => detectMediaString(item) === 'image'
+  );
+
+  const video = data?.image?.filter(
+    (item) => detectMediaString(item) === 'video'
+  )[0];
 
   React.useEffect(() => {
     if (!stateArticle.articleDetail)
@@ -315,9 +328,18 @@ const UpdatePostPage = () => {
                   name="files"
                   errors={errors}
                   setValue={setValue}
-                  listImages={data?.image}
+                  listImages={images}
                 />
               </div>
+              <LineHorizontal className="my-[30px]" />
+              <p className="text-[20px] font-semibold text-baseColor text-center">
+                Video giới thiệu
+              </p>
+              <div className="mt-[20px]">
+                <p className="">Tải video giới thiệu ở đây (tối đa 1 video)</p>
+                <VideoPicker setValue={setValue} video={video} name="video" />
+              </div>
+              <LineHorizontal className="my-[30px]" />
               <div className="mt-[30px] flex gap-x-[20px]">
                 <input
                   type="submit"
