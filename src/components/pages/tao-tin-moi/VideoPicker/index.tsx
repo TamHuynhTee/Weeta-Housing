@@ -41,7 +41,7 @@ const VideoPicker = ({
   };
 
   return (
-    <div className="border-dashed min-h-[200px] p-5 mt-[10px]border-gray-300 rounded-[3px] border-2 flex justify-center items-center">
+    <div className="border-dashed min-h-[200px] p-5 mt-[10px] border-gray-300 rounded-[3px] border-2 flex justify-center items-center">
       {video || pickedVideo ? (
         <div className="">
           <div className="border-2 border-green-400 p-0">

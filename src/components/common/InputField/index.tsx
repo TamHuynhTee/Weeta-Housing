@@ -16,7 +16,7 @@ type Props = {
   inputClassName?: string;
   overrideInputClassName?: boolean;
   errors?: any;
-  label?: string;
+  label?: string | React.ReactChild;
   type?: 'password' | 'text' | 'email' | 'number' | 'date' | 'money';
   defaultValue?: string | number;
   placeholder?: string;

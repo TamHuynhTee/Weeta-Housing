@@ -6,12 +6,14 @@ import LineHorizontal from '@/components/common/LineHorizontal';
 import SelectBoxField from '@/components/common/SelectBoxField';
 import LayoutCommon from '@/components/layout/LayoutCommon';
 import BoxSelectLocation from '@/components/pages/tao-tin-moi/BoxSelectLocation';
+import FacilitiesForm from '@/components/pages/tao-tin-moi/FacilitiesForm';
 import ModalConfirmDeleteArticle from '@/components/pages/tao-tin-moi/ModalConfirmDeleteArticle';
 import VideoPicker from '@/components/pages/tao-tin-moi/VideoPicker';
 import { DISTRICTS, WARDS } from '@/constants/location.constants';
 import {
   detectMediaString,
   formatMoney,
+  getIndexOfTrueItems,
   moneyConverter,
 } from '@/helpers/base.helpers';
 import { notifyError } from '@/helpers/toast.helpers';
@@ -71,6 +73,7 @@ const UpdatePostPage = () => {
   const router = useRouter();
   const articleId = router.query.article as string;
   const data = stateArticle.articleDetail;
+  //   console.log(`data`, data);
   const backURL = router.query.backURL as string;
 
   const images = data?.image?.filter(
@@ -113,6 +116,31 @@ const UpdatePostPage = () => {
         setValue('title', data.title);
         setValue('description', data.description);
         setValue('image', data.image);
+
+        setValue(
+          'facilities.electric.price',
+          formatMoney(data.facilities.electric.price || 0)
+        );
+        setValue('facilities.electric.unit', data.facilities.electric.unit);
+        setValue(
+          'facilities.water.price',
+          formatMoney(data.facilities.water.price || 0)
+        );
+        setValue('facilities.water.unit', data.facilities.water.unit);
+        setValue(
+          'facilities.wifi.price',
+          formatMoney(data.facilities.wifi.price || 0)
+        );
+        setValue('facilities.wifi.unit', data.facilities.wifi.unit);
+        setValue('facilities.limitTime', data.facilities.limitTime);
+        setValue('facilities.liveWithOwner', data.facilities.liveWithOwner);
+        setValue('facilities.parking', data.facilities.parking);
+        data.facilities.typeUser.map((item) => {
+          setValue(`facilities.typeUser.${item}`, true);
+        });
+        data.facilities.places_around.map((item) => {
+          setValue(`facilities.places_around.${item}`, true);
+        });
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -120,23 +148,45 @@ const UpdatePostPage = () => {
 
   const handleUpdateArticle = async (formData: any) => {
     if (data) {
-      const { area, price, files, image, ...rest } = formData;
+      const { area, price, files, image, facilities, ...rest } = formData;
+
       const listFiles = Object.values(files);
       if (listFiles.length + image.length < 1) {
         notifyError('Vui lòng đăng tải ít nhất 1 hình ảnh');
         return;
       }
+      const places_around = getIndexOfTrueItems(
+        Object.values(facilities.places_around)
+      );
+      const typeUser = getIndexOfTrueItems(Object.values(facilities.typeUser));
 
       const payload = {
         ...rest,
         location: {
           latitude: 1,
-          longtitude: 1,
+          longitude: 1,
         },
         area: +area,
         price: moneyConverter(price),
         files: listFiles,
         image: image,
+        facilities: {
+          ...facilities,
+          places_around,
+          typeUser,
+          electric: {
+            price: moneyConverter(facilities.electric.price),
+            unit: facilities.electric.unit,
+          },
+          water: {
+            price: moneyConverter(facilities.water.price),
+            unit: facilities.water.unit,
+          },
+          wifi: {
+            price: moneyConverter(facilities.wifi.price),
+            unit: facilities.wifi.unit,
+          },
+        },
       };
       //   console.log('payload', payload);
       const result = await actionArticle.updateArticleAsync(data._id, payload);
@@ -254,29 +304,31 @@ const UpdatePostPage = () => {
               <p className="text-[20px] font-semibold text-baseColor text-center">
                 Mặt bằng và giá cả
               </p>
-              <div className="mt-[20px]">
-                <InputField
-                  type="number"
-                  register={register('area')}
-                  name="area"
-                  label="Diện tích"
-                  placeholder="m2"
-                  errors={errors}
-                  isRequired
-                />
-              </div>
-              <div className="mt-[20px]">
-                <InputField
-                  type="money"
-                  register={register('price')}
-                  name="price"
-                  label="Giá tiền (mỗi tháng) VND"
-                  placeholder="Giá cho thuê"
-                  setValue={setValue}
-                  clearErrors={clearErrors}
-                  errors={errors}
-                  isRequired
-                />
+              <div className="mt-[20px] grid grid-cols-2 gap-x-[10px]">
+                <div className="col-span-1">
+                  <InputField
+                    type="number"
+                    register={register('area')}
+                    name="area"
+                    label="Diện tích"
+                    placeholder="m2"
+                    errors={errors}
+                    isRequired
+                  />
+                </div>
+                <div className="col-span-1">
+                  <InputField
+                    type="money"
+                    register={register('price')}
+                    name="price"
+                    label="Giá tiền (mỗi tháng) VND"
+                    placeholder="Giá cho thuê"
+                    setValue={setValue}
+                    clearErrors={clearErrors}
+                    errors={errors}
+                    isRequired
+                  />
+                </div>
               </div>
               <div className="mt-[20px]">
                 <p className="block font-semibold text-baseColor mb-[10px]">
@@ -312,6 +364,17 @@ const UpdatePostPage = () => {
                   setValue={setValue}
                   defaultValue={data?.description}
                   label={'Mô tả'}
+                />
+              </div>
+              <LineHorizontal className="my-[30px]" />
+              <p className="text-[20px] font-semibold text-baseColor text-center">
+                Tiện ích
+              </p>
+              <div className="mt-[20px]">
+                <FacilitiesForm
+                  register={register}
+                  setValue={setValue}
+                  clearErrors={clearErrors}
                 />
               </div>
               <LineHorizontal className="my-[30px]" />

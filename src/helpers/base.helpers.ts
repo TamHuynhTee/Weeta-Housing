@@ -131,3 +131,10 @@ export const pushSearchQueries = (
     query: { ...router.query, ...query },
   });
 };
+
+export const getIndexOfTrueItems = (arr: any[]) => {
+  return arr.reduce(
+    (out: any, bool, index) => (bool ? out.concat(index) : out),
+    []
+  );
+};

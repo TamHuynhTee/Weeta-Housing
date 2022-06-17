@@ -9,7 +9,7 @@ import { getFromLocalStorage } from '../../../helpers/base.helpers';
 
 const axiosClient = axios.create({
   baseURL: BASE_CONSTANTS.BASE_URL,
-  timeout: 20000,
+  timeout: 100000,
   headers: {
     'Content-Type': 'application/json',
     // 'Content-Type': 'multipart/form-data',

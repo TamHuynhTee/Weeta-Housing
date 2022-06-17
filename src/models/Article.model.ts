@@ -27,4 +27,25 @@ export interface ARTICLE_MODEL {
   endDate: string;
   timeService: number;
   lessor: ACCOUNT_MODEL;
+  facilities: FACILITIES_MODEL;
 }
+
+export type FACILITIES_MODEL = {
+  typeUser: number[];
+  electric: {
+    price: number | null;
+    unit: 'kWh';
+  };
+  water: {
+    price: number | null;
+    unit: 'perCapita' | 'block';
+  };
+  wifi: {
+    price: number | null;
+    unit: 'perCapita';
+  };
+  places_around: number[];
+  limitTime: string;
+  parking: boolean;
+  liveWithOwner: boolean;
+};

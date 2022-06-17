@@ -17,6 +17,7 @@ import dayjs from 'dayjs';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
+import FacilitiesView from '@/components/common/FacilitiesView';
 
 const ArticleDetail = () => {
   // Stores
@@ -198,6 +199,16 @@ const ArticleDetail = () => {
                         </li>
                       </ul>
                     </div>
+
+                    {data?.facilities && (
+                      <div className="mt-[20px]">
+                        <p className="text-black-100 text-[18px] font-bold">
+                          Tiện ích
+                        </p>
+                        <FacilitiesView facilities={data.facilities} />
+                      </div>
+                    )}
+
                     <div className="mt-[20px]">
                       <p className="text-black-100 text-[18px] font-bold">
                         Giới thiệu

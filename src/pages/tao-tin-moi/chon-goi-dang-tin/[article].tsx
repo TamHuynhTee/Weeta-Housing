@@ -1,5 +1,6 @@
 import Breadcrumb from '@/components/common/BreadCrumb';
 import ContainerModal from '@/components/common/ContainerModal';
+import FacilitiesView from '@/components/common/FacilitiesView';
 import GoogleMap from '@/components/common/GoogleMap';
 import LineHorizontal from '@/components/common/LineHorizontal';
 import LayoutCommon from '@/components/layout/LayoutCommon';
@@ -75,9 +76,18 @@ const ChoosePostPackagePage = () => {
                   <ImageSlide images={data?.image} />
                   <div className="mt-[20px]">
                     <p className="font-bold text-[24px]">{data?.title}</p>
-                    <p className="font-semibold text-[24px] mt-[10px]">
-                      {data?.address}
-                    </p>
+                    <div className="flex items-center gap-x-[10px] mt-[10px]">
+                      <div className="h-[24px] w-[24px]">
+                        <img
+                          src="/icons/ic_location.png"
+                          className="w-full h-full object-contain"
+                          alt="location"
+                        />
+                      </div>
+                      <p className="font-normal text-[20px] leading-[30px]">
+                        {data?.address}
+                      </p>
+                    </div>
                     <p className="text-[36px] font-bold max_line-2 text-baseColor mt-[10px]">
                       {formatMoney(data?.price || 0)}đ
                     </p>
@@ -101,6 +111,15 @@ const ChoosePostPackagePage = () => {
                       </li>
                     </ul>
                   </div>
+                  {data?.facilities && (
+                    <div className="mt-[20px]">
+                      <p className="text-black-100 text-[18px] font-bold">
+                        Tiện ích
+                      </p>
+                      <FacilitiesView facilities={data.facilities} />
+                    </div>
+                  )}
+
                   <div className="mt-[20px]">
                     <p className="text-black-100 text-[18px] font-bold">
                       Giới thiệu
