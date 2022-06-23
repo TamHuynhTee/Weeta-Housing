@@ -13,7 +13,6 @@ type Props = {
 const CardChannel = (props: Props) => {
   const { isSelected, data, authId, handleSelect } = props;
   const { latestMessage } = data;
-  //   const [stateConversation] = useConversation();
 
   const theOtherMember = data.members.filter((e) => e._id !== authId)[0];
 
@@ -26,12 +25,12 @@ const CardChannel = (props: Props) => {
 
   return (
     <div
-      className={`w-full px-[20px] grid grid-cols-5 gap-x-[10px] h-[80px] cursor-pointer border-b ${
+      className={`w-full px-[20px] grid grid-cols-12 gap-x-[10px] h-[80px] cursor-pointer border-b ${
         isSelected && 'bg-white !cursor-default !border-none'
       }`}
       onClick={setCurrentConversation}
     >
-      <div className="col-span-4 flex items-center">
+      <div className="col-span-9 flex items-center">
         <div className="w-[50px] h-[50px] rounded-[50%] mr-[10px]">
           <img
             src={theOtherMember?.avatar || DEFAULT_AVATAR}
@@ -44,21 +43,31 @@ const CardChannel = (props: Props) => {
             {theOtherMember?.fullname}
           </p>
           <p className="max_line-1 font-normal text-[16px]">
-            {latestMessage?.isDelete ? (
-              <span className="text-[14px] text-gray-400 italic">
-                Tin nhắn đã được thu hồi
-              </span>
+            {latestMessage ? (
+              latestMessage?.isDelete ? (
+                <span className="text-[14px] text-gray-400 italic">
+                  Tin nhắn đã được thu hồi
+                </span>
+              ) : (
+                latestMessage?.text
+              )
             ) : (
-              latestMessage?.text
+              <span className="italic text-[14px] text-gray-400">
+                [Chưa có tin nhắn]
+              </span>
             )}
           </p>
         </div>
       </div>
-      <div className="col-span-1 flex justify-center">
-        <p className="text-gray-400 text-[12px] self-center">
-          {formatChannelMessageTime(latestMessage?.createdAt)}
-        </p>
-      </div>
+      {latestMessage ? (
+        <div className="col-span-3 flex justify-center">
+          <p className="text-gray-400 text-[12px] self-center">
+            {formatChannelMessageTime(latestMessage.createdAt)}
+          </p>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 };

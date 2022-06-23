@@ -164,7 +164,7 @@ const FacilitiesForm = ({
                 alt=""
               />
             </span>
-            Giờ đóng cửa
+            Giờ giấc
           </label>
           <div className="col-span-5">
             <Select

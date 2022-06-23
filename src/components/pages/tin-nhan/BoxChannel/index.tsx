@@ -9,11 +9,45 @@ import { ENUM_MESSAGE_MODE } from '@/constants/base.constants';
 import { useAuth } from '@/stores/Auth';
 import BoxConversationSkeleton from '@/components/common/Skeleton/BoxChannelSkeleton';
 import SendMessageSocket from '@/services/sockets/MessageSocket';
+import { useRouter } from 'next/router';
 
 const BoxChannel = () => {
   const [stateConversation, actionConversation] = useConversation();
-  //   console.log(`stateConversation id`, stateConversation.conversationDetail);
+  const router = useRouter();
+  const receiverId = router.query.receiverId as string;
+
   const [stateAuth] = useAuth();
+
+  React.useEffect(() => {
+    if (receiverId && stateAuth.authId) {
+      (async () => {
+        if (socketService.socket && socketService.socket.connected) {
+          const result = await actionConversation.createConversationAsync({
+            senderId: stateAuth.authId,
+            receiverId,
+          });
+          if (result.success) {
+            SendMessageSocket.joinRoomCSS(socketService.socket, {
+              senderId: stateAuth.authId,
+              receiverId: receiverId as string,
+            });
+
+            await actionConversation.getConversationMessagesAsync({
+              conversationId: result.data?._id || '',
+              limit: 10,
+              page: 1,
+            });
+          }
+        }
+      })();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    receiverId,
+    stateAuth.authId,
+    socketService.socket,
+    socketService.socket?.connected,
+  ]);
 
   React.useEffect(() => {
     actionConversation.getConversationAsync({

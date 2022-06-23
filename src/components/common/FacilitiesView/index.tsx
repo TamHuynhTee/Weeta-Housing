@@ -80,7 +80,7 @@ const FacilitiesView = ({ facilities }: { facilities: FACILITIES_MODEL }) => {
                 alt=""
               />
             </span>
-            <span className="font-semibold">Thời gian đóng cửa:</span>{' '}
+            <span className="font-semibold">Giờ giấc:</span>{' '}
             {
               LIMIT_TIME.find((item) => item.value === facilities.limitTime)
                 ?.label
@@ -109,7 +109,7 @@ const FacilitiesView = ({ facilities }: { facilities: FACILITIES_MODEL }) => {
                 alt=""
               />
             </span>
-            <span className="font-semibold">Sống không với chủ:</span>{' '}
+            <span className="font-semibold">Sống chung với chủ:</span>{' '}
             {facilities.liveWithOwner ? 'Có' : 'Không'}
           </div>
         </li>

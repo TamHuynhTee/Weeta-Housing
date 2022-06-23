@@ -2,7 +2,10 @@ import { ENUM_MESSAGE_MODE } from '@/constants/base.constants';
 import { notifyError } from '@/helpers/toast.helpers';
 import { CONVERSATION_MODEL } from '@/models/Conversations.model';
 import { MESSAGE_MODEL } from '@/models/Messages.model';
-import { getConversationService } from '@/services/apis/Conversation';
+import {
+  createConversationService,
+  getConversationService,
+} from '@/services/apis/Conversation';
 import {
   createConversationMessageService,
   editConversationMessageService,
@@ -16,6 +19,24 @@ import {
 import { State } from '.';
 
 type Actions = { setState: any; getState: () => State; dispatch: any };
+
+export const createConversationAsync =
+  (payload: { senderId: string; receiverId: string }) =>
+  async ({ setState, getState }: Actions) => {
+    const resData = await createConversationService(payload);
+    if (resData.error !== undefined) {
+      if (!resData.error) {
+        setState({
+          ...getState(),
+          conversationDetail: resData.data,
+          mode: ENUM_MESSAGE_MODE.CHAT,
+        });
+        return { success: true, data: resData.data };
+      }
+      return { success: false, data: undefined };
+    }
+    return { success: false, data: undefined };
+  };
 
 export const getConversationAsync =
   ({ limit = 10, page }: { limit: number; page: number }) =>

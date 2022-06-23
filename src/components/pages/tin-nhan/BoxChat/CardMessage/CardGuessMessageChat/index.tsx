@@ -1,3 +1,4 @@
+import { DEFAULT_AVATAR } from '@/constants/base.constants';
 import { formatChatMessageTime } from '@/helpers/base.helpers';
 import { useClickOutside } from '@/hooks/useClickOutSide';
 import { CONVERSATION_MEMBER } from '@/models/Conversations.model';
@@ -24,7 +25,7 @@ const CardGuessMessageChat = (props: Prop) => {
   const [tooltip, setTooltip] = React.useState(false);
 
   const renderAvatar = () => {
-    return sender?.avatar || '/images/avatar.jpg';
+    return sender?.avatar || DEFAULT_AVATAR;
   };
 
   const domNode = useClickOutside(() => {

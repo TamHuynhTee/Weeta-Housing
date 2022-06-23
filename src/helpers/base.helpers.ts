@@ -68,7 +68,7 @@ export const formatChannelMessageTime = (date: string | undefined) => {
   const dayDistance = dayjs(formatDate).diff(dayjs(), 'days');
   if (dayDistance === -1) return `Hôm qua`;
   if (dayDistance >= -7 && dayDistance < -1) return dayjs(date).fromNow();
-  return dayjs(date).format('DD/MM/YYYY HH:mm');
+  return dayjs(date).format('DD-MM-YYYY HH:mm');
 };
 
 export const formatChatMessageTime = (date: string | undefined) => {
@@ -86,8 +86,8 @@ export const formatArticleTime = (date: string | undefined) => {
   if (formatDate === dayjs().format('YYYY-MM-DD')) return `Hôm nay`;
   const dayDistance = dayjs(formatDate).diff(dayjs(), 'days');
   if (dayDistance === -1) return `Hôm qua`;
-  if (dayDistance < -1) return dayjs(date).format('DD/MM/YYYY');
-  return dayjs(date).format('DD/MM/YYYY');
+  if (dayDistance < -1) return dayjs(date).format('DD-MM-YYYY');
+  return dayjs(date).format('DD-MM-YYYY');
 };
 
 export const isShowTimeMessageBetween = (time: number, time2: number) => {

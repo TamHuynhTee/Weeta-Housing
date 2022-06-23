@@ -14,6 +14,7 @@ import {
   editConversationMessageAsync,
   removeConversationMessageAsync,
   updateMessageInConversation,
+  createConversationAsync,
 } from './conversation.action';
 import { selector } from './conversation.selector';
 
@@ -69,6 +70,7 @@ const actions = {
   editConversationMessageAsync,
   removeConversationMessageAsync,
   updateMessageInConversation,
+  createConversationAsync,
 };
 
 const Store = createStore({

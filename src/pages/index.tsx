@@ -60,7 +60,7 @@ const Home = () => {
             </SliderCustom>
             <HomeFilter />
           </div>
-          <div className="w-full px-[50px] py-[30px]">
+          {/* <div className="w-full px-[50px] py-[30px]">
             <div className="flex justify-between items-center my-[30px]">
               <p className="text-[25px] font-bold text-[rgb(44_44_44)]">
                 Khám phá
@@ -72,7 +72,7 @@ const Home = () => {
               </Link>
             </div>
             <div className="w-full flex flex-wrap"></div>
-          </div>
+          </div> */}
           <ContainerModal
             isVisible={welcome}
             closeModal={() => {
