@@ -19,7 +19,7 @@ const NavLogged = ({
 
   const handleLogout = () => {
     actionAuth.logoutAsync();
-    window.google.accounts.id.disableAutoSelect();
+    window.google?.accounts?.id?.disableAutoSelect();
     router.push('/');
   };
 
